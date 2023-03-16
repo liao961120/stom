@@ -1,0 +1,4 @@
+*.RDS
+*.rds
+.vscode
+*.exe
