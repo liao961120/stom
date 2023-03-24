@@ -29,18 +29,12 @@ d1 = d
 contrasts(d1$Sid) = contr.sum( n_subj )
 m1 = glm( R ~ -1 + Iid + Sid, data=d1, family=binomial("logit") )
 summary(m1)
-eff = coef(m1)
-item_eff.m1 = eff[1:n_item]
-subj_eff.m1 = eff[(n_item+1):(n_item+n_subj-1)]
-subj_eff.m1 = c( subj_eff.m1, -sum(subj_eff.m1) )
-m1_eff = c( item_eff.m1, subj_eff.m1 )
-m1_se = arm::se.coef( m1 )
-s_se = m1_se[startsWith(names(m1_se), "Sid")]
-# Compute standard error for all n_item + n_subj parameters
+# Contrast matrix for computing effects and std.Error for all parameters
 Cmat = diag(0, nrow=n_item+n_subj)[, -1]
 diag(Cmat)[1:n_item] = 1
 idxS = 1:n_subj + n_item
 Cmat[idxS, idxS[-length(idxS)]] = contr.sum( n_subj )
+m1_eff = (Cmat %*% coef(m1))[, 1]
 Vmat = Cmat %*% vcov(m1) %*% t(Cmat)
 m1_se = sqrt(diag(Vmat))
 
@@ -74,7 +68,6 @@ for (i in seq_along(m2_se)) {
   lines( c(i,i), m1_eff[i] + c(-2,2)*m1_se[i], col=col.alpha(4), lwd=6 )
   lines( c(i,i), m2_eff[i] + c(-2,2)*m2_se[i], col=col.alpha(2,.7), lwd=3 )
 }
-points( m1_eff,   col=4)
+points( m1_eff, col=4 )
 points( m2_eff, col=2 )
-
 
