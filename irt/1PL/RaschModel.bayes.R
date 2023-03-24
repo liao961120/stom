@@ -28,8 +28,8 @@
 #'
 #'      Through hierarchical parameterization, partial pooling is also done. And
 #'      through partial pooling, the estimation of each item parameters
-#'      incorporates information from all other items, which reduces overfit and
-#'      increases out-of-sample prediction accuracy.
+#'      incorporates information from all other items, which reduces overfitting 
+#'      and increases out-of-sample prediction accuracy.
 #'   
 #' - `m0.2` follows naturally from `m0.1`. Now, both item and person parameters
 #'   are partially pooled. `m0.2` identifies the parameters through constraining
