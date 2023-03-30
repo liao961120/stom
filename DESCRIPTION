@@ -1,0 +1,16 @@
+Package: stom
+Title: Miscellaneous Functions for Statistical Modeling
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Yongfu", 
+           family = "Liao",
+           email = "liao961120@gmail.com", 
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-1814-2993"))
+Description: Personal package for a collection of functions commonly used
+    in statistical modeling.
+License: file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+URL: http://yongfu.name/stom, https://github.com/liao961120/stom

@@ -2,3 +2,5 @@
 *.rds
 .vscode
 *.exe
+.Rproj.user
+docs

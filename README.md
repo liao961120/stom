@@ -1,5 +1,5 @@
-Miscellaneous script for fitting models in R and Stan
-=====================================================
+Miscellaneous Functions for Statistical Modeling
+================================================
 
 
 ## Item Response Theory
