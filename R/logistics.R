@@ -3,7 +3,7 @@
 #' @param x Numeric vector. Values on the linear scale.
 #' @param p Numeric vector. Values on the probability scale.
 #' @export
-logit = function(p) log( p / (1 - p) )
+logit = function(p) log(p) - log(1 - p)
 
 #' @rdname logit
 #' @export
