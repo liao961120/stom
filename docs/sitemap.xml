@@ -4,13 +4,13 @@
     <loc>http://yongfu.name/stom/404.html</loc>
   </url>
   <url>
+    <loc>http://yongfu.name/stom/LICENSE-text.html</loc>
+  </url>
+  <url>
     <loc>http://yongfu.name/stom/authors.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/index.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/LICENSE-text.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/col.alpha.html</loc>
@@ -23,6 +23,9 @@
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/rbern.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/rordlogit.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/rtnorm.html</loc>

@@ -30,3 +30,29 @@ rtnorm = function(n, m=0, s=1, lower=0, upper=Inf) {
   }
   sampled[seq_along(n)]
 }
+
+
+#' Random Number Generator for ordered categories
+#'
+#' @param phi Numeric. The linear term(s) to subtract from
+#'        each ordered categories.
+#' @param cutpoints A vector of cutpoints for delineating the
+#'        ordered categories on the logit scale. For generating
+#'        `n` categories, `n-1` cutpoints are needed. Do not
+#'        include (negative) `Inf` values.
+#' @examples
+#' cutpoints = c( -1.5, 0, 1.5 )
+#' rordlogit( phi=0, cutpoints=cutpoints )
+#' x = replicate( 1e5, {rordlogit(0, cutpoints)})
+#' table(x) / length(x)
+#' logistic( c(cutpoints, Inf) ) - logistic( c(-Inf, cutpoints) )
+#' @export
+rordlogit = function( phi, cutpoints ) {
+  a = c( -Inf, cutpoints, Inf )
+  sapply(phi, function(phi_) {
+    p = logistic( a - phi_ )
+    p_base = p[-1] - p[-length(p)]
+    sample( seq_along(p_base), size=1, prob=p_base )
+  })
+}
+
