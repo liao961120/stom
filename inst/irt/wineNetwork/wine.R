@@ -3,16 +3,6 @@
 #' ---
 #' title: Joint Estimation of Interaction and Piped Effects in an Item Response Model
 #' author: "Yongfu Liao"
-#' documentclass: amsart
-#' classoption:
-#' - reqno
-#' - 12pt
-#' geometry:
-#' - left=1in
-#' - top=1in
-#' - headheight=0.25in
-#' - headsep=0.4in
-#' - footskip=0.4in
 #' ---
 #'
 #' <!-- date -->

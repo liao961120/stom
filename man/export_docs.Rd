@@ -7,7 +7,7 @@
 \usage{
 export_docs(path, outfp = NULL)
 
-export_docs_pdf(path, outfp)
+export_docs_pdf(path, outfp, style = "amsart")
 }
 \arguments{
 \item{path}{Path to input R script.}

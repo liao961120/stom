@@ -19,14 +19,39 @@ export_docs = function(path, outfp=NULL) {
 
 #' @rdname export_docs
 #' @export
-export_docs_pdf = function(path, outfp) {
+export_docs_pdf = function(path, outfp, style="amsart") {
   fin = tempfile()
   export_docs(path, outfp=fin)
   pandoc = ifelse( Sys.info()['sysname'] == "Windows", "pandoc.exe", "pandoc" )
-  system2(pandoc, args = c(fin,
-                             "--from=markdown+tex_math_dollars",
-                             "--to=pdf",
-                             "-o",
-                             outfp)
-  )
+  args = c( fin,
+            "--from=markdown+tex_math_dollars",
+            "--to=pdf", "--pdf-engine=xelatex",
+            get_pandoc_pdf_args(style),
+            "-o", outfp )
+  cat( pandoc, args, "\n")
+  system2(pandoc, args=args, stdout=FALSE)
 }
+
+
+get_pandoc_pdf_args = function(style="") {
+  if ( style == "amsart" )
+    return(c(
+      "--variable=documentclass:amsart",
+      "--variable=classoption:reqno",
+      "--variable=classoption:12pt",
+      "--variable=geometry:left=1in",
+      "--variable=geometry:top=1in",
+      "--variable=geometry:headheight=0.25in",
+      "--variable=geometry:headsep=0.4in",
+      "--variable=geometry:footskip=0.4in"))
+  return(c())
+}
+
+
+pandoc = function(...) {
+  pd = ifelse( Sys.info()['sysname'] == "Windows", "pandoc.exe", "pandoc" )
+  args = c(...)
+  system2(pd, args=args )
+}
+
+
