@@ -22,7 +22,6 @@ export_docs = function(path, outfp=NULL) {
 export_docs_pdf = function(path, outfp, style="amsart") {
   fin = tempfile()
   export_docs(path, outfp=fin)
-  pandoc = ifelse( Sys.info()['sysname'] == "Windows", "pandoc.exe", "pandoc" )
   args = c( fin,
             "--from=markdown+tex_math_dollars",
             "--to=pdf", "--pdf-engine=xelatex",
