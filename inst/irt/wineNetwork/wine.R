@@ -1,8 +1,26 @@
-#' Exploring the joint modeling of an interaction effect and a piped effect
-#' ========================================================================
+# Export this file with `stom::export_docs_pdf("wine.R", "README.pdf")`
+
+#' ---
+#' title: Joint Estimation of Interaction and Piped Effects in an Item Response Model
+#' author: "Yongfu Liao"
+#' documentclass: amsart
+#' classoption:
+#' - reqno
+#' - 12pt
+#' geometry:
+#' - left=1in
+#' - top=1in
+#' - headheight=0.25in
+#' - headsep=0.4in
+#' - footskip=0.4in
+#' ---
+#'
+#' <!-- date -->
+#' \vspace{-15pt}\footnotesize\begin{center}\today\end{center}\vspace{12pt}
+#'
 #'
 #' Description
-#' -----------
+#' ===========
 #'
 #' The Directed Acyclic Graph (DAG) shown below represent the data generating
 #' process of the IRT model of interest. It can be conceptualized as a wine
@@ -22,34 +40,36 @@
 #' generating process is found in the `sim_dat()` function below.
 #'
 #' ```goat
-#'     R <--- Ow
-#'    ^ ^      |
-#'   /   \     |
-#'  J      W <-'
+#'       R <--- Ow
+#'      ^ ^      |
+#'     /   \     |
+#'    J      W <-'
 #' ```
 #'
 #'
 #' The Original Model and its Problem
-#' ----------------------------------
+#' ==================================
 #'
 #' The specification of the original model is shown in the equations below.
 #' A problem found in this model is that it cannot stably recover the wine
 #' quality (`W`) and the interaction (`Int`) parameters.
 #'
 #' $$
-#' R ~ Bernoulli( p )
-#' logit(p) = W[Wid] + J[Jid] + Int[Oj, Ow]
-#' J ~ Normal( 0, sigma_J )
-#' sigma_J ~ Exponential(1)
-#'
-#' W[Wid] ~ Normal( a[Ow], sigma_W )
-#' vector[2]:a ~ Normal( 0, 1.5 )
-#' sigma_W ~ Exponential(1)
+#' \begin{aligned}
+#' R & \sim Bernoulli( p )  \\
+#' logit(p) &= W_{[Wid]} + J_{[Jid]} + Int_{[O_j, O_w]} \\
+#' J & \sim Normal( 0, \sigma_J )  \\
+#' \sigma_J & \sim Exponential(1) \\
+#' \\
+#' W_{[Wid]} & \sim Normal( a_{[O_w]}, \sigma_W )  \\
+#' a & \sim Normal( 0, 1.5 )  \\
+#' \sigma_W & \sim Exponential(1)
+#' \end{aligned}
 #' $$
 #'
 #'
-#' Potential Cause
-#' ---------------
+#' Potential Causes
+#' ================
 #'
 #' With some exploration on a simpler model (the response was modeled as normal
 #' distributions generated from latent scores), it was found that the problem
@@ -61,7 +81,7 @@
 #'
 #'
 #' Fixes
-#' -----
+#' =====
 #'
 #' As illustrated in `wine2_normal.stan` (Case 4 & 5), the problem can be fixed
 #' by imposing additional constraints on the model. Two of them are imposed
@@ -74,7 +94,7 @@
 #'
 #'
 #' ToDo
-#' -----
+#' ====
 #'
 #' Test whether the conclusion also holds with logit models (binary/ordinal
 #' response models).
