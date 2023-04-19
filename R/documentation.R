@@ -22,13 +22,14 @@ export_docs = function(path, outfp=NULL) {
 export_docs_pdf = function(path, outfp, style="amsart") {
   fin = tempfile()
   export_docs(path, outfp=fin)
+  pd = ifelse( Sys.info()['sysname'] == "Windows", "pandoc.exe", "pandoc" )
   args = c( fin,
             "--from=markdown+tex_math_dollars",
             "--to=pdf", "--pdf-engine=xelatex",
             get_pandoc_pdf_args(style),
             "-o", outfp )
-  cat( pandoc, args, "\n")
-  system2(pandoc, args=args, stdout=FALSE)
+  cat( pd, args, "\n")
+  system2(pd, args=args, stdout=FALSE)
 }
 
 
