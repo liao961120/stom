@@ -1,4 +1,5 @@
 # Export this file with `stom::export_docs_pdf("wine.R", "README.pdf")`
+# Export this file with `stom::export_docs_html("wine.R", "README.html")`
 
 #' ---
 #' title: Joint Estimation of Interaction and Piped Effects in an Item Response Model
