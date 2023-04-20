@@ -18,6 +18,11 @@ development:
 
 # pkgdown::build_reference_index()
 reference:
+- title: "Documentation"
+  desc: >
+    Helpers for documenting scripts in Markdown
+  contents:
+  - matches("docs|html|pdf")
 - title: "Index"
   desc: >
     All functions

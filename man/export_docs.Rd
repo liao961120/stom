@@ -24,14 +24,14 @@ only \code{amsart} is available.}
 The docstring is defined as lines that start with \verb{#'}. To avoid problems
 when converting to \code{.pdf} and \code{.html}, the format of documentation should
 comply to Pandoc's markdown syntax.
-To allow for the execution of  \code{export_docs_html()} and \code{export_docs_pdf()}
-pandoc needs to be installed and available through the command line. In
-addition, a LaTeX distribution (e.g. TeXLive) should also be available
-for PDF compilation.
+To allow for the execution of  \code{export_docs_html()} and \code{export_docs_pdf()},
+pandoc needs to be available through the command line. In addition, a LaTeX
+distribution (e.g. TeXLive) is also required for PDF compilation.
 }
 \examples{
 (fin = system.file("wineNetwork", "wine.R", package = "stom"))
-export_docs(fin)  # Return as character vector if `outfp=NULL`
+docstring = export_docs(fin)  # Return as character vector if `outfp=NULL`
+cat(docstring, sep="\n")
 \dontrun{
 export_docs(fin, "docs.md")
 export_docs_pdf(fin, "docs.pdf")
