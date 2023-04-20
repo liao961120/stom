@@ -2,6 +2,7 @@
 
 export(col.alpha)
 export(export_docs)
+export(export_docs_html)
 export(export_docs_pdf)
 export(inv_logit)
 export(logistic)

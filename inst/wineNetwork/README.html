@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Yongfu Liao" />
+  <title>Joint Estimation of Interaction and Piped Effects in an Item Response Model</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Joint Estimation of Interaction and Piped Effects in
+an Item Response Model</h1>
+<p class="author">Yongfu Liao</p>
+<p class="date">April 20, 2023</p>
+</header>
+<h1 id="description">Description</h1>
+<p>The Directed Acyclic Graph (DAG) shown below represent the data
+generating process of the IRT model of interest. It can be
+conceptualized as a wine rating context, where the rating of wine
+quality (<span class="math inline">R</span>) is influenced by three
+factors:</p>
+<ol type="1">
+<li><span class="math inline">J</span>: Judge leniency</li>
+<li><span class="math inline">W</span>: Wine quality</li>
+<li><span class="math inline">O_w</span>: Wine origin</li>
+</ol>
+<p>Furthermore, it is assumed that <span class="math inline">O_w</span>
+differentially influences <span class="math inline">R</span> based on
+the levels of another variable <span class="math inline">O_j</span>, the
+origin of the judge In stats jargon, there’s an interaction between
+<span class="math inline">O_w</span> and <span
+class="math inline">O_j</span>. In simpler conceptual terms, consider
+the scenario that, for instance, French wines are rated higher by French
+judges, in addition to the scores they should have received based on
+their quality alone. The simulation code of this data generating process
+is found in the <code>sim_dat()</code> function below.</p>
+<pre class="goat"><code>      R &lt;--- Ow
+     ^ ^      |
+    /   \     |
+   J      W &lt;-&#39;</code></pre>
+<h1 id="the-original-model-and-its-problem">The Original Model and its
+Problem</h1>
+<p>The specification of the original model is shown in the equations
+below. A problem found in this model is that it cannot stably recover
+the wine quality (<code>W</code>) and the interaction (<code>Int</code>)
+parameters.</p>
+<p><span class="math display">
+\begin{aligned}
+R &amp; \sim Bernoulli( p )  \\
+logit(p) &amp;= W_{[Wid]} + J_{[Jid]} + Int_{[O_j, O_w]} \\
+J &amp; \sim Normal( 0, \sigma_J )  \\
+\sigma_J &amp; \sim Exponential(1) \\
+\\
+W_{[Wid]} &amp; \sim Normal( a_{[O_w]}, \sigma_W )  \\
+a &amp; \sim Normal( 0, 1.5 )  \\
+\sigma_W &amp; \sim Exponential(1)
+\end{aligned}
+</span></p>
+<h1 id="potential-causes">Potential Causes</h1>
+<p>With some exploration on a simpler model (the response was modeled as
+normal distributions generated from latent scores), it was found that
+the problem seemed to arise from an identifiablity issue: the model
+cannot correctly attribute the right amount of effect to wine quality
+(which is influenced by wine origin) and the direct (interactive)
+influence of wine origin on rating scores. The parameter estimates float
+around case by case when different configurations of the interaction are
+set in the simulation.</p>
+<h1 id="fixes">Fixes</h1>
+<p>As illustrated in <code>wine2_normal.stan</code> (Case 4 &amp; 5),
+the problem can be fixed by imposing additional constraints on the
+model. Two of them are imposed here to correctly identify the
+parameters:</p>
+<ol type="1">
+<li>A sum-to-zero constraint on the effects of wine origin on wine
+quality. That is, the effect through the path <span
+class="math inline">O_w \rightarrow W</span>.</li>
+<li>One of a term in the interaction matrix (<code>(2, 2)</code> in the
+case here) is constraint to zero as the reference.</li>
+</ol>
+<h1 id="todo">ToDo</h1>
+<p>Test whether the conclusion also holds with logit models
+(binary/ordinal response models).</p>
+</body>
+</html>

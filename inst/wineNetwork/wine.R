@@ -5,10 +5,6 @@
 #' author: "Yongfu Liao"
 #' ---
 #'
-#' <!-- date -->
-#' \vspace{-15pt}\footnotesize\begin{center}\today\end{center}\vspace{12pt}
-#'
-#'
 #' Description
 #' ===========
 #'
