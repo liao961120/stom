@@ -2,26 +2,26 @@
 % Please edit documentation in R/distributions.R
 \name{rordlogit}
 \alias{rordlogit}
-\title{Random Number Generator for ordered categories}
+\title{Random Number Generator from Ordered Logit Distribution}
 \usage{
-rordlogit(phi, cutpoints)
+rordlogit(phi, kappa)
 }
 \arguments{
 \item{phi}{Numeric. The linear term(s) to subtract from
 each ordered categories.}
 
-\item{cutpoints}{A vector of cutpoints for delineating the
+\item{kappa}{A vector of cut-points for delineating the
 ordered categories on the logit scale. For generating
-\code{n} categories, \code{n-1} cutpoints are needed. Do not
+\code{n} categories, \code{n-1} cut-points are needed. Do not
 include (negative) \code{Inf} values.}
 }
 \description{
-Random Number Generator for ordered categories
+Random Number Generator from Ordered Logit Distribution
 }
 \examples{
-cutpoints = c( -1.5, 0, 1.5 )
-rordlogit( phi=0, cutpoints=cutpoints )
-x = replicate( 1e5, {rordlogit(0, cutpoints)})
+kappa = c( -1.5, 0, 1.5 )
+rordlogit( phi=0, kappa=kappa )
+x = replicate( 1e4, {rordlogit(0, kappa)})
 table(x) / length(x)
-logistic( c(cutpoints, Inf) ) - logistic( c(-Inf, cutpoints) )
+logistic( c(kappa, Inf) ) - logistic( c(-Inf, kappa) )
 }

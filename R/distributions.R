@@ -32,27 +32,27 @@ rtnorm = function(n, m=0, s=1, lower=0, upper=Inf) {
 }
 
 
-#' Random Number Generator for ordered categories
+#' Random Number Generator from Ordered Logit Distribution
 #'
 #' @param phi Numeric. The linear term(s) to subtract from
 #'        each ordered categories.
-#' @param cutpoints A vector of cutpoints for delineating the
+#' @param kappa A vector of cut-points for delineating the
 #'        ordered categories on the logit scale. For generating
-#'        `n` categories, `n-1` cutpoints are needed. Do not
+#'        `n` categories, `n-1` cut-points are needed. Do not
 #'        include (negative) `Inf` values.
 #' @examples
-#' cutpoints = c( -1.5, 0, 1.5 )
-#' rordlogit( phi=0, cutpoints=cutpoints )
-#' x = replicate( 1e5, {rordlogit(0, cutpoints)})
+#' kappa = c( -1.5, 0, 1.5 )
+#' rordlogit( phi=0, kappa=kappa )
+#' x = replicate( 1e4, {rordlogit(0, kappa)})
 #' table(x) / length(x)
-#' logistic( c(cutpoints, Inf) ) - logistic( c(-Inf, cutpoints) )
+#' logistic( c(kappa, Inf) ) - logistic( c(-Inf, kappa) )
 #' @export
-rordlogit = function( phi, cutpoints ) {
-  a = c( -Inf, cutpoints, Inf )
+rordlogit = function( phi, kappa ) {
+  a = c( -Inf, kappa, Inf )
   sapply(phi, function(phi_) {
-    p = logistic( a - phi_ )
-    p_base = p[-1] - p[-length(p)]
-    sample( seq_along(p_base), size=1, prob=p_base )
+    Pc = logistic( a - phi_ )
+    P = Pc[-1] - Pc[-length(Pc)]
+    sample( seq_along(P), size=1, prob=P )
   })
 }
 

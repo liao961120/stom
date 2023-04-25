@@ -63,11 +63,11 @@ distribution (e.g. TeXLive) is also required for PDF compilation.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">export_docs</span><span class="op">(</span><span class="va">path</span>, outfp <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">export_docs_pdf</span><span class="op">(</span><span class="va">path</span>, <span class="va">outfp</span>, style <span class="op">=</span> <span class="st">"amsart"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">export_docs_html</span><span class="op">(</span><span class="va">path</span>, <span class="va">outfp</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">export_docs</span><span class="op">(</span><span class="va">path</span>, outfp <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+
+<span class="fu">export_docs_pdf</span><span class="op">(</span><span class="va">path</span>, <span class="va">outfp</span>, style <span class="op">=</span> <span class="st">"amsart"</span><span class="op">)</span>
+
+<span class="fu">export_docs_html</span><span class="op">(</span><span class="va">path</span>, <span class="va">outfp</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -88,10 +88,10 @@ only <code>amsart</code> is available.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">(</span><span class="va">fin</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"wineNetwork"</span>, <span class="st">"wine.R"</span>, package <span class="op">=</span> <span class="st">"stom"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpUWaKTy/temp_libpath478466443a0e/stom/wineNetwork/wine.R"</span>
-<span class="r-in"><span><span class="va">docstring</span> <span class="op">=</span> <span class="fu">export_docs</span><span class="op">(</span><span class="va">fin</span><span class="op">)</span>  <span class="co"># Return as character vector if `outfp=NULL`</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">docstring</span>, sep<span class="op">=</span><span class="st">"\n"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">(</span><span class="va">fin</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"wineNetwork"</span>, <span class="st">"wine.R"</span>, package <span class="op">=</span> <span class="st">"stom"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "C:/Users/rd/Desktop/stom/inst/wineNetwork/wine.R"</span>
+<span class="r-in"><span class="va">docstring</span> <span class="op">=</span> <span class="fu">export_docs</span><span class="op">(</span><span class="va">fin</span><span class="op">)</span>  <span class="co"># Return as character vector if `outfp=NULL`</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">docstring</span>, sep<span class="op">=</span><span class="st">"\n"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> title: Joint Estimation of Interaction and Piped Effects in an Item Response Model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> author: "Yongfu Liao"</span>
@@ -176,11 +176,11 @@ only <code>amsart</code> is available.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test whether the conclusion also holds with logit models (binary/ordinal</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> response models).</span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">export_docs</span><span class="op">(</span><span class="va">fin</span>, <span class="st">"docs.md"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">export_docs_pdf</span><span class="op">(</span><span class="va">fin</span>, <span class="st">"docs.pdf"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">export_docs_html</span><span class="op">(</span><span class="va">fin</span>, <span class="st">"docs.html"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="fu">export_docs</span><span class="op">(</span><span class="va">fin</span>, <span class="st">"docs.md"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">export_docs_pdf</span><span class="op">(</span><span class="va">fin</span>, <span class="st">"docs.pdf"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">export_docs_html</span><span class="op">(</span><span class="va">fin</span>, <span class="st">"docs.html"</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
