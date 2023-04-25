@@ -1,3 +1,9 @@
+#### ignore files without extensions ####
+*
+!/**/
+!*.*
+#########################################
+
 *.RDS
 *.rds
 .vscode
