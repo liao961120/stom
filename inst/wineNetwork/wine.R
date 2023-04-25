@@ -28,10 +28,10 @@
 #'
 #' ```{.goat}
 #'         R <--- Ow
-#'        ^ ^     ^  
-#'       /   \   /   
-#'      /     \ /     
-#'     J       W 
+#'        ^ ^     /
+#'       /   \   /
+#'      /     \ v
+#'     J       W
 #' ```
 #'
 #' The Original Model and its Problem
