@@ -3,14 +3,17 @@
 \name{inline}
 \alias{inline}
 \alias{inline_zh}
-\title{Inline Formatting of Vectors}
+\title{Format vectors as inline text}
 \usage{
 inline(x, sep = ", ", last_sep = ", and ", two_sep = " and ")
 
 inline_zh(x, sep = "、", last_sep = "、", two_sep = " 與 ")
 }
 \description{
-Inline Formatting of Vectors
+These functions are expect to work with R Markdown's inline R chunk syntax
+\code{`r `}, such that, for instance,
+\verb{they are numbered `r inline(1:3)` respectively} results in
+\verb{they are numbered 1, 2, and 3 respectively}.
 }
 \examples{
 inline(1:2)

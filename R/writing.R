@@ -1,6 +1,11 @@
 # Functions to facilitate authoring in R Markdown
 
-#' Inline Formatting of Vectors
+#' Format vectors as inline text
+#'
+#' These functions are expect to work with R Markdown's inline R chunk syntax
+#' `` `r ` ``, such that, for instance,
+#' ``they are numbered `r inline(1:3)` respectively`` results in
+#' `they are numbered 1, 2, and 3 respectively`.
 #'
 #' @export
 #' @examples
