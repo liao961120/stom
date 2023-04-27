@@ -3,8 +3,8 @@ library(cmdstanr)
 
 sim_dat = function( Int=matrix(rep(0,4), nrow=2, byrow=T), diff_by_Ow=T ) {
   set.seed(1023)
-  Nj = 40      # n judges
-  Nw = 40      # n wines
+  Nj = 14      # n judges
+  Nw = 26      # n wines
   N = Nj * Nw  # n responses
   Oj = rep( 1:2, each=Nj/2 )  # Judge origin (1 or 2)
   Ow = rep( 1:2, each=Nw/2 )  # Wine origin (1 or 2)
@@ -103,7 +103,7 @@ s = f2$summary(variables=c("W", "J", "Int"), "mean", "sd", "quantile2", "rhat", 
 plot( dat$W.ori, s[grepl("W", s$variable), "mean"] ); abline(0, 1)
 plot( dat$J.ori, s[grepl("J", s$variable), "mean"] ); abline(0, 1)
 plot( Int, s[grepl("Int", s$variable), "mean"] ); abline(0, 1)
-
+f2$save_object("wine2_normal_first_level2.RDS")
 
 ################################################
 # Model 3

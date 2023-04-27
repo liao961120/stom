@@ -15,7 +15,7 @@ data{
 parameters{
   vector[3] Int_raw;  
   vector[Nj] zJ;
-  vector[Nj] zW;
+  vector[Nw] zW;
   vector[1] a_raw;
   real<lower=0> sigma_J;
   real<lower=0> sigma_W;
