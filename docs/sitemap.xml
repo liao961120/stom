@@ -4,13 +4,16 @@
     <loc>http://yongfu.name/stom/404.html</loc>
   </url>
   <url>
-    <loc>http://yongfu.name/stom/LICENSE-text.html</loc>
-  </url>
-  <url>
     <loc>http://yongfu.name/stom/authors.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/index.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/bin_ext.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/col.alpha.html</loc>
@@ -22,13 +25,25 @@
     <loc>http://yongfu.name/stom/reference/index.html</loc>
   </url>
   <url>
+    <loc>http://yongfu.name/stom/reference/inline.html</loc>
+  </url>
+  <url>
     <loc>http://yongfu.name/stom/reference/logit.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/pandoc_pdf.html</loc>
   </url>
   <url>
+    <loc>http://yongfu.name/stom/reference/pat_depth.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/precis.html</loc>
+  </url>
+  <url>
     <loc>http://yongfu.name/stom/reference/rbern.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/replace_file_ext.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/rordlogit.html</loc>
@@ -37,7 +52,19 @@
     <loc>http://yongfu.name/stom/reference/rtnorm.html</loc>
   </url>
   <url>
+    <loc>http://yongfu.name/stom/reference/stan.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/stan2bin.html</loc>
+  </url>
+  <url>
     <loc>http://yongfu.name/stom/reference/standardize.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/stom-package.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/test_cmdstanr.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/template/after-body.html</loc>
