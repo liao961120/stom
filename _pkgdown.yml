@@ -18,13 +18,36 @@ development:
 
 # pkgdown::build_reference_index()
 reference:
+- title: "Stan"
+  desc: >
+    Wrappers of cmdstanr.
+  contents:
+  - stan
+  - precis
+  - extract
+  - matches("stan")
+- title: "Stats"
+  desc: >
+    Utilities for working with stats.
+  contents:
+  - rbern
+  - rordlogit
+  - rtnorm
+  - logit
+  - standardize
+- title: "Plotting"
+  desc: >
+    Plotting-related utilities.
+  contents:
+  - col.alpha
 - title: "Documentation"
   desc: >
-    Helpers for documenting scripts in Markdown
+    Helpers for documenting scripts in Markdown.
   contents:
+  - inline
   - matches("docs|html|pdf")
 - title: "Index"
   desc: >
-    All functions
+    All functions.
   contents:
   - matches(".")
