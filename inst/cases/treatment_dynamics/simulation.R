@@ -68,11 +68,11 @@ for ( t in 1:Nt ) {
 
 # Collect data
 dat = list(
-  Ns = Ns,
-  Ni = Ni, #
+  Ns = Ns, # number of subjects
+  Ni = Ni, # number of items in the self-efficacy scale
   Nt = Nt, # number of time points
-  R = R,   # Responses on self-efficacy scale
-  D = D,   # outcome: days of use
-  As = As  # age (min-max scaled)
+  R = R,   # Responses on self-efficacy scale: array[Ns, Ni, Nt]
+  D = D,   # outcome: days of use: D[Ns]
+  As = As  # age (min-max scaled): A[Ns]
 )
 
