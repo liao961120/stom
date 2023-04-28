@@ -25,3 +25,26 @@ inline = function(x, sep=", ", last_sep=", and ", two_sep=" and ") {
 #' @rdname inline
 #' @export
 inline_zh = function(x, sep="、", last_sep="、", two_sep=" 與 ") inline(x, sep, last_sep, two_sep)
+
+
+#' Convert vector object to R syntax equivalent
+#'
+#' @export
+#' @examples
+#' as_c_num(1:3)
+#' as_c_chr(1:3)
+as_c_num = function(x) {
+  x = paste(x, collapse = ", ")
+  x = paste0( "c(", x, ")" )
+  cat(x, "\n")
+}
+
+#' @export
+#' @rdname num_as_concat
+as_c_chr = function(x) {
+  x = paste(x, collapse = "', '")
+  x = paste0( "c('", x, "')" )
+  cat(x, "\n")
+}
+
+

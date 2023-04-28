@@ -28,7 +28,7 @@ rtnorm = function(n, m=0, s=1, lower=0, upper=Inf) {
     sampled = c( sampled, x[x > lower & x < upper] )
     n_sampled = n_sampled + length(sampled)
   }
-  sampled[seq_along(n)]
+  sampled[seq(n)]
 }
 
 
