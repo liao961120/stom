@@ -32,7 +32,7 @@ stan = function(stan_file, data, seed=123) {
 #' @export
 #' @examples
 #' # Fitted model
-#' fp = system.file("wineNetwork", "wine2_normal_first_level2.RDS", package="stom")
+#' fp = system.file("cases", "wine_network", "wine2_normal_first_level2.RDS", package="stom")
 #' m = readRDS(fp)
 #'
 #' # Posterior distribution summary

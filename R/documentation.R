@@ -13,7 +13,7 @@
 #'        only `amsart` is available.
 #' @export
 #' @examples
-#' (fin = system.file("wineNetwork", "wine.R", package = "stom"))
+#' (fin = system.file("cases", "wine_network", "wine.R", package = "stom"))
 #' docstring = export_docs(fin)  # Return as character vector if `outfp=NULL`
 #' cat(docstring, sep="\n")
 #' \dontrun{
