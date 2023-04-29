@@ -23,6 +23,8 @@ parameters {
     real AC;       // Age on Control
     real tE;       // Time on Efficacy
     // Non-centered parameterization for TE/TC (partial-pooled)
+    vector[Ns] zC;   // self-control at Et
+    real<lower=0> sigma_C;  // self-control std at Et
     vector[3] zTE;
     vector[3] zTC;
     real<lower=0> sigma_TE;
@@ -30,7 +32,8 @@ parameters {
     real muTE;
     real muTC;
     real muEb;  // baseline grand mean Efficacy before treatment
-    array[Nt] real<lower=0> sigma_Et;  // SD of efficacy of each time step;
+    array[Nt] real<lower=0> sigma_Et;  // SD of Efficacy at each time step;
+
 }
 transformed parameters {
     // IRT model params
@@ -48,41 +51,51 @@ transformed parameters {
 }
 model {
     // IRT Submodel (Efficacy Measure)
-    real phi;
-    kappa ~ normal(0, 1);
-    to_vector(zE) ~ normal(0, 1);
-    zI_raw ~ normal(0, 1);
+    kappa ~ std_normal();
+    to_vector(zE) ~ std_normal();
+    zI_raw ~ std_normal();
     muE ~ normal(0, 1.5);
     sigma_I ~ exponential(1);
     sigma_E ~ exponential(1);
     for (t in 1:Nt) {
         for (s in 1:Ns) {
             for (i in 1:Ni) {
-                phi = I[i] + E[s,t];
-                R[s,i,t] ~ ordered_logistic(phi, kappa);
+                R[s,i,t] ~ ordered_logistic( I[i] + E[s,t], kappa );
             }
         }
     }
 
     // Mediation Model
     vector[Ns] mu;
-    muEb ~ normal( 0, 1 );
+    vector[Ns] Et_std;
+    muEb ~ std_normal();
     sigma_Et ~ exponential(1);
-    tE ~ normal( 0, 1 );
-    TE ~ normal( 0, 1 );
-    AE ~ normal( 0, 1 );
+    tE ~ std_normal();
+    zTE ~ std_normal();
+    zTC ~ std_normal();
+    AE ~ std_normal();
+    AC ~ std_normal();
+    zC ~ std_normal();
+    sigma_C ~ exponential(1);
     // pre-treatment Efficacy: affected by age
     for (s in 1:Ns) {
         mu[s] = AE * As[s] + muEb;
     }
-    E[,1] ~ normal( mu, sigma_Et[1] );
+    Et_std = (E[,1] - mu) / sigma_Et[1];
+    Et_std ~ std_normal();
     // post-treatment Efficacy
     for (t in 2:Nt) {
         for (s in 1:Ns) {
             mu[s] = E[s,t-1] + tE + TE[Tr[s]];
         }
-        E[,t] ~ normal( mu, sigma_Et[t] );
+        Et_std = (E[,t] - mu) / sigma_Et[t];
+        Et_std ~ std_normal();
     }
-    // Link to outcome
-    D ~ binomial_logit( Nd, E[,Nt] );
+    // link to Outcome
+    vector[Ns] Ct;
+    vector[Ns] C;
+    for (s in 1:Ns)
+        Ct[s] = E[s,Nt] + AC*As[s] + TC[Tr[s]];
+    C = -( zC * sigma_C + Ct );  // non-centered parameterization
+    D ~ binomial_logit( Nd, C );
 }
