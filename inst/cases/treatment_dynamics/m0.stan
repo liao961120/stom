@@ -4,7 +4,7 @@ data {
     int Nt;  // number of time points
     int Nk;  // number of Likert scale points
     array[Ns,Ni,Nt] int<lower=1> R;  // Responses on self-efficacy scale
-    vector[Ns] Tr;  // Received treatment
+    array[Ns] int<lower=1> Tr;       // received treatment
     vector[Ns] As;  // age (min-max scaled)
     array[Ns] int<lower=0> D ;  // outcome: days of heavy drinking
 }

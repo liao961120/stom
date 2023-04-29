@@ -74,7 +74,8 @@ sim_data = function() {
       R = R,   # Responses on self-efficacy scale: array[Ns, Ni, Nt]
       Tr = Tr, # Received treatment Tr[Ns]
       As = As, # age (min-max scaled): A[Ns]
-      D = D    # outcome: days of heavy drinking: D[Ns]
+      D = D,   # outcome: days of heavy drinking: D[Ns]
+      Nd = 90  # number of days for outcome evaluation
     )
     return(list(
       dat = dat,

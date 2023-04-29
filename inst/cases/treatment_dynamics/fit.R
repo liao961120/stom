@@ -5,7 +5,7 @@ d = sim_data()
 
 
 #############################################################
-#' m0: simple rating scale model
+#' Model 0: simple rating scale model
 #'
 #' `m0.stan` fits an ordinal response IRT model, without other
 #' explanatory variables.
@@ -44,3 +44,18 @@ for (t in 1:4) {
   plot(E[, t], d$param$E[, t], main=t); abline(0, 1)
 }
 
+
+
+
+
+
+
+########################
+#' Model 1: Full model
+#'
+#' @FitTime
+#' 1361 secs on i7/Linux
+#' model seems to not converge
+init = function()
+  list( kappa = seq(-2,2, length=d$dat$Nk-1) )
+m1 = stan( "m1.stan", data=d$dat, init=init )
