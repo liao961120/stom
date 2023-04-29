@@ -7,13 +7,13 @@
 #' @param seed Integer. Random seed passed to cmdstanr's `$sample()`.
 #' @return A `CmdStanFit` object.
 #' @export
-stan = function(stan_file, data, seed=123) {
+stan = function(stan_file, data, ...) {
   m = cmdstanr::cmdstan_model(stan_file)
   # Fit object
   m$sample(
     data = data,
     refresh = 500,
-    seed = seed
+    ...
   )
 }
 
