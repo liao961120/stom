@@ -7,18 +7,17 @@ sim_data = function(viz=F, seed=10, Ns=100) {
     Ntx = 2
     Nt = 4
     Tx = rep(1:Ntx, each=Ns/Ntx)
-    Bt_Tx = c( 0, 1.5 )
-    Bt = .7
-    A_Tx = c( 0, 1 )
+    Bt_Tx = c( 1, 1.5 )
+    Bt = 0
+    A_Tx = c( .5, 1 )
     A_s = rnorm( Ns, 0, 1.5 )
     Bt_s = rnorm( Ns, 0, 1 )
-    alpha = 3
-    
+
     d = expand.grid( Sid=1:Ns, time=(1:Nt)-1, KEEP.OUT.ATTRS=F )
     d$Tx = Tx[d$Sid]
-    d$Y = rnorm( nrow(d), alpha + A_Tx[d$Tx] + Bt*d$time + Bt_Tx[d$Tx]*d$time + A_s[d$Sid] + Bt_s[d$Sid]*d$time )
+    d$Y = rnorm( nrow(d), A_Tx[d$Tx] + Bt_Tx[d$Tx]*d$time + A_s[d$Sid] + Bt_s[d$Sid]*d$time )
     # str(d)
-    
+
     if (!viz)
       return(list(
         dat = list(
@@ -37,10 +36,10 @@ sim_data = function(viz=F, seed=10, Ns=100) {
         A_s = A_s,
         Bt_s = Bt_s
       ))
-      
-    
+
+
     ## Plot trajectory
-    plot( 1, type="n", xlim=c(-0,3), ylim=c(-10,10),
+    plot( 1, type="n", xlim=c(0,3), ylim=c(-10,10),
           xlab="time", ylab="Outcome")
     # Sampled subjects' trajectories
     for ( Sid in sample(1:Ns, 20) ) {

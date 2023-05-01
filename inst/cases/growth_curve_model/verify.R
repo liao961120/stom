@@ -78,6 +78,7 @@ m.b_subj_int = post[, startsWith(names(post), "As") ] |>
 m.b_subj_slp = post[, startsWith(names(post), "Bt_s") ] |> 
   apply( 2, function(col) c( mean(col), quantile(col,.05), quantile(col,.95) ) )
 
+
 # lme4 vs. stan
 plot(m.f_subj_int, m.b_subj_int[1,]);abline(0, 1)
 plot(m.f_subj_slp, m.b_subj_slp[1,]);abline(0, 1)
