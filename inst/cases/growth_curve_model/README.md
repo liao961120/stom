@@ -34,12 +34,12 @@ points should be constant.
 A commonly seen formulation of the growth curve model is shown in (1).
 
 $$
-%\begin{equation}
+\begin{equation}
     \begin{aligned}
     y   & \sim Normal( \mu, \sigma )  \\
     \mu &  = \alpha + \alpha_{T_x} + \alpha_{Sid} + \beta_{t} time + \beta_{t \colon T_x} time
     \end{aligned}
-%\end{equation}
+\end{equation}
 $$
 
 The $\alpha$ parameters are intercepts, which estimate the effects discarding
@@ -86,12 +86,12 @@ interpretation of $\beta_{t \colon T_x}$ simplifies to "the rate of change for
 each treatment".
 
 $$
-%\begin{equation}
+\begin{equation}
     \begin{aligned}
     y   & \sim Normal( \mu, \sigma )  \\
     \mu &  = \alpha_{T_x} + \alpha_{Sid} + \beta_{t \colon T_x} time
     \end{aligned}
-%\end{equation}
+\end{equation}
 $$
 
  \
