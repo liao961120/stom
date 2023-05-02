@@ -94,7 +94,6 @@ $$
 \end{equation}
 $$
 
- \
 
 
 Bayesian Growth Curve Models

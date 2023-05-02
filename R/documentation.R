@@ -54,7 +54,8 @@ export_docs_html = function(path, outfp) {
 #'
 #' @export
 pandoc_pdf = function(fin, outfp, style="amsart") {
-  pandoc( fin,
+  temp = pdf_filter(fin)
+  pandoc( temp,
           "--shift-heading-level-by=-1",
           "--from=markdown+tex_math_dollars",
           "--to=pdf", "--pdf-engine=xelatex",
@@ -83,8 +84,30 @@ get_pandoc_pdf_args = function(style="") {
   if ( style == "amsart" ) {
     # Before body
     before_body = tempfile()
-    writeLines("\\vspace{-15pt}\\footnotesize\\begin{center}\\today\\end{center}\\vspace{12pt}\n",
-               before_body)
+    writeLines(c(
+      "\\vspace{-15pt}\\footnotesize\\begin{center}\\today\\end{center}\\vspace{12pt}\n",
+      "
+      \\makeatletter
+      \\let\\origsection\\section
+      \\renewcommand\\section{\\@ifstar{\\starsection}{\\nostarsection}}
+
+      \\newcommand\\nostarsection[1]
+      {\\sectionprelude\\origsection{#1}\\sectionpostlude}
+
+      \\newcommand\\starsection[1]
+      {\\sectionprelude\\origsection*{#1}\\sectionpostlude}
+
+      \\newcommand\\sectionprelude{%
+        \\vspace{.85em}
+      }
+
+      \\newcommand\\sectionpostlude{%
+        \\vspace{.35em}
+      }
+      \\makeatother
+      "),
+      before_body
+    )
     return(c(
       "-B", before_body,
       "--number-sections",
@@ -112,5 +135,32 @@ pandoc = function(...) {
   cat( "  ...Executing system command...\n" )
   cat( pd, args, "\n\n" )
   system2( pd, args=args, stdout=FALSE )
+}
+
+
+
+
+pdf_filter = function(fin) {
+  fout = tempfile()
+  lines = readLines(fin)
+  lines = ignore_dollars_with_begin_equation(lines)
+  writeLines(lines, fout)
+  fout
+}
+
+#' Spcial function to deal with conflicts between `$$` and equation env in latex
+ignore_dollars_with_begin_equation = function(lines) {
+  trim_lines = trimws(lines)
+  idx_dollars = which( trim_lines == "$$" )
+  idx_begin_eq = which( trim_lines == "\\begin{equation}" )
+  idx_end_eq = which( trim_lines == "\\end{equation}" )
+  idx_ignore = c()
+  for ( i in idx_dollars ) {
+    if ( (i+1) %in% idx_begin_eq )
+      idx_ignore = c(idx_ignore, i)
+    if ( (i-1) %in% idx_end_eq )
+      idx_ignore = c(idx_ignore, i)
+  }
+  return( lines[-idx_ignore] )
 }
 
