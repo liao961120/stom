@@ -89,7 +89,7 @@ Passed to the <code>variables</code> argument in cmdstanr's
 <span class="r-in"><span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="va">fp</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Posterior distribution summary</span></span>
-<span class="r-in"><span class="fu">precis</span><span class="op">(</span> <span class="va">m</span>, depth<span class="op">=</span><span class="fl">2</span>, pars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Int"</span>, <span class="st">"J"</span><span class="op">)</span> <span class="op">)</span></span>
+<span class="r-in"><span class="fu">precis</span><span class="op">(</span> <span class="va">m</span>, depth<span class="op">=</span><span class="fl">2</span>, pars<span class="op">=</span><span class="st">"Int,J"</span> <span class="op">)</span>  <span class="co"># or pars=c("Int", "J")</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    variable        mean        sd         q5        q95     rhat  ess_bulk</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  Int[1,1]  1.46065860 0.4155012  0.7738191  2.1368475 1.005829  596.2273</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  Int[2,1]  1.60776153 0.3527793  1.0167770  2.1725515 1.004828  638.9929</span>
@@ -114,6 +114,50 @@ Passed to the <code>variables</code> argument in cmdstanr's
 <span class="r-in"><span class="va">post</span> <span class="op">=</span> <span class="fu">extract</span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">post</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> draws_df [4,000 x 92] (S3: draws_df/draws/tbl_df/tbl/data.frame)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[1]      : num [1:4000] -0.0158 -0.187 -0.734 -0.5636 -0.5874 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[2]      : num [1:4000] -0.0841 0.463 -0.3212 -0.5345 -0.292 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[3]      : num [1:4000] -1.248 -0.534 -1.488 -1.374 -1.298 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[4]      : num [1:4000] 1.529 1.119 0.504 0.235 0.429 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[5]      : num [1:4000] 0.314 -0.135 -0.771 -0.771 -0.768 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[6]      : num [1:4000] 1.04423 0.64068 0.00361 -0.18366 0.05693 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[7]      : num [1:4000] 0.8662 0.7335 -0.0205 0.1177 0.1687 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[8]      : num [1:4000] 0.889 0.556 -0.197 -0.377 -0.179 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[9]      : num [1:4000] 1.33 1.038 0.416 0.445 0.28 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[10]     : num [1:4000] 0.297 0.364 -0.313 -0.166 -0.117 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[11]     : num [1:4000] -0.327 -0.192 -0.496 -0.895 -0.613 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[12]     : num [1:4000] 0.939 1.131 0.593 0.694 0.73 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[13]     : num [1:4000] 0.8695 0.6877 0.0365 0.1273 0.3824 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[14]     : num [1:4000] -0.751 -0.898 -1.579 -1.809 -1.412 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[15]     : num [1:4000] -0.00292 -0.24683 -0.88096 -1.04147 -0.84397 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[16]     : num [1:4000] -1.77 -1 -2.21 -1.97 -1.54 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[17]     : num [1:4000] 1.988 1.913 1.266 1.102 0.612 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[18]     : num [1:4000] 2.03 1.65 1.4 1.38 1.31 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[19]     : num [1:4000] 1.664 1.73 1.233 1.194 0.969 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[20]     : num [1:4000] 0.0272 0.3132 -0.2881 -0.1649 -0.2281 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[21]     : num [1:4000] 0.3107 0.0762 -0.5769 -0.4809 -0.2945 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[22]     : num [1:4000] 1.298 1.25 0.303 0.276 0.211 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[23]     : num [1:4000] -0.664 -1.083 -1.314 -1.595 -1.352 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[24]     : num [1:4000] -1.04 -1.43 -1.87 -1.78 -1.25 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[25]     : num [1:4000] -0.293 -0.235 -0.918 -0.632 -0.453 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[26]     : num [1:4000] 0.318 0.391 -0.212 -0.271 -0.283 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[1]      : num [1:4000] -0.9396 -0.7205 -0.3567 0.0858 -0.1114 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[2]      : num [1:4000] 0.729 1.099 1.271 1.494 1.522 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[3]      : num [1:4000] -0.2317 0.0751 0.2137 0.3774 0.6341 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[4]      : num [1:4000] 0.0343 0.3392 0.5008 0.4388 0.6549 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[5]      : num [1:4000] -0.518 -0.514 -0.258 -0.08 -0.385 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[6]      : num [1:4000] -0.8853 -0.4669 -0.2202 -0.3753 -0.0616 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[7]      : num [1:4000] 0.0902 0.4072 0.8518 0.9992 0.6837 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[8]      : num [1:4000] -2.02 -2.02 -1.4 -1.19 -1.08 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[9]      : num [1:4000] -1.657 -1.32 -0.635 -0.864 -1.013 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[10]     : num [1:4000] 0.295 0.365 0.904 0.604 0.338 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[11]     : num [1:4000] -1.403 -1.748 -1.201 -0.978 -1.018 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[12]     : num [1:4000] 1.25 1.57 1.97 2.06 2.2 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[13]     : num [1:4000] -0.3117 0.0141 0.0603 0.0507 0.3128 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[14]     : num [1:4000] -0.281 -0.238 0.491 0.478 0.357 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Int[1,1]  : num [1:4000] 1.59 1.4 1.85 1.65 1.58 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Int[2,1]  : num [1:4000] 1.83 1.74 1.89 2.05 1.75 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Int[1,2]  : num [1:4000] -0.2375 -0.6001 -0.0834 -0.37 -0.2706 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Int[2,2]  : num [1:4000] 0 0 0 0 0 0 0 0 0 0 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Int_raw[1]: num [1:4000] 1.59 1.4 1.85 1.65 1.58 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Int_raw[2]: num [1:4000] -0.2375 -0.6001 -0.0834 -0.37 -0.2706 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Int_raw[3]: num [1:4000] 1.83 1.74 1.89 2.05 1.75 ...</span>
@@ -159,50 +203,6 @@ Passed to the <code>variables</code> argument in cmdstanr's
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ zW[26]    : num [1:4000] 0.318 0.414 -0.243 -0.336 -0.391 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ sigma_J   : num [1:4000] 1.247 1.131 0.775 0.769 0.785 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ sigma_W   : num [1:4000] 0.999 0.944 0.871 0.806 0.724 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Int[1,1]  : num [1:4000] 1.59 1.4 1.85 1.65 1.58 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Int[2,1]  : num [1:4000] 1.83 1.74 1.89 2.05 1.75 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Int[1,2]  : num [1:4000] -0.2375 -0.6001 -0.0834 -0.37 -0.2706 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Int[2,2]  : num [1:4000] 0 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[1]      : num [1:4000] -0.9396 -0.7205 -0.3567 0.0858 -0.1114 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[2]      : num [1:4000] 0.729 1.099 1.271 1.494 1.522 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[3]      : num [1:4000] -0.2317 0.0751 0.2137 0.3774 0.6341 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[4]      : num [1:4000] 0.0343 0.3392 0.5008 0.4388 0.6549 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[5]      : num [1:4000] -0.518 -0.514 -0.258 -0.08 -0.385 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[6]      : num [1:4000] -0.8853 -0.4669 -0.2202 -0.3753 -0.0616 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[7]      : num [1:4000] 0.0902 0.4072 0.8518 0.9992 0.6837 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[8]      : num [1:4000] -2.02 -2.02 -1.4 -1.19 -1.08 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[9]      : num [1:4000] -1.657 -1.32 -0.635 -0.864 -1.013 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[10]     : num [1:4000] 0.295 0.365 0.904 0.604 0.338 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[11]     : num [1:4000] -1.403 -1.748 -1.201 -0.978 -1.018 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[12]     : num [1:4000] 1.25 1.57 1.97 2.06 2.2 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[13]     : num [1:4000] -0.3117 0.0141 0.0603 0.0507 0.3128 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ J[14]     : num [1:4000] -0.281 -0.238 0.491 0.478 0.357 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[1]      : num [1:4000] -0.0158 -0.187 -0.734 -0.5636 -0.5874 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[2]      : num [1:4000] -0.0841 0.463 -0.3212 -0.5345 -0.292 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[3]      : num [1:4000] -1.248 -0.534 -1.488 -1.374 -1.298 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[4]      : num [1:4000] 1.529 1.119 0.504 0.235 0.429 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[5]      : num [1:4000] 0.314 -0.135 -0.771 -0.771 -0.768 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[6]      : num [1:4000] 1.04423 0.64068 0.00361 -0.18366 0.05693 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[7]      : num [1:4000] 0.8662 0.7335 -0.0205 0.1177 0.1687 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[8]      : num [1:4000] 0.889 0.556 -0.197 -0.377 -0.179 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[9]      : num [1:4000] 1.33 1.038 0.416 0.445 0.28 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[10]     : num [1:4000] 0.297 0.364 -0.313 -0.166 -0.117 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[11]     : num [1:4000] -0.327 -0.192 -0.496 -0.895 -0.613 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[12]     : num [1:4000] 0.939 1.131 0.593 0.694 0.73 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[13]     : num [1:4000] 0.8695 0.6877 0.0365 0.1273 0.3824 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[14]     : num [1:4000] -0.751 -0.898 -1.579 -1.809 -1.412 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[15]     : num [1:4000] -0.00292 -0.24683 -0.88096 -1.04147 -0.84397 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[16]     : num [1:4000] -1.77 -1 -2.21 -1.97 -1.54 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[17]     : num [1:4000] 1.988 1.913 1.266 1.102 0.612 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[18]     : num [1:4000] 2.03 1.65 1.4 1.38 1.31 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[19]     : num [1:4000] 1.664 1.73 1.233 1.194 0.969 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[20]     : num [1:4000] 0.0272 0.3132 -0.2881 -0.1649 -0.2281 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[21]     : num [1:4000] 0.3107 0.0762 -0.5769 -0.4809 -0.2945 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[22]     : num [1:4000] 1.298 1.25 0.303 0.276 0.211 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[23]     : num [1:4000] -0.664 -1.083 -1.314 -1.595 -1.352 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[24]     : num [1:4000] -1.04 -1.43 -1.87 -1.78 -1.25 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[25]     : num [1:4000] -0.293 -0.235 -0.918 -0.632 -0.453 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ W[26]     : num [1:4000] 0.318 0.391 -0.212 -0.271 -0.283 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ .chain    : int [1:4000] 1 1 1 1 1 1 1 1 1 1 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ .iteration: int [1:4000] 1 2 3 4 5 6 7 8 9 10 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ .draw     : int [1:4000] 1 2 3 4 5 6 7 8 9 10 ...</span>

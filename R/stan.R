@@ -36,12 +36,13 @@ stan = function(stan_file, data, ...) {
 #' m = readRDS(fp)
 #'
 #' # Posterior distribution summary
-#' precis( m, depth=2, pars=c("Int", "J") )
+#' precis( m, depth=2, pars="Int,J" )  # or pars=c("Int", "J")
 #'
 #' # Extract posterior samples
 #' post = extract(m)
 #' str(post)
 precis = function(fit, depth=1, pars=NULL, lp=F) {
+  pars = parse_pars( pars )
   d = fit$summary(pars, "mean", "sd", "quantile2", "rhat", "ess_bulk")
   if (!lp)
     d = d[ d$variable != "lp__", ]
@@ -54,11 +55,40 @@ precis = function(fit, depth=1, pars=NULL, lp=F) {
 #' @rdname precis
 #' @export
 extract = function(fit, pars=NULL, lp=F) {
+  pars = parse_pars( pars )
   d = fit$draws(pars, format = "draws_df")
   if (!lp)
     d = d[ , colnames(d) != "lp__" ]
   return(d)
 }
+
+
+#' Select/Filter parameters from precis/extract data frames
+#'
+#' @param d data frame. A data frame returned by `stom::precis()` or
+#'        `stom::extract()`.
+#' @param pars Character vector of parameter names to retrieve.
+#' @return A subset of data frame with given parameters.
+#' @export
+#' @examples
+#' fp = system.file("cases", "wine_network", "wine2_normal_first_level2.RDS", package="stom")
+#' m = readRDS(fp)
+#' d = precis( m, depth=3 )
+#' d %>% get_pars( c("Int", "Int_raw") )
+#'
+#' d = extract( m )
+#' d %>% get_pars( "Int, Int_raw" )
+get_pars = function(d, pars) {
+  pars = parse_pars( pars )
+  pat = pat_param( pars )
+  # precis data frame
+  if ( "variable" %in% names(d) )
+    return( d[grepl(pat, d$variable),] )
+  # posterior sample data frame
+  idx_col = grepl( pat, names(d) )
+  return( d[, idx_col] )
+}
+
 
 
 #' Test cmdstanr compilation
@@ -113,11 +143,6 @@ bin_ext = function() {
 }
 
 
-
-
-
-
-
 #' Stan parameter regex pattern
 #'
 #' @param depth Integer. The parameters' dimension number. Parameters with
@@ -143,8 +168,18 @@ pat_depth_atom = function(depth=1) {
   return(pat)
 }
 
+pat_param = function(x) {
+  digits = "(\\d+,?)+"
+  x = paste0( "^", x, "\\[", digits, "\\]$" )
+  if (length(x) > 1)
+    x = paste(x, collapse="|")
+  return(x)
+}
 
 
-
-
-
+parse_pars = function(x) {
+  x = as.character(x)
+  if (length(x) == 1)
+    return( strsplit(x, ", ?")[[1]] )
+  x
+}

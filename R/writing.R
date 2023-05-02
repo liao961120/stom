@@ -27,7 +27,7 @@ inline = function(x, sep=", ", last_sep=", and ", two_sep=" and ") {
 inline_zh = function(x, sep="、", last_sep="、", two_sep=" 與 ") inline(x, sep, last_sep, two_sep)
 
 
-#' Convert vector object to R syntax equivalent
+#' Vector object as R input string
 #'
 #' @export
 #' @examples
@@ -40,7 +40,7 @@ as_c_num = function(x) {
 }
 
 #' @export
-#' @rdname num_as_concat
+#' @rdname as_c_num
 as_c_chr = function(x) {
   x = paste(x, collapse = "', '")
   x = paste0( "c('", x, "')" )

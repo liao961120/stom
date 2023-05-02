@@ -2,12 +2,15 @@
 % Please edit documentation in R/writing.R
 \name{as_c_num}
 \alias{as_c_num}
-\title{Convert vector object to R syntax equivalent}
+\alias{as_c_chr}
+\title{Vector object as R input string}
 \usage{
 as_c_num(x)
+
+as_c_chr(x)
 }
 \description{
-Convert vector object to R syntax equivalent
+Vector object as R input string
 }
 \examples{
 as_c_num(1:3)

@@ -25,7 +25,8 @@ reference:
   - stan
   - precis
   - extract
-  - matches("stan")
+  - get_pars
+  - matches("cmdstan")
 - title: "Stats"
   desc: >
     Utilities for working with stats.
@@ -45,6 +46,7 @@ reference:
     Helpers for documenting scripts in Markdown.
   contents:
   - inline
+  - as_c_num
   - matches("docs|html|pdf")
 - title: "Index"
   desc: >

@@ -34,7 +34,7 @@ fp = system.file("cases", "wine_network", "wine2_normal_first_level2.RDS", packa
 m = readRDS(fp)
 
 # Posterior distribution summary
-precis( m, depth=2, pars=c("Int", "J") )
+precis( m, depth=2, pars="Int,J" )  # or pars=c("Int", "J")
 
 # Extract posterior samples
 post = extract(m)
