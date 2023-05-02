@@ -1,95 +1,34 @@
+#' Growth curve modeling of latent trait
 library(stom)
 
-sim_data = function() {
-    set.seed(1023)
-    ## Subject-level params
-    Ns = 200  # number of subj
-    A = rtnorm( Ns, m=27, lower=18, upper=80, s=15 )  # age of subj
-    As = (A - 18) / 80
-    AE = -.3  # age effect on efficacy
-    AC = -.3  # age effect on control
-    Eb = standardize( rnorm( Ns, AE*As ), -1 )  # baseline self-efficacy before treatment
-    Tr = sample( 1:3, size=Ns, replace=T )  # received treatment
-    Shift = 3
-    # before treatment outcomes
-    C0 = rnorm( Ns, Eb + AC*As + Shift )
-    D0 = rbinom( Ns, 90, logistic(-C0) )
-    # hist(C0)
-    # hist(D0)
+Ns = 3*10
+Ntx = 3
+Nt = 4
+Tx = rep(1:Ntx, each=Ns/3)
+A = rtnorm( Ns, m = 27, lower=18, upper=80, s=20 )
+A = ( A - 18 ) / 80
+E0 = rnorm( Ns, .8*A )  # baseline latent trait
+E0 = standardize(E0, m=-1)
+B_Tx = c( .5, 1, 2 )  # Treatment effect (slopes)
+t = 0:(Nt-1)  # time points of measure
+E = sapply( t, function(time) {  # latent trait across time points (including E0)
+   E0 + B_Tx[Tx]*time
+})
+U = rnorm( Ns )  # unmeasured influence on D
+D = sapply( t, function(time) {  # Outcome across time
+  rnorm( Ns, 1.5 * E[, time+1] + 0.8*A + U )
+})
 
-    # Treatment-level params
-    Nt = 4  # number of time points (include baseline)
-          ## RP  MBRP TAU(ref)
-    TE = c( .3,  .3,   0 )  # Treatment effect on self-efficacy (indirect)
-    TC = c( 0,   .3,   0 )  # Treatment effect on self-control (direct)
-    tE = .05  # Unexplained effect of time on self-efficacy
-    E = matrix( NA, nrow=Ns, ncol=Nt )  # Self-Efficacy
-    for ( t in 1:Nt ) {
-      if ( t == 1 )
-        E[, t] = Eb
-      else
-        E[, t] = rnorm( Ns, E[, t-1] + tE + TE[Tr])
-    }
-    C = rnorm( Ns, E[, Nt] + AC*As + TC[Tr] + Shift )  # Self-control at final time point
-    D = rbinom( Ns, size=90, prob = logistic(-C) ) # Days of use (outcome)
-    # hist(C)
-    # hist(D)
 
-    # Item-level params
-    Ni = 8  # number of items (6-point Likert)
-    I = seq( -1.5, 1.5, length=Ni )     # item easiness (Efficacy): sum-to-zero constraint
-    kappa = c(-2.3, -1.1, 0, 1.1, 2.3 ) # baseline latent scores
-    R = array( NA, dim=c(Ns, Ni, Nt) )  # Subj's responses on survey
+Ni = 10  # number of items
+ei = seq(-3, 3, length=Ni)  # item easiness
+kappa = logit( cumsum( simplex(c(1,2,3,3,2,1)) ) )
+kappa = kappa[-length(kappa)]
 
-    for ( t in 1:Nt ) {
-      for ( i in 1:Ni ) {
-            # person + item
-        phi = E[, t] + I[i]
-        R[ ,i,t] = stom::rordlogit( phi, kappa )
-      }
-    }
-    # Visualize rating responses across time points
-    # plot( 1, type="n", xlim=c(.5, 6.5), ylim=c(0, .5))
-    # s = -.15
-    # col = 1
-    # for ( t in 1:Nt ) {
-    #   count = table( R[,,t] )
-    #   prob = count / sum(count)
-    #   for ( x in seq_along(prob) )
-    #     lines( c(x+s,x+s), c(0,prob[x]), lwd=8, col=col )
-    #   s = s + .1
-    #   col = col + 1
-    # }
-
-    rethinking::dens( C0 ); rethinking::dens( C, add=T, col=2 )
-    rethinking::dens( D0 ); rethinking::dens( D, add=T, col=2 )
-
-    # Collect data
-    dat = list(
-      Ns = Ns, # number of subjects
-      Ni = Ni, # number of items in the self-efficacy scale
-      Nt = Nt, # number of time points
-      Nk = length(kappa) + 1,  # number of Likert scale points
-      R = R,   # Responses on self-efficacy scale: array[Ns, Ni, Nt]
-      Tr = Tr, # Received treatment Tr[Ns]
-      As = As, # age (min-max scaled): A[Ns]
-      D = D,   # outcome: days of heavy drinking: D[Ns]
-      Nd = 90  # number of days for outcome evaluation
-    )
-    return(list(
-      dat = dat,
-      param = list(
-        A     = A    ,   # Age (ori)
-        # Efficacy mediation model
-        AE    = AE   ,   # Age on Efficacy
-        AC    = AC   ,   # Age on Control
-        TE    = TE   ,   # Treatment on Efficacy
-        TC    = TC   ,   # Treatment on Control
-        tE    = tE   ,   # Time on on Efficacy
-        # IRT submodel
-        E     = E    ,   # Efficacy
-        I     = I    ,   # Item easiness
-        kappa = kappa    # baseline latent scores
-      )
-    ))
+d = expand.grid( Sid=1:Ns, Iid=1:Ni, time=t, KEEP.OUT.ATTRS=F )
+for ( i in 1:nrow(d) ) {
+  d$R[i] = with(d, {
+    rordlogit( E[Sid[i], time[i]+1] + ei[Iid[i]], kappa=kappa )
+  })
+  d$D[i] = D[d$Sid[i], d$time[i]+1]
 }
