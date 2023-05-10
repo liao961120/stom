@@ -114,6 +114,7 @@ get_pandoc_pdf_args = function(style="") {
       "--variable=documentclass:amsart",
       "--variable=classoption:reqno",
       "--variable=classoption:12pt",
+      "--variable=indent:true",
       "--variable=geometry:left=1in",
       "--variable=geometry:top=1in",
       "--variable=geometry:headheight=0.25in",
@@ -161,6 +162,8 @@ ignore_dollars_with_begin_equation = function(lines) {
     if ( (i-1) %in% idx_end_eq )
       idx_ignore = c(idx_ignore, i)
   }
-  return( lines[-idx_ignore] )
+  if ( length(idx_ignore) > 0 )
+    return( lines[-idx_ignore] )
+  lines
 }
 
