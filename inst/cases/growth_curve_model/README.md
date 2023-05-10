@@ -66,7 +66,7 @@ Below, I provide a simplified specification of the model from an **estimation
 perspective**. Instead of asking how much better is _ACT_ than _CBT_, the
 estimation perspective asks how good each of them is. If we need to compare the
 two, simply subtract the estimated effect of _CBT_ from that of _ACT_. The
-meaning of the parameters changes but should now become more intuitive. The
+meaning of the parameters changes but should now become more intuitive. This
 simplified model is shown in (2). Two modifications are applied here.
 
 #### Dropping the global intercept $\alpha$
