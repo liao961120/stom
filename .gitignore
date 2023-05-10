@@ -9,3 +9,6 @@
 .vscode
 *.exe
 .Rproj.user
+*.aux
+*.log
+*.synctex.gz
