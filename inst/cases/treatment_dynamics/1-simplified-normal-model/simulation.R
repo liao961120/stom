@@ -48,6 +48,8 @@ sim_data = function() {
       Ns = Ns,
       Ntx = Ntx,
       Nt = Nt,
+      Nk = length(kappa) + 1,
+
       A = d$A,
       Tx = d$Tx,
       R = d$R,
@@ -60,7 +62,9 @@ sim_data = function() {
       B_TE = B_TE,
       B_ED = B_ED,
       B_AE = B_AE,
-      B_AD = B_AD
+      B_AD = B_AD,
+      E = E,
+      kappa = kappa
     )
     return( list(dat=dat, params=true_params) )
 }
