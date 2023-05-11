@@ -62,7 +62,7 @@ sim_data = function() {
       B_AE = B_AE,
       B_AD = B_AD
     )
-    return( list(dat = dat, params=true_params) )
+    return( list(dat=dat, params=true_params) )
 }
 
 

@@ -3,5 +3,7 @@
 ^LICENSE\.md$
 ^_pkgdown\.yml$
 ^docs$
+^doc$
 ^pkgdown$
 [.]exe$
+[.]pdf$
