@@ -69,6 +69,7 @@ pandoc_html = function(fin, outfp, style=NULL) {
   if (Sys.info()['sysname'] == "Windows")
     Sys.setlocale("LC_TIME", "C")
   pandoc( fin,
+          "--default-image-extension=svg",
           "--from=markdown+tex_math_dollars",
           "--to=html5",
           "--katex",
@@ -111,6 +112,7 @@ get_pandoc_pdf_args = function(style="") {
     return(c(
       "-B", before_body,
       "--number-sections",
+      "--default-image-extension=pdf",
       "--variable=documentclass:amsart",
       "--variable=classoption:reqno",
       "--variable=classoption:12pt",
