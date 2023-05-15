@@ -119,30 +119,6 @@ test_cmdstanr = function(clean=F, draw_sample=T) {
 stan2bin = function(fp) replace_file_ext(fp, bin_ext())
 
 
-#' Replace file extension
-#'
-#' @param fp Character vector of file paths.
-#' @param ext String. Extension (with dot) to change to.
-#' @examples
-#' replace_file_ext("x/y/zcda.txt")
-#' replace_file_ext(paste0(1:3, ".txt"), ".stan")
-#' @export
-replace_file_ext = function(fp, ext="") {
-  no_ext = tools::file_path_sans_ext(fp)
-  return( paste0(no_ext, ext) )
-}
-
-
-#' Returns binary extension depending on OS
-#'
-#' ToDo: check mac's binary extension
-bin_ext = function() {
-  if (Sys.info()["sysname"] == "Windows")
-    return(".exe")
-  return("")
-}
-
-
 #' Stan parameter regex pattern
 #'
 #' @param depth Integer. The parameters' dimension number. Parameters with
