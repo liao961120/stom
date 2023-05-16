@@ -145,11 +145,18 @@ pat_depth_atom = function(depth=1) {
 }
 
 pat_param = function(x) {
-  digits = "(\\d+,?)+"
-  x = paste0( "^", x, "\\[", digits, "\\]$" )
-  if (length(x) > 1)
-    x = paste(x, collapse="|")
-  return(x)
+    if (endsWith(x, "]")) {
+        x = gsub( "[", "\\[", x, fixed=T )
+        x = gsub( "]", "\\]", x, fixed=T )
+        return(x)
+    }
+    digits = "(\\d+,?)+"
+    x0 = paste0( "^", x, "$" )
+    x = paste0( "^", x, "\\[", digits, "\\]$" )
+    # if (length(x) > 1)
+    x = c(x0, x)
+    x = paste( x, collapse="|" )
+    return(x)
 }
 
 

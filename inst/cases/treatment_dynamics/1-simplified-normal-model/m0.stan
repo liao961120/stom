@@ -11,7 +11,7 @@ data {
     array[N] int<lower=1,upper=Ni> Iid; // Item ID
     array[N] int<lower=1> R;            // Responses on self-efficacy scale
     array[N] int<lower=1> Tx;           // Treatment received 
-    array[N] real<lower=0,upper=1> As;  // Age ( scaled: (x-18)/80 )
+    array[N] real<lower=0,upper=1> A;   // Age ( scaled: (x-18)/80 )
     array[N] real D;   // Outcome: observed heavy drinking tendency (coined, for scaffolding larger models later)
 }
 parameters {
@@ -29,6 +29,9 @@ parameters {
     real B_ED;    // Efficacy on Outcome (indirect effect)
     vector[Ntx] B_TE;    // Treatment on Efficacy (indirect effect)
     vector[Ntx] B_TD;    // Treatment on Outcome (direct effect)
+
+    // Outcome std
+    real<lower=0> sigma_D;
 
     // Non-centered parameterization for TE/TC (partial-pooled)
     // vector[Ns] zC;   // self-control at Et
@@ -59,20 +62,19 @@ transformed parameters {
 }
 model {
     // IRT Submodel (Efficacy Measure)
-    kappa ~ std_normal();
     to_vector(zE) ~ std_normal();
     zI_raw ~ std_normal();
-    muE ~ normal(0, 1.5);
+    muE ~ normal(0, 2);
     sigma_I ~ exponential(1);
     sigma_E ~ exponential(1);
     for ( i in 1:N )
         R[i] ~ ordered_logistic( E[Sid[i], time[i]+1] + I[Iid[i]], kappa );
 
-
     // Mediation Model
     B_AD ~ std_normal();
     B_ED ~ std_normal();
-    B_TD ~ std_normal();
+    B_TD ~ std_normal();  // treatment direct effect (vector)
+    B_TE ~ std_normal();  // treatment indirect effect (vector)
     B_AE ~ std_normal();
     // pre-treatment Efficacy: affected by age
     for (s in 1:Ns)
@@ -85,7 +87,12 @@ model {
         }
         E[,t+1] ~ normal( mu, 1.5 );
     }
-    // link to Outcome
-    for ( i in 1:N )
-        D[i] ~ normal( B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]]*time[i], 3 );
+    // link to (Normal) Outcome
+    sigma_D ~ exponential(1);
+    // vector[N] D_std;
+    // D_std ~ std_normal();
+    for ( i in 1:N ) {
+        ( ( D[i] - ( B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]]*time[i] ) ) / sigma_D ) ~ std_normal();
+        // D_std[i] = ( D[i] - ( B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]]*time[i] ) ) / sigma_D;
+    }
 }

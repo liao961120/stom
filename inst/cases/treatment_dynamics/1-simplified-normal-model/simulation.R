@@ -27,7 +27,7 @@ sim_data = function() {
 
 
     Ni = 10  # number of items
-    ei = seq(-3, 3, length=Ni)  # item easiness
+    ei = seq(-3, 3, length=Ni)  # item easiness (sums to zero)
     kappa = logit( cumsum( simplex(c(1,2,3,3,2,1)) ) )
     kappa = kappa[-length(kappa)]
 
@@ -49,6 +49,7 @@ sim_data = function() {
       Ntx = Ntx,
       Nt = Nt,
       Nk = length(kappa) + 1,
+      Ni = Ni,
 
       A = d$A,
       Tx = d$Tx,
@@ -64,6 +65,7 @@ sim_data = function() {
       B_AE = B_AE,
       B_AD = B_AD,
       E = E,
+      I = ei,
       kappa = kappa
     )
     return( list(dat=dat, params=true_params) )
