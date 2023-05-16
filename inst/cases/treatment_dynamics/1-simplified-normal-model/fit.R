@@ -9,6 +9,7 @@ m = readRDS("m0.RDS")
 pars = c("B_TE", "B_TD", "B_ED", "B_AE", "B_AD", "E", "I", "kappa", "sigma_D")
 s = precis(m, 5, pars )
 
+# get_pars(s, "sigma_D")
 
 
 ####### Check IRT params recovery ########
