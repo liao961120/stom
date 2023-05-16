@@ -2,7 +2,7 @@ library(stom)
 source("simulation.R")
 
 d = sim_data()
-m = stan( "m0.stan", data=d$dat )
+m = stan( "m0.1.stan", data=d$dat )
 m$save_object("m0.RDS")
 m = readRDS("m0.RDS")
 

@@ -1,4 +1,3 @@
-// Untested yet (2023.5.11)
 data {
     int N;   // num of obs.
     int Ns;  // num of subjects
@@ -16,8 +15,9 @@ data {
 }
 parameters {
     // IRT model params
-    array[Nt] real muE;
-    array[Nt] real<lower=0> sigma_E;
+    array[Ns] real muEs;
+    array[Ns] real<lower=0> sigma_Es;
+    array[Nt] real<lower=0> sigma_Et;
     real<lower=0> sigma_I;
     matrix[Ns,Nt] zE;
     vector[Ni-1] zI_raw;
@@ -29,22 +29,7 @@ parameters {
     real B_ED;    // Efficacy on Outcome (indirect effect)
     vector[Ntx] B_TE;    // Treatment on Efficacy (indirect effect)
     vector[Ntx] B_TD;    // Treatment on Outcome (direct effect)
-
-    // Outcome std
-    real<lower=0> sigma_D;
-
-    // Non-centered parameterization for TE/TC (partial-pooled)
-    // vector[Ns] zC;   // self-control at Et
-    // real<lower=0> sigma_C;  // self-control std at Et
-    // vector[3] zTE;
-    // vector[3] zTC;
-    // real<lower=0> sigma_TE;
-    // real<lower=0> sigma_TC;
-    // real muTE;
-    // real muTC;
-    // real muEb;  // baseline grand mean Efficacy before treatment
-    // array[Nt] real<lower=0> sigma_Et;  // SD of Efficacy at each time step;
-
+    real<lower=0> sigma_D;  // Outcome std
 }
 transformed parameters {
     // IRT model params
@@ -52,46 +37,42 @@ transformed parameters {
     matrix[Ns,Nt] E;  // Efficacy
     // sum-to-0 contraint on I
     I = sigma_I * append_row( zI_raw,-sum(zI_raw) );
-    for ( t in 1:Nt )
-        E[,t] = sigma_E[t] * zE[,t] + muE[t];
-
-    // // Mediation model params
-    // vector[3] TE;  // Treatment on Efficacy
-    // vector[3] TC;  // Treatment on Efficacy
-    // TE =  zTE * sigma_TE + muTE;  // Treatment on Efficacy
-    // TC =  zTC * sigma_TC + muTC;  // Treatment on Efficacy
+    for ( s in 1:Ns )
+        E[s,] = sigma_Es[s] * zE[s,] + muEs[s];
 }
 model {
-    // IRT Submodel (Efficacy Measure)
     to_vector(zE) ~ std_normal();
-    zI_raw ~ std_normal();
-    muE ~ normal(0, 2);
-    sigma_I ~ exponential(1);
-    sigma_E ~ exponential(1);
-    for ( i in 1:N )
-        R[i] ~ ordered_logistic( E[Sid[i], time[i]+1] + I[Iid[i]], kappa );
+    muEs ~ normal(0, 2);
+    sigma_Es ~ exponential(1);
+    sigma_Et ~ exponential(1);
 
-    // Mediation Model
+    zI_raw ~ std_normal();
+    sigma_I ~ exponential(1);
+    sigma_D ~ exponential(1);
+
     B_AD ~ std_normal();
     B_ED ~ std_normal();
     B_TD ~ std_normal();  // treatment direct effect (vector)
     B_TE ~ std_normal();  // treatment indirect effect (vector)
     B_AE ~ std_normal();
-    // pre-treatment Efficacy: affected by age
-    for (s in 1:Ns)
-        E[Sid[s], 1] ~ normal( B_AE*A[s], sigma_E[1] );
-    // post-treatment Efficacy
-    vector[Ns] mu;
-    for ( t in 1:(Nt-1) ) {
-        for (s in 1:Ns) {
-            mu[s] = E[s,1] + B_TE[Tx[s]]*t;
-        }
-        E[,t+1] ~ normal( mu, sigma_E[t+1] );
+
+    int t;
+    real mu;
+    for ( i in 1:N ) {
+        // Mediation Submodel
+        t = time[i];
+        // pre-treatment Efficacy: affected by age
+        if ( t == 0 ) 
+            mu = B_AE*A[i];
+        // post-treatment Efficacy
+        else 
+            mu = E[Sid[i],1] + B_TE[Tx[i]]*t;
+        E[Sid[i],t+1] ~ normal( mu, sigma_Et[t+1] );
+
+        // IRT Submodel (Efficacy Measure)
+        R[i] ~ ordered_logistic( E[Sid[i],t+1] + I[Iid[i]], kappa );
+
+        // link to (Normal) Outcome
+        D[i] ~ normal( B_ED*E[Sid[i],t+1] + B_AD*A[i] + B_TD[Tx[i]]*t, sigma_D );
     }
-    // link to (Normal) Outcome
-    sigma_D ~ exponential(1);
-    vector[N] muD;
-    for ( i in 1:N )
-        muD[i] = B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]]*time[i];
-    D ~ normal( muD, sigma_D );
 }
