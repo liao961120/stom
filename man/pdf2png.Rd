@@ -3,39 +3,50 @@
 \name{pdf2png}
 \alias{pdf2png}
 \alias{pdf2svg}
-\title{PDF to image conversion}
+\alias{svg2pdf}
+\alias{svg2png}
+\title{Vector graphics conversion}
 \usage{
-pdf2png(infile, dpi = 1200, outfile = NULL, page = NULL)
+pdf2png(infile, outfile = NULL, page = NULL, dpi = 1200)
 
 pdf2svg(infile, outfile = NULL, page = NULL)
+
+svg2pdf(infile, outfile = NULL)
+
+svg2png(infile, outfile = NULL, dpi = 1200)
 }
 \arguments{
 \item{infile}{String. Path to input PDF file.}
 
-\item{dpi}{Integer. "Dots Per Inch" for PNG outputs with \code{pdf2png()}.}
-
 \item{outfile}{Character vector. Output file paths without file extensions.
-File extensions will be set to \code{.png} for \code{pdf2png()} and \code{.svg} for
-\code{pdf2svg()}. The length of \code{outfile} should be \code{1} or corresponds to
-the length of \code{page}. If there is a mismatch, only the first element
-in \code{outfile} will be taken as the file stem, and the page numbers will
-be appended to the file stem as suffixes. By default, \code{outfile}
-is set to \code{NULL}, in which the input PDF file stem is used.}
+File extensions will be set to \code{.png} for \verb{*2png()}; \code{.svg} for
+\code{pdf2svg()}; and \code{.pdf} for \code{svg2pdf()}. The length of \code{outfile}
+should be \code{1} or corresponds to the length of \code{page}. If there is a
+mismatch, only the first element in \code{outfile} will be taken as the
+file stem, and the page numbers will be appended to the file stem as
+suffixes. By default, \code{outfile} is set to \code{NULL}, in which the
+input PDF file stem is used.}
 
 \item{page}{Integer vector. The pages (starting with 1) to extract from the
 PDF file, defaults to \code{NULL}, in which every page is converted to
 an image.}
+
+\item{dpi}{Integer. "Dots Per Inch" for PNG outputs with \code{pdf2png()}.}
 }
 \description{
-Convert a PDF file to images with Inkscape. To use this function, \code{inkscape}
-has to be available from the command line. Alternatively, users can specify
-the absolute path to inkscape by the option \code{stom.inkscape} (e.g.,
-\code{options(stom.inkscape = "/home/stom/bin/inkscape")}).
+Convert a PDF/SVG file to images of other formats with Inkscape.
+}
+\details{
+To use this function, \code{inkscape} has to be available from the command line.
+Alternatively, users can specify the absolute path to inkscape by the option
+\code{stom.inkscape} (e.g., \code{options(stom.inkscape = "/home/stom/bin/inkscape")}).
 }
 \examples{
 \dontrun{
 infile = system.file("inkscape", "dag.pdf", package = "stom")
 pdf2svg( infile, outfile="dag.svg" )
-pdf2png( infile, dpi=800, outfile="dag.png" )
+pdf2png( infile, outfile="dag.png", dpi=800 )
+svg2pdf( "dag.svg", "dag2.pdf" )
+svg2png( "dag.svg", "dag2.png" )
 }
 }
