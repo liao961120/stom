@@ -7,12 +7,12 @@
 #' @param seed Integer. Random seed passed to cmdstanr's `$sample()`.
 #' @return A `CmdStanFit` object.
 #' @export
-stan = function(stan_file, data, ...) {
+stan = function(stan_file, data, refresh = 250,...) {
   m = cmdstanr::cmdstan_model(stan_file)
   # Fit object
   m$sample(
     data = data,
-    refresh = 500,
+    refresh = refresh,
     ...
   )
 }
@@ -162,7 +162,28 @@ pat_param = function(x) {
 
 parse_pars = function(x) {
   x = as.character(x)
-  if (length(x) == 1)
+  if (length(x) == 1 && !grepl("\\d+,\\d+", x) )
     return( strsplit(x, ", ?")[[1]] )
   x
 }
+
+######## ToDo ###########
+####### convert 1-D vector to matrix based on bracket syntax
+# parse_bracket = function(x) {
+#     pat = "\\[(\\d+,?\\d*)\\]"
+# }
+#
+#
+# split_bracket_expression = function(x) {
+#     pat = "([^\\[\\]+)\\[(\\d+,?\\d*)\\]"
+#     #gsub(pat, "\\2",  c("zE[1,1]","zE[1]") )
+#     letters = gsub(pat, "\\1", x)
+#     digits = gsub(pat, "\\2", x)
+#     names(digits) = letters
+#     return(digits)
+# }
+#
+# x = c("zE[1,1]","zE[1]", "a")
+# split_bracket_expression(x)
+
+

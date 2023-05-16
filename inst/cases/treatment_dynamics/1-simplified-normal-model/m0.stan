@@ -18,6 +18,7 @@ parameters {
     // IRT model params
     real muE;
     real<lower=0> sigma_E;
+    real<lower=0> sigma_Et;
     real<lower=0> sigma_I;
     matrix[Ns,Nt] zE;
     vector[Ni-1] zI_raw;
@@ -71,6 +72,7 @@ model {
         R[i] ~ ordered_logistic( E[Sid[i], time[i]+1] + I[Iid[i]], kappa );
 
     // Mediation Model
+    sigma_Et ~ exponential(1);
     B_AD ~ std_normal();
     B_ED ~ std_normal();
     B_TD ~ std_normal();  // treatment direct effect (vector)
@@ -78,21 +80,19 @@ model {
     B_AE ~ std_normal();
     // pre-treatment Efficacy: affected by age
     for (s in 1:Ns)
-        E[Sid[s], 1] ~ normal( B_AE*A[s], 1.5 );
+        E[Sid[s], 1] ~ normal( B_AE*A[s], sigma_Et );
     // post-treatment Efficacy
     vector[Ns] mu;
     for ( t in 1:(Nt-1) ) {
         for (s in 1:Ns) {
             mu[s] = E[s,1] + B_TE[Tx[s]]*t;
         }
-        E[,t+1] ~ normal( mu, 1.5 );
+        E[,t+1] ~ normal( mu, sigma_Et );
     }
     // link to (Normal) Outcome
     sigma_D ~ exponential(1);
-    // vector[N] D_std;
-    // D_std ~ std_normal();
-    for ( i in 1:N ) {
-        ( ( D[i] - ( B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]]*time[i] ) ) / sigma_D ) ~ std_normal();
-        // D_std[i] = ( D[i] - ( B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]]*time[i] ) ) / sigma_D;
-    }
+    vector[N] muD;
+    for ( i in 1:N )
+        muD[i] = B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]]*time[i];
+    D ~ normal( muD, sigma_D );
 }
