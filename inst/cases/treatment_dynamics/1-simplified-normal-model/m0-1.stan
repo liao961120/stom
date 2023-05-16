@@ -73,6 +73,6 @@ model {
         R[i] ~ ordered_logistic( E[Sid[i],t+1] + I[Iid[i]], kappa );
 
         // link to (Normal) Outcome
-        D[i] ~ normal( B_ED*E[Sid[i],t+1] + B_AD*A[i] + B_TD[Tx[i]]*t, sigma_D );
+        D[i] ~ normal( B_ED*E[Sid[i],t+1] + B_AD*A[i] + B_TD[Tx[i]]*t, 1 );
     }
 }
