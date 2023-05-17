@@ -3,9 +3,8 @@ source("simulation.R")
 
 d = sim_data()
 m = stan( "m0-1.stan", data=d$dat, chains=3, parallel_chains=3 )
-# m$save_object( paste0(m$metadata()$model_name, ".RDS") )
-# m = readRDS("m0.RDS")
-s0 = s
+m$save_object( paste0(m$metadata()$model_name, ".RDS") )
+m = readRDS("m0_1_model.RDS")
 
 pars = c("B_TE", "B_TD", "B_ED", "B_AE", "B_AD", "E", "I", "kappa", "sigma_D")
 s = stom::precis(m, 5 )
