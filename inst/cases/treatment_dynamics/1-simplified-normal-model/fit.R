@@ -2,26 +2,33 @@ library(stom)
 source("simulation.R")
 
 d = sim_data()
-m = stan( "m0-1.stan", data=d$dat )
-m$save_object("m0.RDS")
-m = readRDS("m0.RDS")
+m = stan( "m0-1.stan", data=d$dat, chains=3, parallel_chains=3 )
+# m$save_object( paste0(m$metadata()$model_name, ".RDS") )
+# m = readRDS("m0.RDS")
+s0 = s
 
 pars = c("B_TE", "B_TD", "B_ED", "B_AE", "B_AD", "E", "I", "kappa", "sigma_D")
-s = precis(m, 5, pars )
+s = stom::precis(m, 5 )
 
 # get_pars(s, "sigma_D")
 
 
 ####### Check IRT params recovery ########
 for ( p in c("E", "I", "kappa") ) {
-    plot( d$params[[p]], get_pars(s, p)$mean, main=p )
+    mt = d$params[[p]]
+    m = get_pars(s, p)$mean
+    u = get_pars(s, p)$q95
+    l = get_pars(s, p)$q5
+    plot( mt, m , main=p, ylim=c(-8,9) )
+    for ( i in seq_along(m) )
+        lines( c(mt[i],mt[i]), c(u[i],l[i]), lwd=3, col=col.alpha(2) )
     abline(0,1, lty="dashed", col="grey")
 }
 
 
 
 ######## Check Beta params recovery #########
-beta = c("B_TE", "B_ED", "B_AE", "B_AD", "B_TD")
+beta = c( "B_TE", "B_AE" )
 b_true = lapply( beta, function(p) d$params[[p]] ) |> unlist()
 b_est = lapply( beta, function(p) get_pars(s, p)$mean ) |> unlist()
 b_est_upp = lapply( beta, function(p) get_pars(s, p)$q5 ) |> unlist()

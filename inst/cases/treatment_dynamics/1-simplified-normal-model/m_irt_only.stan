@@ -18,14 +18,9 @@ parameters {
     matrix[Ns,Nt] zE;
     real muE;
     real<lower=0> sigma_E;   // global, IRT
-    // real<lower=0> sigma_Et;  // conditional on treatment, mediation model
     real<lower=0> sigma_I;
     vector[Ni-1] zI_raw;
     ordered[Nk-1] kappa;
-
-    // Mediation model params
-    real B_AE;    // Age on Efficacy
-    vector[Ntx] B_TE;    // Treatment on Efficacy (indirect effect)
 }
 transformed parameters {
     // IRT model params
@@ -39,29 +34,13 @@ model {
     to_vector(zE) ~ std_normal();
     muE ~ normal(0, 2.5);
     sigma_E ~ exponential(.5);
-    // sigma_Et ~ exponential(1);
     zI_raw ~ std_normal();
     sigma_I ~ exponential(1);
 
-    B_TE ~ std_normal();  // treatment indirect effect (vector)
-    B_AE ~ std_normal();
-
-    vector[N] mu;
     vector[N] phi;
-    // vector[N] mu;
     for ( i in 1:N ) {
-        // Mediation Submodel
-        // pre-treatment Efficacy: affected by age
-                                   //  E0          Treatment
-        mu[i] = E[Sid[i],time[i]+1] - (B_AE*A[i] + B_TE[Tx[i]] * time[i]);
-        
         // IRT Submodel (Efficacy Measure)
         phi[i] = E[Sid[i],time[i]+1] + I[Iid[i]];
-        // link to (Normal) Outcome
-        // nu[i] = B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]] * time[i];
     }
-    mu ~ normal(0, 1.5);  // discard sigma_Et
-    // mu ~ normal( 0, sigma_Et );
-    // D ~ normal( nu, sigma_D );
     R ~ ordered_logistic( phi, kappa );
 }

@@ -11,12 +11,10 @@ sim_data = function() {
     A = rtnorm( Ns, m=27, lower=18, upper=80, s=20 )  # Age
     A = ( A - 18 ) / 80
     B_AE = .8
-    E0 = rnorm( Ns, B_AE*A )  # baseline latent trait
-    E0 = standardize(E0, m=-1)
     B_TE = c( .5, 1, 2 )  # Treatment effect (slopes)
     t = 0:(Nt-1)  # time points of measure
     E = sapply( t, function(time) {  # latent trait across time points (including E0)
-       E0 + B_TE[Tx]*time
+       rnorm( Ns, B_AE*A + B_TE[Tx]*time ) - 1.5
     })
     U = rnorm( Ns )  # unmeasured influence on D
     B_ED = 1.5
@@ -26,7 +24,7 @@ sim_data = function() {
     })
 
 
-    Ni = 10  # number of items
+    Ni = 16  # number of items
     ei = seq(-3, 3, length=Ni)  # item easiness (sums to zero)
     kappa = logit( cumsum( simplex(c(1,2,3,3,2,1)) ) )
     kappa = kappa[-length(kappa)]
@@ -72,3 +70,25 @@ sim_data = function() {
 }
 
 
+# d = sim_data()
+#
+# library(dplyr)
+# library(ggplot2)
+#
+# dat = d$dat[-(1:6)] |> data.frame()
+# dat$Sid = factor(dat$Sid)
+# dat$Iid = factor(dat$Iid)
+# dat$Tx = factor(dat$Tx)
+# dat$R = ordered(dat$R)
+#
+# dat |> group_by(Tx, time) |> summarise(D=mean(D))
+#
+#
+# dat |>
+#     group_by(Sid, time) |>
+#     summarise(D = mean(D),
+#               R = mean(R)) |>
+#     mutate(Sid = factor(Sid)) |>
+#     ggplot()+
+#         geom_line(aes(x=time, y=R, color=Sid))
+#

@@ -29,22 +29,8 @@ parameters {
     real B_ED;    // Efficacy on Outcome (indirect effect)
     vector[Ntx] B_TE;    // Treatment on Efficacy (indirect effect)
     vector[Ntx] B_TD;    // Treatment on Outcome (direct effect)
-
     // Outcome std
     real<lower=0> sigma_D;
-
-    // Non-centered parameterization for TE/TC (partial-pooled)
-    // vector[Ns] zC;   // self-control at Et
-    // real<lower=0> sigma_C;  // self-control std at Et
-    // vector[3] zTE;
-    // vector[3] zTC;
-    // real<lower=0> sigma_TE;
-    // real<lower=0> sigma_TC;
-    // real muTE;
-    // real muTC;
-    // real muEb;  // baseline grand mean Efficacy before treatment
-    // array[Nt] real<lower=0> sigma_Et;  // SD of Efficacy at each time step;
-
 }
 transformed parameters {
     // IRT model params
@@ -54,12 +40,6 @@ transformed parameters {
     I = sigma_I * append_row( zI_raw,-sum(zI_raw) );
     for ( t in 1:Nt )
         E[,t] = sigma_E[t] * zE[,t] + muE[t];
-
-    // // Mediation model params
-    // vector[3] TE;  // Treatment on Efficacy
-    // vector[3] TC;  // Treatment on Efficacy
-    // TE =  zTE * sigma_TE + muTE;  // Treatment on Efficacy
-    // TC =  zTC * sigma_TC + muTC;  // Treatment on Efficacy
 }
 model {
     // IRT Submodel (Efficacy Measure)
@@ -89,9 +69,9 @@ model {
         E[,t+1] ~ normal( mu, sigma_E[t+1] );
     }
     // link to (Normal) Outcome
-    sigma_D ~ exponential(1);
-    vector[N] muD;
-    for ( i in 1:N )
-        muD[i] = B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]]*time[i];
-    D ~ normal( muD, sigma_D );
+    // sigma_D ~ exponential(1);
+    // vector[N] muD;
+    // for ( i in 1:N )
+    //     muD[i] = B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]]*time[i];
+    // D ~ normal( muD, sigma_D );
 }

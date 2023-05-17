@@ -20,5 +20,5 @@ dat = list(
 m0 = stan( "m0.stan", dat )
 m0
 
-m1 = stan( "m1.stan", dat )
+m1 = stan( "m2.stan", dat )
 m1

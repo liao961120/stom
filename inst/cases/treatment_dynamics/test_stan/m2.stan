@@ -10,8 +10,10 @@ parameters {
 model {
     beta ~ std_normal();
     sigma ~ exponential(.5);
-    vector[N] mu;
-    for ( i in 1:N )
-        mu[i] = beta * x[i];
-    y ~ normal( mu, sigma );
+    vector[N] y_std;
+    for ( i in 1:N ) {
+        y_std[i] = (y[i] - beta * x[i]);
+    }
+    target += normal_lpdf(y_std | 0, sigma );
+    // ( / sigma) ~ std_normal();
 }
