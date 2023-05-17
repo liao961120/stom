@@ -74,10 +74,10 @@ extract = function(fit, pars=NULL, lp=F) {
 #' fp = system.file("cases", "wine_network", "wine2_normal_first_level2.RDS", package="stom")
 #' m = readRDS(fp)
 #' d = precis( m, depth=3 )
-#' d %>% get_pars( c("Int", "Int_raw") )
+#' get_pars( d, c("Int", "Int_raw") )
 #'
 #' d = extract( m )
-#' d %>% get_pars( "Int, Int_raw" )
+#' get_pars( d, "Int, Int_raw" )
 get_pars = function(d, pars) {
   pars = parse_pars( pars )
   pat = pat_param( pars )
@@ -87,6 +87,78 @@ get_pars = function(d, pars) {
   # posterior sample data frame
   idx_col = grepl( pat, names(d) )
   return( d[, idx_col] )
+}
+
+
+#' Convert posterior data frame to a list of array
+#'
+#' @param d Data frame. Posterior samples returned from `stom::extract()`
+#'        or `stom::get_pars()`.
+#' @param param String. Name of the parameter to extract (without brackets).
+#'        By default, `NULL`, which assumes the input data frame `d` contains
+#'        only the columns of the parameter of interest.
+#' @param sample Integer. Number of samples to draw from the posterior samples.
+#'        If `NULL`, returns the full data frame of the posterior samples.
+#' @return A list of arrays, with each array corresponding to a draw from the
+#'         posterior samples (i.e. a row in the posterior data frame).
+#' @export
+#' @examples
+#' fp = system.file("cases", "wine_network", "wine2_normal_first_level2.RDS", package="stom")
+#' m = readRDS(fp)
+#' post = extract(m)
+#' as_posterior_array( post, param="Int", sample_n=5 )
+as_posterior_array = function(d, param=NULL, sample_n=NULL) {
+    if (!is.null(param))
+        d = get_pars(d, pars=param)
+    row_idx = seq_along(d[[1]])
+    if (!is.null(sample_n) && sample_n > 0)
+        row_idx = sample(row_idx, size = sample_n, replace = F)
+    vars = colnames(d)
+    dat = lapply( row_idx, function(i) {
+        arr = bracket_to_array(key=vars, val=unlist(d[i,]) )
+    })
+    return(dat)
+}
+
+
+# x = c("zE[1,1]","zE[2,1]","zE[1,2]","zE[2,2]")
+# bracket_to_array(x, x)
+bracket_to_array = function(key, val) {
+    size_info = split_bracket_expression(key)
+
+    # Check
+    if ( any(names(size_info) != names(size_info)[1]) )
+        stop( "Multiple parameters found!" )
+    dim_len = sapply( size_info, function(x) length(x) )
+    if ( any( dim_len != dim_len[1] ) )
+        stop( "Multiple dimensions found!" )
+
+    # Size up array
+    size_info_flat = sapply(size_info, function(x) x)
+    if ( is.null(dim(size_info_flat)) ) {
+        dim_ = max(size_info_flat)
+    } else {
+        dim_ = apply( size_info_flat, 1, function(r) max(r) )
+    }
+
+    # Fill in values (stan's param order corresponds to R's array fill-in order)
+    arr = array( val, dim=dim_ )
+    arr
+}
+
+
+# x = c("zE[1,1]","zE[2,1]","zE[1,2]","zE[2,2]")
+# size_info = split_bracket_expression(x)
+split_bracket_expression = function(x) {
+    pat = "([^\\[\\]+)\\[(\\d+,?\\d*)\\]"
+    #gsub(pat, "\\2",  c("zE[1,1]","zE[1]") )
+    letters = gsub(pat, "\\1", x)
+    digits = gsub(pat, "\\2", x)
+    digits = lapply( digits,
+                     function(x) as.integer( strsplit(x, ",", fixed=T)[[1]] )
+    )
+    names(digits) = letters
+    return(digits)
 }
 
 
@@ -166,24 +238,3 @@ parse_pars = function(x) {
     return( strsplit(x, ", ?")[[1]] )
   x
 }
-
-######## ToDo ###########
-####### convert 1-D vector to matrix based on bracket syntax
-# parse_bracket = function(x) {
-#     pat = "\\[(\\d+,?\\d*)\\]"
-# }
-#
-#
-# split_bracket_expression = function(x) {
-#     pat = "([^\\[\\]+)\\[(\\d+,?\\d*)\\]"
-#     #gsub(pat, "\\2",  c("zE[1,1]","zE[1]") )
-#     letters = gsub(pat, "\\1", x)
-#     digits = gsub(pat, "\\2", x)
-#     names(digits) = letters
-#     return(digits)
-# }
-#
-# x = c("zE[1,1]","zE[1]", "a")
-# split_bracket_expression(x)
-
-

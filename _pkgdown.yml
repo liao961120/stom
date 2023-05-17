@@ -26,6 +26,7 @@ reference:
   - precis
   - extract
   - get_pars
+  - as_posterior_array
   - matches("cmdstan")
 - title: "Stats"
   desc: >
