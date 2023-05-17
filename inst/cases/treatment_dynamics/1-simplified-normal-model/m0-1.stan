@@ -53,14 +53,14 @@ model {
         // Mediation Submodel
         // pre-treatment Efficacy: affected by age
                                    //  E0          Treatment
-        mu[i] = E[Sid[i],time[i]+1] - (B_AE*A[i] + B_TE[Tx[i]] * time[i]);
+        // mu[i] = E[Sid[i],time[i]+1] - (B_AE*A[i] + B_TE[Tx[i]] * time[i]);
         
         // IRT Submodel (Efficacy Measure)
         phi[i] = E[Sid[i],time[i]+1] + I[Iid[i]];
         // link to (Normal) Outcome
         // nu[i] = B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]] * time[i];
     }
-    mu ~ normal(0, 1.5);  // discard sigma_Et
+    // mu ~ normal(0, 1.5);  // discard sigma_Et
     // mu ~ normal( 0, sigma_Et );
     // D ~ normal( nu, sigma_D );
     R ~ ordered_logistic( phi, kappa );

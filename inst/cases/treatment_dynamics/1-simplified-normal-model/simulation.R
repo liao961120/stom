@@ -14,8 +14,9 @@ sim_data = function() {
     B_TE = c( .5, 1, 2 )  # Treatment effect (slopes)
     t = 0:(Nt-1)  # time points of measure
     E = sapply( t, function(time) {  # latent trait across time points (including E0)
-       rnorm( Ns, B_AE*A + B_TE[Tx]*time ) - 1.5
+       rnorm( Ns, B_AE*A + B_TE[Tx]*time )
     })
+    E = E - mean(E)  # zero-center
     U = rnorm( Ns )  # unmeasured influence on D
     B_ED = 1.5
     B_AD = .8
