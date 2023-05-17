@@ -22,8 +22,8 @@ Select/Filter parameters from precis/extract data frames
 fp = system.file("cases", "wine_network", "wine2_normal_first_level2.RDS", package="stom")
 m = readRDS(fp)
 d = precis( m, depth=3 )
-d \%>\% get_pars( c("Int", "Int_raw") )
+get_pars( d, c("Int", "Int_raw") )
 
 d = extract( m )
-d \%>\% get_pars( "Int, Int_raw" )
+get_pars( d, "Int, Int_raw" )
 }

@@ -4,7 +4,7 @@
 \alias{stan}
 \title{Compile and sample with cmdstanr}
 \usage{
-stan(stan_file, data, ...)
+stan(stan_file, data, refresh = 250, ...)
 }
 \arguments{
 \item{stan_file}{String. Stan file path.}
