@@ -1,8 +1,13 @@
 #' Growth curve modeling of latent trait
 library(stom)
 
-sim_data = function() {
-    set.seed(10)
+sim_data = function(B_AE = 1.5,
+                    B_AD = .8,
+                    B_ED = 1.5,
+                    B_TD = c(0, 0, 0),
+                    B_TE = c(.5, 1, 2)) {
+
+    set.seed(199)
 
     Ns = 3 * 10  # number of subjects
     Ntx = 3    # number of treatments
@@ -16,8 +21,6 @@ sim_data = function() {
         s = 20
     )  # Age
     A = (A - 18) / 80
-    B_AE = 1.5
-    B_TE = c(.5, 1, 2)  # Treatment effect (slopes)
     t = 0:(Nt - 1)  # time points of measure
     E = sapply(t, function(time) {
         # latent trait across time points (including E0)
@@ -25,15 +28,12 @@ sim_data = function() {
     })
     E = E - mean(E) - 1  # -1 centered
     U = rnorm(Ns)  # unmeasured influence on D
-    B_ED = 1.5
-    B_AD = .8
     D = sapply(t, function(time) {
         # Outcome across time (latent trait underlying days of drinking)
-        rnorm(Ns, B_ED * E[, time + 1] + B_AD * A + U)
+        rnorm(Ns, B_TD[Tx]*time + B_ED * E[, time + 1] + B_AD * A + U)
     })
 
-
-    Ni = 10  # number of items
+    Ni = 20  # number of items
     ei = seq(-3, 3, length = Ni)  # item easiness (sums to zero)
     kappa = logit(cumsum(simplex(c(1, 2, 3, 3, 2, 1))))
     kappa = kappa[-length(kappa)]
@@ -65,6 +65,7 @@ sim_data = function() {
         Nt = Nt,                  # num. of time-points
         Nk = length(kappa) + 1,   # num. of ordinal choices
         Ni = Ni,                  # num. of items
+        Nk2 = floor( length(kappa)/2 ),
 
         # Item-level responses (N=Ns*Ni*Nt)
         NI = Ns * Ni * Nt,
