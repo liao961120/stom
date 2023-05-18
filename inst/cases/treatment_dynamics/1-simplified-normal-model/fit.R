@@ -11,6 +11,9 @@ s = stom::precis(m, 5 )
 
 # get_pars(s, "sigma_D")
 
+m = cmdstanr::cmdstan_model("m0-1.stan")
+
+
 
 ####### Check IRT params recovery ########
 for ( p in c("E", "I", "kappa") ) {

@@ -1,17 +1,24 @@
 data {
-    int N;   // num of obs.
     int Ns;  // num of subjects
-    int Ni;  // num of items in the self-efficacy scale
+    int Ntx; // num of treatments
     int Nt;  // num of time points
     int Nk;  // num of Likert scale points
-    int Ntx; // num of treatments
-    array[N] int<lower=0,upper=Nt-1> time;  // Time point of obs.
-    array[N] int<lower=1,upper=Ns> Sid; // Subject ID
-    array[N] int<lower=1,upper=Ni> Iid; // Item ID
-    array[N] int<lower=1> R;            // Responses on self-efficacy scale
-    array[N] int<lower=1> Tx;           // Treatment received
-    array[N] real<lower=0,upper=1> A;   // Age ( scaled: (x-18)/80 )
-    array[N] real D;   // Outcome: observed heavy drinking tendency (coined, for scaffolding larger models later)
+    int Ni;  // num of items in the self-efficacy scale
+
+    // Item-level responses (N=Ns*Ni*Nt)
+    int NI;
+    array[NI] int<lower=1,upper=Ns> Sid_I;     // Subject ID
+    array[NI] int<lower=1,upper=Ni> Iid_I;     // Item ID
+    array[NI] int<lower=0,upper=Nt-1> time_I;  // time point of obs.
+    array[NI] int<lower=1,upper=Nk> R;         // Responses on Efficacy scale
+
+    // Outcome-level responses (N=Ns*Nt)
+    int NO;
+    array[NO] int<lower=1,upper=Ns> Sid_O;     // Subject ID
+    array[NO] int<lower=0,upper=Nt-1> time_O;  // time point of obs.
+    array[NO] real<lower=0,upper=1> A;         // Age ( scaled: (x-18)/80 )
+    array[NO] int<lower=1> Tx;                 // Treatment received
+    array[NO] real D;                          // Outcome: observed heavy drinking tendency (coined, for scaffolding larger models later)
 }
 parameters {
     // IRT model params
@@ -46,17 +53,16 @@ model {
     B_TE ~ std_normal();  // treatment indirect effect (vector)
     B_AE ~ std_normal();
 
-    vector[N] mu;
-    vector[N] phi;
+    vector[NI] phi;
     // vector[N] mu;
-    for ( i in 1:N ) {
+    for ( i in 1:NI ) {
         // Mediation Submodel
         // pre-treatment Efficacy: affected by age
                                    //  E0          Treatment
         // mu[i] = E[Sid[i],time[i]+1] - (B_AE*A[i] + B_TE[Tx[i]] * time[i]);
         
         // IRT Submodel (Efficacy Measure)
-        phi[i] = E[Sid[i],time[i]+1] + I[Iid[i]];
+        phi[i] = E[Sid_I[i],time_I[i]+1] + I[Iid_I[i]];
         // link to (Normal) Outcome
         // nu[i] = B_ED*E[Sid[i],time[i]+1] + B_AD*A[i] + B_TD[Tx[i]] * time[i];
     }

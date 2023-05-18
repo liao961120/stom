@@ -4,70 +4,93 @@ library(stom)
 sim_data = function() {
     set.seed(10)
 
-    Ns = 3*10  # number of subjects
+    Ns = 3 * 10  # number of subjects
     Ntx = 3    # number of treatments
     Nt = 4     # number of time points
-    Tx = rep(1:Ntx, each=Ns/3)
-    A = rtnorm( Ns, m=27, lower=18, upper=80, s=20 )  # Age
-    A = ( A - 18 ) / 80
+    Tx = rep(1:Ntx, each = Ns / Ntx)
+    A = rtnorm(
+        Ns,
+        m = 27,
+        lower = 18,
+        upper = 80,
+        s = 20
+    )  # Age
+    A = (A - 18) / 80
     B_AE = .8
-    B_TE = c( .5, 1, 2 )  # Treatment effect (slopes)
-    t = 0:(Nt-1)  # time points of measure
-    E = sapply( t, function(time) {  # latent trait across time points (including E0)
-       rnorm( Ns, B_AE*A + B_TE[Tx]*time )
+    B_TE = c(.5, 1, 2)  # Treatment effect (slopes)
+    t = 0:(Nt - 1)  # time points of measure
+    E = sapply(t, function(time) {
+        # latent trait across time points (including E0)
+        rnorm(Ns, B_AE * A + B_TE[Tx] * time)
     })
     E = E - mean(E)  # zero-center
-    U = rnorm( Ns )  # unmeasured influence on D
+    U = rnorm(Ns)  # unmeasured influence on D
     B_ED = 1.5
     B_AD = .8
-    D = sapply( t, function(time) {  # Outcome across time (latent trait underlying days of drinking)
-      rnorm( Ns, B_ED * E[, time+1] + B_AD*A + U )
+    D = sapply(t, function(time) {
+        # Outcome across time (latent trait underlying days of drinking)
+        rnorm(Ns, B_ED * E[, time + 1] + B_AD * A + U)
     })
 
 
-    Ni = 16  # number of items
-    ei = seq(-3, 3, length=Ni)  # item easiness (sums to zero)
-    kappa = logit( cumsum( simplex(c(1,2,3,3,2,1)) ) )
+    Ni = 10  # number of items
+    ei = seq(-3, 3, length = Ni)  # item easiness (sums to zero)
+    kappa = logit(cumsum(simplex(c(1, 2, 3, 3, 2, 1))))
     kappa = kappa[-length(kappa)]
 
-    d = expand.grid( Sid=1:Ns, Iid=1:Ni, time=t, KEEP.OUT.ATTRS=F )
-    for ( i in 1:nrow(d) ) {
-      # Item responses
-      d$R[i] = with(d, {
-        rordlogit( E[Sid[i],time[i]+1] + ei[Iid[i]], kappa=kappa )
-      })
-      d$D[i] = D[d$Sid[i], d$time[i]+1]  # Outcome
-      d$Tx = Tx[d$Sid]  # Treatment received
-      d$A = A[d$Sid]    # Age of subjects
+    # Item-level responses (subject-item-time observation)
+    dI = expand.grid( Sid=1:Ns, Iid=1:Ni, time=t, KEEP.OUT.ATTRS=F )
+    for (i in 1:nrow(dI)) {
+        # Item responses
+        dI$R[i] = with(dI, {
+            rordlogit(E[Sid[i], time[i] + 1] + ei[Iid[i]], kappa = kappa)
+        })
+    }
+
+    # Outcome-level responses (subject-time observation)
+    dO = expand.grid( Sid=1:Ns, time=t, KEEP.OUT.ATTRS=F )
+    dO$A = with( dO, A[Sid] )
+    dO$Tx = with( dO, Tx[Sid] )
+    for ( i in 1:nrow(dO) ) {
+        s = dO$Sid[i]
+        t_ = dO$time[i] + 1
+        dO$E[i] = E[s, t_]
+        dO$D[i] = D[s, t_]
     }
 
     # Gather data
     dat = list(
-      N = nrow(d),
-      Ns = Ns,
-      Ntx = Ntx,
-      Nt = Nt,
-      Nk = length(kappa) + 1,
-      Ni = Ni,
+        Ns = Ns,                  # num. of subjects
+        Ntx = Ntx,                # num. of treatments
+        Nt = Nt,                  # num. of time-points
+        Nk = length(kappa) + 1,   # num. of ordinal choices
+        Ni = Ni,                  # num. of items
 
-      A = d$A,
-      Tx = d$Tx,
-      R = d$R,
-      D = d$D,
-      Sid = d$Sid,
-      Iid = d$Iid,
-      time = d$time
+        # Item-level responses (N=Ns*Ni*Nt)
+        NI = Ns * Ni * Nt,
+        Sid_I  = dI$Sid,
+        Iid_I  = dI$Iid,
+        time_I = dI$time,
+        R      = dI$R,            # item responses
+
+        # Outcome-level responses (N=Ns*Nt)
+        NI = Ns * Nt,
+        Sid_O  = dO$Sid,
+        time_O = dO$time,
+        A      = dO$A,
+        Tx     = dO$Tx,
+        D      = dO$D             # outcome
     )
     true_params = list(
-      B_TE = B_TE,
-      B_ED = B_ED,
-      B_AE = B_AE,
-      B_AD = B_AD,
-      E = E,
-      I = ei,
-      kappa = kappa
+        B_TE = B_TE,
+        B_ED = B_ED,
+        B_AE = B_AE,
+        B_AD = B_AD,
+        E = E,
+        I = ei,
+        kappa = kappa
     )
-    return( list(dat=dat, params=true_params) )
+    return(list(dat = dat, params = true_params))
 }
 
 
