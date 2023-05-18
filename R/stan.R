@@ -18,6 +18,20 @@ stan = function(stan_file, data, refresh = 250,...) {
 }
 
 
+#' Save `CmdStanFit` object as RDS with a cross-platform consistent name
+#'
+#' @param m A `CmdStanFit` object returned from `stom::stan()`.
+#' @export
+save_model = function(m, fp=NULL) {
+    if ( is.null(fp) ) {
+        fp = basename(m$stan_file())
+        fp = stom::replace_file_ext(fp, ".RDS")
+    }
+    m$save_object(fp)
+    cat("CmdStanFit Object saved to", fp, "\n")
+}
+
+
 #' Posterior summary and extraction from CmdStanFit objects
 #'
 #' @param fit  A `CmdStanFit` object.

@@ -23,6 +23,7 @@ reference:
     Wrappers of cmdstanr.
   contents:
   - stan
+  - save_model
   - precis
   - extract
   - get_pars
