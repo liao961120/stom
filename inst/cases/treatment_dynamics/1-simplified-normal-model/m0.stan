@@ -45,8 +45,8 @@ model {
     zI_raw ~ std_normal();
     sigma_I ~ exponential(1);
 
-    B_TE ~ std_normal(); 
-    B_AE ~ std_normal();
+    B_TE ~ normal(0, 1.5); 
+    B_AE ~ normal(0, 1.5);
     alpha ~ normal(0, 1.5);
 
     // Mediation submodel
@@ -60,11 +60,3 @@ model {
         phi[i] = E[Sid_I[i],time_I[i]+1] + I[Iid_I[i]];
     R ~ ordered_logistic( phi, kappa );
 }
-
-
-/*
-    Next:
-        1. Add Outcome model
-        2. Random subject intercepts/slopes on alpha/B_TE
-            -> correlation among random intercepts/slopes (bivariate normal)
-*/
