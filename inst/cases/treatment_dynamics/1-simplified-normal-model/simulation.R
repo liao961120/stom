@@ -16,14 +16,14 @@ sim_data = function() {
         s = 20
     )  # Age
     A = (A - 18) / 80
-    B_AE = .8
+    B_AE = 1.5
     B_TE = c(.5, 1, 2)  # Treatment effect (slopes)
     t = 0:(Nt - 1)  # time points of measure
     E = sapply(t, function(time) {
         # latent trait across time points (including E0)
         rnorm(Ns, B_AE * A + B_TE[Tx] * time)
     })
-    E = E - mean(E)  # zero-center
+    E = E - mean(E) - 1  # -1 centered
     U = rnorm(Ns)  # unmeasured influence on D
     B_ED = 1.5
     B_AD = .8
@@ -74,7 +74,7 @@ sim_data = function() {
         R      = dI$R,            # item responses
 
         # Outcome-level responses (N=Ns*Nt)
-        NI = Ns * Nt,
+        NO = Ns * Nt,
         Sid_O  = dO$Sid,
         time_O = dO$time,
         A      = dO$A,

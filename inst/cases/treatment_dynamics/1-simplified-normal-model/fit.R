@@ -3,16 +3,13 @@ source("simulation.R")
 
 d = sim_data()
 m = stan( "m0-2.stan", data=d$dat, chains=3, parallel_chains=3 )
-m$save_object( paste0(m$metadata()$model_name, ".RDS") )
+save_model(m)
 # m = readRDS("model_4a5c159a2ff3_model.RDS")
 
 pars = c("B_TE", "B_TD", "B_ED", "B_AE", "B_AD", "E", "I", "kappa", "sigma_D")
-s = stom::precis(m, 5 )
+s = stom::precis(m, 5)
 
 # get_pars(s, "sigma_D")
-
-m = cmdstanr::cmdstan_model("m0-1.stan")
-
 
 
 ####### Check IRT params recovery ########
@@ -28,7 +25,6 @@ for ( p in c("E", "I", "kappa") ) {
 }
 
 
-
 ######## Check Beta params recovery #########
 beta = c( "B_TE", "B_AE" )
 b_true = lapply( beta, function(p) d$params[[p]] ) |> unlist()
@@ -37,7 +33,7 @@ b_est_upp = lapply( beta, function(p) get_pars(s, p)$q5 ) |> unlist()
 b_est_low = lapply( beta, function(p) get_pars(s, p)$q95 ) |> unlist()
 b_true = c(b_true, rep(0,3) )  # no B_TD effect
 
-plot( b_true, pch=19, ylim=c(-2, 2) )
+plot( b_true, pch=19, ylim=c(-2, 4) )
 abline(h = 0, lty="dashed", col="grey")
 points( b_est, col=2 )
 for ( i in seq_along(b_est) )
