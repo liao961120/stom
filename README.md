@@ -1,7 +1,7 @@
 Miscellaneous Functions for Statistical Modeling
 ================================================
 
-A slowly moving package. 
+A slow moving package. 
 
 Interesting model-fitting scripts might be found under [`inst/cases`][inst].  
 Otherwise, it's just a log of some personal scripts and functions.
