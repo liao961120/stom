@@ -24,7 +24,7 @@ stan = function(stan_file, data, refresh = 250,...) {
 #' @export
 save_model = function(m, fp=NULL) {
     if ( is.null(fp) ) {
-        fp = basename(m$stan_file())
+        fp = basename(m$runset$args$exe_file)
         fp = stom::replace_file_ext(fp, ".RDS")
     }
     m$save_object(fp)
