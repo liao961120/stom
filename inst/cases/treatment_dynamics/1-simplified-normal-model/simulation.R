@@ -1,7 +1,7 @@
 #' Growth curve modeling of latent trait
 library(stom)
 
-sim_data = function(B_AE = 1.5,
+sim_data = function(B_AE = 1,
                     B_AD = .8,
                     B_ED = 1.5,
                     B_TD = c(0, 0, 0),
@@ -15,18 +15,19 @@ sim_data = function(B_AE = 1.5,
     Tx = rep(1:Ntx, each = Ns / Ntx)
     A = rtnorm(
         Ns,
-        m = 27,
+        m = 38,
         lower = 18,
-        upper = 80,
+        upper = 83,
         s = 20
     )  # Age
-    A = (A - 18) / 80
+    minA = min(A)
+    A = (A - minA) / 10  # 1 unit of increase = 10 years of increase in original age
     t = 0:(Nt - 1)  # time points of measure
     E = sapply(t, function(time) {
         # latent trait across time points (including E0)
         rnorm(Ns, B_AE * A + B_TE[Tx] * time)
     })
-    E = E - mean(E) - 1  # -1 centered
+    E = E - mean(E)  # 0-centered
     U = rnorm(Ns)  # unmeasured influence on D
     D = sapply(t, function(time) {
         # Outcome across time (latent trait underlying days of drinking)
@@ -89,7 +90,8 @@ sim_data = function(B_AE = 1.5,
         B_AD = B_AD,
         E = E,
         I = ei,
-        kappa = kappa
+        kappa = kappa,
+        minA = minA
     )
     return(list(dat = dat, params = true_params))
 }
@@ -100,20 +102,23 @@ sim_data = function(B_AE = 1.5,
 # library(dplyr)
 # library(ggplot2)
 #
-# dat = d$dat[-(1:6)] |> data.frame()
-# dat$Sid = factor(dat$Sid)
-# dat$Iid = factor(dat$Iid)
-# dat$Tx = factor(dat$Tx)
-# dat$R = ordered(dat$R)
+# dat1 = d$dat[c("Sid_I", "time_I", "R")] |> data.frame()
+# dat2 = d$dat[c("Sid_O", "time_O", "A", "Tx", "D")] |> data.frame()
+# names(dat1) = gsub("_I$", "", names(dat1))
+# names(dat2) = gsub("_O$", "", names(dat2))
 #
 # dat |> group_by(Tx, time) |> summarise(D=mean(D))
 #
 #
-# dat |>
+# dat2 |>
 #     group_by(Sid, time) |>
-#     summarise(D = mean(D),
-#               R = mean(R)) |>
+#     summarise(D = mean(D)) |>
+#     mutate(Tx = case_when(
+#         Sid %in% 1:10 ~ "1",
+#         Sid %in% 11:20 ~ "2",
+#         Sid %in% 21:30 ~ "3"
+#     )) |>
 #     mutate(Sid = factor(Sid)) |>
 #     ggplot()+
-#         geom_line(aes(x=time, y=R, color=Sid))
-#
+#         geom_line(aes(x=time, y=D, color=Tx, group=Sid))
+

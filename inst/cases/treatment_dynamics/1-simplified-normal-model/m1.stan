@@ -17,13 +17,12 @@ data {
     int NO;
     array[NO] int<lower=1,upper=Ns> Sid_O;     // Subject ID
     array[NO] int<lower=0,upper=Nt-1> time_O;  // time point of obs.
-    array[NO] real<lower=0,upper=1> A;         // Age ( scaled: (x-18)/80 )
+    array[NO] real<lower=0,upper=100> A;       // Age scaled: (A-min(A))/10 
     array[NO] int<lower=1> Tx;                 // Treatment received
     array[NO] real D;                          // Outcome: observed heavy drinking tendency (coined, for scaffolding larger models later)
 }
 parameters {
     // IRT model params
-    // matrix[Ns,Nt] E;
     vector[Ns*Nt-1] E_raw;
     real<lower=0> sigma_I;
     vector[Ni-1] zI_raw;
@@ -35,7 +34,7 @@ parameters {
     vector[Ntx] B_TE;        // Treatment on Efficacy (indirect effect)
     real B_AE;               // Age on Efficacy
     real alpha;              // global intercept (E linear model)
-    real<lower=0> sigma_E;   // std Efficacy, conditional on Treatment & Age
+    real<lower=0> sigma_ET;  // std Efficacy, conditional on Treatment & Age
 
     // Outcome params
     vector[Ntx] B_TD;        // Treatment on Outcome (direct effect)
@@ -49,7 +48,7 @@ transformed parameters {
     vector[Ni] I;
     I = sigma_I * append_row( zI_raw,-sum(zI_raw) );
     matrix[Ns,Nt] E;
-    E = to_matrix( append_row(E_raw, -sum(E_raw)), Ns, Nt ) - 1; // -1-centered
+    E = to_matrix( append_row(E_raw, -sum(E_raw)), Ns, Nt );
     // vector[Nk-1] kappa;
     // if ( fmod(Nk-1, 2) == 0 )
     //     kappa = append_row( reverse(-kappa_neg), kappa_pos );
@@ -61,14 +60,15 @@ transformed parameters {
 }
 model {
     // to_vector(E) ~ normal(0, 2.5);
-    E_raw ~ normal(0, 2.5);
+    E_raw ~ normal(0, 2);
     zI_raw ~ std_normal();
     sigma_I ~ exponential(1);
 
     B_TE ~ normal(0, 1.5); 
     B_AE ~ normal(0, 1.5);
     alpha ~ normal(0, 1.5);
-    sigma_E ~ exponential(1);
+    sigma_ET ~ exponential(1);
+    
 
     B_TD ~ normal(0, 1.5);
     B_AD ~ normal(0, 1.5);
@@ -79,7 +79,7 @@ model {
     // Mediation submodel
     vector[NO] mu;
     for ( i in 1:NO ) {
-        E[Sid_O[i],time_O[i]+1] ~ normal( B_AE*A[i] + B_TE[Tx[i]] * time_O[i] + alpha, sigma_E );
+        E[Sid_O[i],time_O[i]+1] ~ normal( B_AE*A[i] + B_TE[Tx[i]] * time_O[i] + alpha, sigma_ET );
         mu[i] =  B_AD*A[i] + B_TD[Tx[i]] * time_O[i] + B_ED*E[Sid_O[i],time_O[i]+1] + gamma;
     }
     D ~ normal( mu, sigma_D );
@@ -93,10 +93,10 @@ model {
 
 /*
     Next:
-        1. Think harder on the scales:
-            Scale of time: ranges from 0~3 
-            Scale of age:  ranges from 0~1
-            This results in different magnitute of beta parameters (slopes)
+        1. (zero-inflated) Poisson outcome
+            -> add random intercepts/slopes to reduce un-modeled variance, hence
+               naturally increasing the (modeled) dispersion on the outcome
+               scale, saving the need to utilize over-dispersed mixture models.
         2. Random subject intercepts/slopes on alpha/B_TE
             -> correlation among random intercepts/slopes (bivariate normal)
 */
