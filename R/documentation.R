@@ -58,7 +58,7 @@ pandoc_pdf = function(fin, outfp, style="amsart") {
   pandoc( temp,
           "--citeproc",
           "--shift-heading-level-by=-1",
-          "--from=markdown+tex_math_dollars",
+          "--from=markdown+tex_math_dollars+raw_tex",
           "--to=pdf", "--pdf-engine=xelatex",
           get_pandoc_pdf_args(style),
           "-o", outfp )

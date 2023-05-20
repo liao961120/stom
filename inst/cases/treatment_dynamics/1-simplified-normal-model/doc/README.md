@@ -1,5 +1,5 @@
 ---
-title: "Growth Curve Modeling of Latent Variables with Embedded Item Response Models"
+title: "Growth Curve Modeling of Latent Variables"
 author: Yongfu Liao
 format: 
    gfm:
