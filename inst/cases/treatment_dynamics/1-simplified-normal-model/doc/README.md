@@ -140,6 +140,7 @@ Model Specification
 -------------------
 
 $$
+\begin{equation}
 \begin{aligned}
    & \text{\scriptsize Treatment Outcome Generative Process} \\
    & D^{\ast}_{[Sid,~t]} \sim Normal( D_{[Sid,~t]}, \sigma )                       \\
@@ -153,6 +154,7 @@ $$
    & E_{[Sid,~t]} \sim Normal( \mu_{[Sid,~t]}, \tau )                   \\
    & \mu_{[Sid,~t]} = \beta_{AE} A_{[Sid]}  + \beta_{TE [T_{[Sid]}]} t
 \end{aligned}
+\end{equation}
 $$
 
 
