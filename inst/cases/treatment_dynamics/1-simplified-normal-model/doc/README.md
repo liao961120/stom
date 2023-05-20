@@ -141,19 +141,19 @@ Model Specification
 
 $$
 \begin{equation}
-\begin{aligned}
-   & \text{\scriptsize Treatment Outcome Generative Process} \\
-   & D^{\ast}_{[Sid,~t]} \sim Normal( D_{[Sid,~t]}, \sigma )                       \\
-   & D_{[Sid,~t]} = \beta_{TD [T_{[Sid]}]} t + \beta_{AD} A_{[Sid]} + \beta_{ED} E_{[Sid,~t]}  \\
-   \\
-   & \text{\scriptsize Item Response Generative Process} \\
-   & R_{[Sid,~Iid,~t]} \sim OrderedLogit( \phi_{[Sid,~Iid,~t]}, \kappa )    \\
-   & \phi_{[Sid,~Iid,~t]} = E_{[Sid,~t]} + I_{[Iid]}                         \\
-   \\
-   & \text{\scriptsize Efficacy Generative Process} \\
-   & E_{[Sid,~t]} \sim Normal( \mu_{[Sid,~t]}, \tau )                   \\
-   & \mu_{[Sid,~t]} = \beta_{AE} A_{[Sid]}  + \beta_{TE [T_{[Sid]}]} t
-\end{aligned}
+   \begin{aligned}
+      & \text{\scriptsize Treatment Outcome Generative Process} \\
+      & D^{\ast}_{[Sid,~t]} \sim Normal( D_{[Sid,~t]}, \sigma )                       \\
+      & D_{[Sid,~t]} = \beta_{TD [T_{[Sid]}]} t + \beta_{AD} A_{[Sid]} + \beta_{ED} E_{[Sid,~t]}  \\
+      \\
+      & \text{\scriptsize Item Response Generative Process} \\
+      & R_{[Sid,~Iid,~t]} \sim OrderedLogit( \phi_{[Sid,~Iid,~t]}, \kappa )    \\
+      & \phi_{[Sid,~Iid,~t]} = E_{[Sid,~t]} + I_{[Iid]}                         \\
+      \\
+      & \text{\scriptsize Efficacy Generative Process} \\
+      & E_{[Sid,~t]} \sim Normal( \mu_{[Sid,~t]}, \tau )                   \\
+      & \mu_{[Sid,~t]} = \beta_{AE} A_{[Sid]}  + \beta_{TE [T_{[Sid]}]} t
+   \end{aligned}
 \end{equation}
 $$
 
