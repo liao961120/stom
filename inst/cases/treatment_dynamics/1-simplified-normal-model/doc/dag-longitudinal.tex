@@ -1,7 +1,7 @@
 %\title{Using the forest package to create trees in LaTeX}
 % From http://tex.stackexchange.com/a/108728/23931 
 \documentclass[preview,border=0]{standalone}
-\usepackage[paperheight=20cm,paperwidth=9.5cm]{geometry}
+\usepackage[paperheight=20cm,paperwidth=10cm]{geometry}
 \usepackage{graphicx}
 % \usepackage{forest}
 \usepackage{amsmath}
@@ -24,8 +24,8 @@
 	auto,
 	node distance = 2cm, % distance between nodes
 	thick, % line style
-	U/.style={circle, draw=black, inner sep=1.8pt, outer sep=1.5pt, minimum size=3mm},  %draw=black, fill=white
-	O/.style={circle, inner sep=3.4pt, outer sep=-.75pt, minimum size=3mm},              %draw=white, fill=white
+	U/.style={circle, draw=black, inner sep=1.8pt, outer sep=1.5pt, minimum size=3mm, font=\Large},  %draw=black, fill=white
+	O/.style={circle, inner sep=3.4pt, outer sep=-.75pt, minimum size=3mm, font=\Large},              %draw=white, fill=white
 	]
 	
 	% Nodes and their relative positions
