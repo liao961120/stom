@@ -8,6 +8,13 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata,positioning}
 
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
+\setromanfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
+\setmathrm[Scale=1]{Adobe Caslon Pro}
+%\setmathfont(Digits,Latin)[Numbers={Lining,Proportional}]{Adobe Caslon Pro}
+
 
 \begin{document} \begin{center}
 		
@@ -34,7 +41,7 @@
     \node[U] (E1) [above = .8 of D1] {$E_1$};
     \node[O] (R1) [above left = .65 of E1] {$R_1$};
    	\node[O] (DD1) [below left = .65 of D1] {$D_1^\ast$};
-   	\node[O] (T) [right = .7 of D1] {$T_x$};
+   	\node[O] (T) [right = .7 of D1] {$T$};
        
 	% Paths connecting nodes
     \path[->] (T) edge (D1);
