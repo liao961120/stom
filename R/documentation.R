@@ -56,6 +56,7 @@ export_docs_html = function(path, outfp) {
 pandoc_pdf = function(fin, outfp, style="amsart") {
   temp = pdf_filter(fin)
   pandoc( temp,
+          "--citeproc",
           "--shift-heading-level-by=-1",
           "--from=markdown+tex_math_dollars",
           "--to=pdf", "--pdf-engine=xelatex",
@@ -69,6 +70,7 @@ pandoc_html = function(fin, outfp, style=NULL) {
   if (Sys.info()['sysname'] == "Windows")
     Sys.setlocale("LC_TIME", "C")
   pandoc( fin,
+          "--citeproc",
           "--default-image-extension=svg",
           "--from=markdown+tex_math_dollars",
           "--to=html5",
@@ -116,6 +118,13 @@ get_pandoc_pdf_args = function(style="") {
       "--variable=documentclass:amsart",
       "--variable=classoption:reqno",
       "--variable=classoption:12pt",
+      # Fonts
+      "--variable=mainfont:'Adobe Caslon Pro'",
+      "--variable=mainfontoptions:Numbers={Lining,Proportional}",
+      "--variable=mathfont:'Adobe Caslon Pro'",
+      "--variable=mathfontoptions:Scale=1",
+      "--variable=mathfontoptions:Ligatures={Common}",
+      ########
       "--variable=indent:true",
       "--variable=geometry:left=1in",
       "--variable=geometry:top=1in",
