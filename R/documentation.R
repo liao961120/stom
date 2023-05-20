@@ -58,7 +58,7 @@ pandoc_pdf = function(fin, outfp, style="amsart") {
   pandoc( temp,
           "--citeproc",
           "--shift-heading-level-by=-1",
-          "--from=markdown+tex_math_dollars+raw_tex",
+          "--from=markdown+tex_math_dollars+raw_tex+raw_attribute",
           "--to=pdf", "--pdf-engine=xelatex",
           get_pandoc_pdf_args(style),
           "-o", outfp )
@@ -72,7 +72,7 @@ pandoc_html = function(fin, outfp, style=NULL) {
   pandoc( fin,
           "--citeproc",
           "--default-image-extension=svg",
-          "--from=markdown+tex_math_dollars",
+          "--from=markdown+tex_math_dollars+raw_tex+raw_attribute",
           "--to=html5",
           "--katex",
           "-A", system.file("template", "after-body.html", package="stom"),
@@ -85,10 +85,12 @@ pandoc_html = function(fin, outfp, style=NULL) {
 
 get_pandoc_pdf_args = function(style="") {
   if ( style == "amsart" ) {
+    header = tempfile()
+    writeLines( c(""), header )
     # Before body
     before_body = tempfile()
     writeLines(c(
-      "\\vspace{-15pt}\\footnotesize\\begin{center}\\today\\end{center}\\vspace{12pt}\n",
+      "\\vspace{-8pt}\\footnotesize\\begin{center}\\today\\end{center}\\vspace{12pt}\n",
       "
       \\makeatletter
       \\let\\origsection\\section
@@ -101,7 +103,7 @@ get_pandoc_pdf_args = function(style="") {
       {\\sectionprelude\\origsection*{#1}\\sectionpostlude}
 
       \\newcommand\\sectionprelude{%
-        \\vspace{.85em}
+        \\vspace{.9em}
       }
 
       \\newcommand\\sectionpostlude{%
@@ -112,28 +114,24 @@ get_pandoc_pdf_args = function(style="") {
       before_body
     )
     return(c(
+      "-H", header,
       "-B", before_body,
+      "--template", system.file("template", "default.latex", package = "stom"),
       "--number-sections",
       "--default-image-extension=pdf",
       "--variable=documentclass:amsart",
-      "--variable=classoption:reqno",
-      "--variable=classoption:12pt",
+      "--variable=classoption:reqno,12pt",
       # Fonts
       "--variable=mainfont:'Adobe Caslon Pro'",
-      "--variable=mainfontoptions:Numbers={Lining,Proportional}",
+      "--variable=mainfontoptions:Scale=1.28,Numbers={Lining,Proportional}",
       "--variable=mathfont:'Adobe Caslon Pro'",
-      "--variable=mathfontoptions:Scale=1",
-      "--variable=mathfontoptions:Ligatures={Common}",
+      "--variable=mathfontoptions:Scale=1,Ligatures={Common}",
+      # "--variable=fontsize:12pt",
       ########
+      # "--variable=linestretch:1.2",
       "--variable=indent:true",
-      "--variable=geometry:left=1in",
-      "--variable=geometry:top=1in",
-      "--variable=geometry:headheight=0.25in",
-      "--variable=geometry:headsep=0.4in",
-      "--variable=geometry:footskip=0.4in",
-      "--variable=geometry:paperwidth=7in",
-      "--variable=geometry:paperheight=10in",
-      "--variable=geometry:text={5in,8in}"))
+      "--variable=geometry:paperwidth=7in,paperheight=10in,text={5in,8in},left=1in,top=1in,headheight=0.25in,headsep=0.4in,footskip=0.4in"
+      ))
   }
   return(c())
 }
