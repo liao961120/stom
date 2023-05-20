@@ -1,5 +1,6 @@
 ---
-title: "Growth Curve Modeling of Latent Variables"
+title: Growth Curve Modeling of Latent Constructs with Embedded Item Response Submodels
+short-title: Growth Curve Modeling of Latent Constructs
 author: Yongfu Liao
 format: 
    gfm:
@@ -30,28 +31,30 @@ knitr::opts_chunk$set(
 Goal
 -----
 
-Consider the scenario of a study aiming to examine the role of some factors that
-may be causally related to the clinical intervention and the treatment outcome.
-These factors as well as the treatment outcomes are often assessed and measured
-indirectly through self-reported questionnaires. In such settings, where
-responses to questionnaires are collected, it would be desirable to analyze the
-data with models of item response theory. In practice, however, raw sum scores
-of questionnaire items, instead of latent scores estimated through IRT models,
-are often taken directly as the measures of the latent constructs of interest.
+Consider the scenario of a study examining potential causal factors that may be
+related to the clinical intervention and the outcome. These factors as well as
+the treatment outcomes are often assessed and measured indirectly through
+self-reported questionnaires. In such settings, where responses to
+questionnaires are collected, it would be desirable to analyze the data with
+models of item response theory. In practice, however, raw sum scores of
+questionnaire items, instead of latent scores estimated through IRT models, are
+often taken directly as the measures of the latent constructs of interest.
+
 The reason for these practices results from researchers not being aware of the
-possibility of embedding IRT models into a larger system of regression models.
-Doing so would allow the latent constructs and all other parameters of interest
-to be *jointly estimated* by the model. This is much more rigorous as the IRT
-submodel directly deals with measurement errors associated with self-report
-questionnaires. In addition, information can now flow through all modeled
-variables, avoiding biases and overconfidence subtlely introduced during
-separate stages of modeling, such as when the outputs of a model (e.g.,
-estimates of participants' IQ from an IRT model) are taken as inputs to a
-subsequent model.
+possibility of embedding IRT models into a larger system of _interconnected_
+regression models. Doing so would allow the latent constructs and all other
+parameters of interest to be *jointly estimated* by the model. This is much more
+rigorous than raw sum scores as the IRT submodel directly deals with
+measurement errors associated with self-reported questionnaires. In addition,
+information can now flow through all modeled variables, avoiding biases and
+overconfidence that could have been subtly introduced when there are multiple
+_disconnected_ regression models. This happens when the parameters of a model,
+such as estimates of participants' IQ from an IRT model, are fed in as inputs to
+another model.
 
 The present document demonstrates one such application of embedding an IRT model
-into a growth curve modeling of patient outcomes after receiving treatments for
-substance abuse.
+into a large growth curve model, enabling the joint modeling of all parameters
+of interest in a study.
 
 
 Background
@@ -59,18 +62,18 @@ Background
 
 The model constructed here is largely inspired by the study of @bowen2014 and a
 secondary analysis of the data collected by the former [@moniz-lewis2022]. The
-context of the studies is the evaluation of three kinds of treatments for
-substance abuse. Participants were recruited and randomly assigned to one of the
-three treatment conditions. Before (baseline) and after the treatment, data on
-treatment outcomes (amount of heavy drinking and drug use) and self-efficacy on
-alcohol/drug control (measured through questionary) were collected. There were
-four such evaluations for the participants, including the baseline, thus
-resulting in a set of longitudinal data of four time points. The theoretical
-interest of @moniz-lewis2022\'s study is to examine the mediating role of
-self-efficacy between the treatments and the outcomes. In particular, previous
-studies have suggested that treatments for substance abuse work partly through
-the increasing of participants' self-efficacy in the control of alcohol/drug
-use.
+context of the studies is the evaluation of three different treatments for
+substance use disorder. Participants were recruited and randomly assigned to one
+of the three treatment conditions. Before (baseline) and after the treatment,
+data on treatment outcomes (amount of heavy drinking and drug use) and
+self-efficacy on the control of alcohol/drug use (measured through questionary)
+were collected. There were four such evaluations for the participants, including
+the baseline, thus resulting in a set of longitudinal data of four time points.
+The theoretical interest of @moniz-lewis2022\'s study is to examine the
+mediating role of self-efficacy between the treatments and the outcomes. In
+particular, previous studies have suggested that treatments for substance use
+problems work partly through the increase of participants' self-efficacy in the
+control of substance use.
 
 
 Causal Assumptions
@@ -78,64 +81,72 @@ Causal Assumptions
 
 Based on the descriptions in the articles, the assumed causal relations among
 the variables of interest are explicated in the following Directed Acyclic
-Graphs (DAGs). Note that these assumed causal relations may depart from those
-stated in @bowen2014 and @moniz-lewis2022. Since there is no publicly available
-data from both studies, ambiguous descriptions could not be disambiguated
-through data. Upon encountering such situations, opinionated decisions were made
-to serve the need of the current demonstration.
+Graphs (DAGs). Note that these causal relations may depart from those implied in
+@bowen2014 and @moniz-lewis2022. Since there is no publicly available data from
+both studies, ambiguous descriptions in the methodology sections could not be
+disambiguated through the data. Upon encountering such situations, opinionated
+decisions were made to serve the need of the current demonstration.
 
 ![Assumed causal relations among the variables of interest (time collapsed).](./dag)
 
 The first DAG presented here is a compacted representation of the causal
-assumptions underlying our model. The time dimension is collapsed. Below
-explains the variables of interest.
+assumptions underlying our model. The time dimension is collapsed. Below are the
+descriptions of the variables of interest.
 
-- $E$: participants' self-efficacy on alcohol/drug use control
-   
-   Since self-efficacy $E$ is not directly observed, it is represented as a
-   circled node in the DAG.
+$E$
 
-- $R$: item responses collected through the self-efficacy questionnaire 
+:    Participants' self-efficacy on alcohol/drug use control
+      
+     Since self-efficacy $E$ is not directly observed, it is represented as a
+     circled node in the DAG.
 
-   To measure the unobserved self-efficacy $E$, tools such as a questionnaire
-   are required to measure the latent construct. $R$ stands for the responses
-   collected through the questionnaire. These responses would allow the
-   estimation of the variable $E$ for each participant. Note that the item
-   parameter $I$ is left out for simplicity. If present, it would point to $R$
-   as item estimates also affect the responses $R$.
+$R$
 
-- $A$: participants' age
+:   Item responses collected through self-efficacy questionnaires
 
-- $T$: the type of treatment received by a participant
+    To measure the unobserved self-efficacy $E$, tools such as a questionnaire
+    are required to measure the latent construct. $R$ stands for the responses
+    collected through the questionnaire. These responses would allow the
+    estimation of the variable $E$ for each participant. Note that the item
+    parameter $I$ is left out for simplicity. If present, it would point to $R$
+    as item estimates also affect the responses $R$.
 
-- $D$: the latent treatment outcome 
+$A$
+:   Participants' age
 
-   $D$ is the theoretical variable that underlies the observable treatment
-   outcome. It is latent, and arguably a statistical artifact. Its purpose is to
-   serve as an aggregate of all assumed effects on the treatment outcome
-   $D^{\ast}$.
+$T$
+:   Treatment condition received by a participant
 
-- $D^{\ast}$: the treatment outcome, or, the manifest of the latent treatment
-  outcome $D$
+$D$
 
-The arrows among the variables indicate the directions of influence. So the 
-DAG is basically saying that the treatment affects the outcome through two 
+:   Latent treatment outcome 
+
+    $D$ is the theoretical variable that underlies the observable treatment
+    outcome. It is latent, and arguably a statistical artifact. Its purpose is to
+    serve as an aggregate of all assumed effects on the treatment outcome
+    $D^{\ast}$.
+
+$D^{\ast}$
+
+:   Treatment outcome, or, manifest of the latent treatment outcome $D$
+
+The arrows among the nodes in the DAG indicate the directions of influence. So
+the graph is basically saying that the treatment affects the outcome through two
 pathways. One direct, and the other indirectly through self-efficacy. Age also
 has direct influences on self-efficacy and the treatment outcome. The labels on
 the edges mark the regression coefficients, which are the parameters of interest
 for use in later simulations and model testing.
 
-The second DAG, shown below, adds in the time dimension. To avoid cluttering the
-graph, only two, instead of four, time points are shown here. The lower right
-subscripts on the variables mark the time points. $t=0$ indicates the baseline
-(i.e., the first) evaluation. A caution to note here is that age only *directly*
-influences self-efficacy at the baseline ($A \rightarrow E_0$). Self-efficacy at
-subsequent time points is only influenced by age *indirectly* through $E_0$.
-This slight complication becomes clearer in the following description of the
-model (data-generating process).
-
 ![Assumed causal relations among the variables of interest (simplified illustration of two time points).](./dag-longitudinal)
 
+The second DAG adds in the time dimension. To avoid cluttering the graph, only
+two, instead of four, time points are shown here. The subscripts on the
+variables mark the time points. $t=0$ indicates the baseline (i.e., the first)
+evaluation. A caution to note here is that age only *directly* influences
+self-efficacy at the baseline ($A \rightarrow E_0$). Self-efficacy at subsequent
+time points is influenced by age only *indirectly* through $E_0$. This slight
+complication becomes clearer in the following description of the model
+(data-generating process).
 
 
 Model Specification
