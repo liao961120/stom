@@ -151,7 +151,7 @@ inkscape_pdf_pager = function(pdf_file,
 
 inkscape = function(cmd) {
     exe = getOption("stom.inkscape", "inkscape")  # Executable path
-    cmd = c(exe, "--without-gui", cmd)
+    cmd = c(exe, cmd)
     cat( paste(cmd), "\n" )
     system2( cmd )
 }
