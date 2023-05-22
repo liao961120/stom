@@ -37,7 +37,7 @@ $$
 \begin{equation}
     \begin{aligned}
     y   & \sim Normal( \mu, \sigma )  \\
-    \mu &  = \alpha + \alpha_{T_x} + \alpha_{Sid} + \beta_{t} time + \beta_{t \colon T_x} time
+    \mu &  = \alpha + \alpha_{T_x} + \alpha_{Sid} + \beta_{t} time + \beta_{t {:} T_x} time
     \end{aligned}
 \end{equation}
 $$
@@ -46,7 +46,7 @@ The $\alpha$ parameters are intercepts, which estimate the effects discarding
 the time dimension. The $\beta$ parameters are _slopes_. Or more intuitively,
 the _rates of changes_, which are the amounts of increases added to the outcome
 when moving one unit of time upwards. The effects of the treatments are found in
-the $\beta_{t \colon T_x}$ parameters, which estimate the rate of change for
+the $\beta_{t {:} T_x}$ parameters, which estimate the rate of change for
 each treatment **in addition to the global rate of change**, estimated through
 the parameter $\beta_{t}$.
 
@@ -81,15 +81,15 @@ intercept gets picked up by the treatment and the subject intercepts.
 
 Similar to the global intercept, when the global rate of change is eliminated
 from the model, its effect will be collected by the remaining slopes. In the
-current example, it will be picked up by $\beta_{t \colon T_x}$. So now, the
-interpretation of $\beta_{t \colon T_x}$ simplifies to "the rate of change for
+current example, it will be picked up by $\beta_{t {:} T_x}$. So now, the
+interpretation of $\beta_{t {:} T_x}$ simplifies to "the rate of change for
 each treatment".
 
 $$
 \begin{equation}
     \begin{aligned}
     y   & \sim Normal( \mu, \sigma )  \\
-    \mu &  = \alpha_{T_x} + \alpha_{Sid} + \beta_{t \colon T_x} time
+    \mu &  = \alpha_{T_x} + \alpha_{Sid} + \beta_{t{:}T_x} time
     \end{aligned}
 \end{equation}
 $$
