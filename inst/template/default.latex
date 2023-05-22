@@ -149,9 +149,9 @@ $endif$
 %%%%%%%%%% CUSTOM %%%%%%%%%
 \usepackage{kmath,kerkis}
 \usepackage[T1]{fontenc}
-\DeclareMathSizes{10}{14}{11}{9}
-\DeclareMathSizes{11}{14}{11}{9}
-\DeclareMathSizes{12}{14}{11}{9}
+\DeclareMathSizes{10}{14}{10}{8}
+\DeclareMathSizes{11}{14}{10}{8}
+\DeclareMathSizes{12}{14}{10}{8}
 % https://tex.stackexchange.com/questions/8434/how-to-scale-math-font-only
 % \DeclareMathSizes {t-size} {mt-size} {s-size} {ss-size}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
