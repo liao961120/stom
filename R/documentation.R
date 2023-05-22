@@ -131,6 +131,8 @@ get_pandoc_pdf_args = function(style="") {
       "-V", "mathspec",
       '--variable=mainfont:"Adobe Caslon Pro"',
       "--variable=mainfontoptions:Scale=1.28,Numbers={Lining,Proportional}",
+      '--variable=monofont:"Monego"',
+      # "--variable=monofontoptions:Scale=1",
       # '--variable=mathfont:"Kerkis Italic"',
       #"--variable=mathfontoptions:Scale=1,Ligatures={Common}",
       # "--variable=fontsize:12pt",
