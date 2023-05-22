@@ -5,20 +5,22 @@
 \usepackage{graphicx}
 % \usepackage{forest}
 \usepackage{amsmath}
-\usepackage{txfonts}  %pretty math font
+% \usepackage{txfonts}  %pretty math font
+\usepackage{kmath,kerkis}
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata,positioning}
 
+% fontspec requires xelatex/lualatex
 % \usepackage{fontspec}
 % \setmainfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
 % \setromanfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
-
 
 %%%%%% XeLaTeX Math Font Setup #%%%%%%%%%%%%%%
 % \usepackage{bm}
 % \usepackage{mathspec}
 % \usepackage{xltxtra}  % also loads fontspec
 % \usepackage{xunicode}
+% \usepackage{fontspec}
 % \defaultfontfeatures{Mapping=tex-text}
 % \setmainfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
 % \setromanfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
@@ -33,8 +35,6 @@
 % % \setmathfont{Adobe Caslon Pro}
 % \mathfont{Cambria Math}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 \begin{document} 
 \begin{center}
 \begin{tikzpicture}[
@@ -52,17 +52,17 @@
     \node[O] (A) {$A$};
     \node[U] (D1) [right = .85 of A] {$D$};	
     \node[U] (E1) [above = .8 of D1] {$E$};
-    \node[O] (R1) [above left = .65 of E1] {$Q$};
+    \node[O] (R1) [above left = .65 of E1] {$R$};
    	\node[O] (DD1) [below left = .65 of D1] {$D^\ast$};
    	\node[O] (T) [right = .85 of D1] {$T$};
        
 	% Paths connecting nodes
-    \path[->] (T) edge node[outer sep=2pt, scale=.75]{$~~~\pmb{\beta_{TD}}$} (D1);
-    \path[->] (T) edge[densely dashed] node[above right,scale=.75]{$\pmb{\beta_{TE}}$} (E1);
+    \path[->] (T) edge node[outer sep=2pt, scale=.75]{$~~\beta_{TD}$} (D1);
+    \path[->] (T) edge[densely dashed] node[above right,scale=.75]{$\beta_{TE}$} (E1);
     \path[->] (E1) edge (R1);
-    \path[->] (E1) edge[densely dashed] node[scale=.75]{$\pmb{\beta_{ED}}$} (D1);
-    \path[->] (A)  edge node[below,scale=.75]{$\pmb{\beta_{AD}}~$} (D1);
-    \path[->] (A) edge node[scale=.75]{$\pmb{\beta_{AE}}$} (E1);
+    \path[->] (E1) edge[densely dashed] node[scale=.75]{$\beta_{ED}$} (D1);
+    \path[->] (A)  edge node[below,scale=.75]{$\beta_{AD}~$} (D1);
+    \path[->] (A) edge node[scale=.75]{$\beta_{AE}$} (E1);
     \path[->] (D1) edge (DD1);
 \end{tikzpicture}
 	
