@@ -61,7 +61,9 @@ pandoc_pdf = function(fin, outfp, style="amsart") {
         "--shift-heading-level-by=-1",
         "--from=markdown+tex_math_dollars+raw_tex+raw_attribute",
         "--to=pdf",
-        "--pdf-engine=xelatex",
+        "--pdf-engine=lualatex",
+        # "--pdf-engine=xelatex",
+        # "--pdf-engine=pdflatex",
         get_pandoc_pdf_args(style),
         "-o",
         outfp
@@ -81,7 +83,7 @@ pandoc_html = function(fin, outfp, style=NULL) {
           "--katex",
           "-A", system.file("template", "after-body.html", package="stom"),
           "-c", system.file("template", "pandoc.css", package="stom"),
-          paste0("-V date=", '"', format.Date(Sys.Date(),"%B %d, %Y"), '"'),
+          "-V", paste0("date=", '"', format.Date(Sys.Date(),"%B %d, %Y"), '"'),
           "-s",
           "-o", outfp )
 }
@@ -126,9 +128,9 @@ get_pandoc_pdf_args = function(style="") {
       "--variable=documentclass:amsart",
       "--variable=classoption:reqno,12pt",
       # Fonts
-      "--variable=mainfont:'Adobe Caslon Pro'",
+      '--variable=mainfont:"Adobe Caslon Pro"',
       "--variable=mainfontoptions:Scale=1.28,Numbers={Lining,Proportional}",
-      "--variable=mathfont:'Adobe Caslon Pro'",
+      '--variable=mathfont:"Adobe Caslon Pro"',
       "--variable=mathfontoptions:Scale=1,Ligatures={Common}",
       # "--variable=fontsize:12pt",
       ########
