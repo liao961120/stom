@@ -1,3 +1,5 @@
+% Seach for CUSTOM to locate custom changes
+
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
@@ -85,27 +87,34 @@ $if(beamerarticle)$
 \usepackage{beamerarticle} % needs to be loaded first
 $endif$
 \usepackage{amsmath,amssymb}
+%%%%% CUSTOM %%%%%
+% \usepackage{kmath,kerkis}
+% \usepackage[T1]{fontenc}
+%%%%%%%%%%%%%%%%%%
 $if(linestretch)$
 \usepackage{setspace}
 $endif$
 \usepackage{iftex}
-\ifPDFTeX
-  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-\else % if luatex or xetex
-$if(mathspec)$
-  \ifXeTeX
-    \usepackage{mathspec} % this also loads fontspec
-  \else
-    \usepackage{unicode-math} % this also loads fontspec
-  \fi
-$else$
-  \usepackage{unicode-math} % this also loads fontspec
-$endif$
-  \defaultfontfeatures{Scale=MatchLowercase}$-- must come before Beamer theme
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-\fi
+%%%%%%% CUSTOM %%%%
+\usepackage{fontspec}
+% \ifPDFTeX
+%   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
+%   \usepackage[utf8]{inputenc}
+%   \usepackage{textcomp} % provide euro and other symbols
+% \else % if luatex or xetex
+% $if(mathspec)$
+%   \ifXeTeX
+%     \usepackage{mathspec} % this also loads fontspec
+%   \else
+%     \usepackage{unicode-math} % this also loads fontspec
+%   \fi
+% $else$
+%   \usepackage{unicode-math} % this also loads fontspec
+% $endif$
+%   \defaultfontfeatures{Scale=MatchLowercase}$-- must come before Beamer theme
+%   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+% \fi
+%%%%%%% CUSTOM %%%%
 $if(fontfamily)$
 $else$
 $-- Set default font before Beamer theme so the theme can override it
@@ -136,6 +145,17 @@ $-- User font settings (must come after default font and Beamer theme)
 $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
 $endif$
+
+%%%%%%%%%% CUSTOM %%%%%%%%%
+\usepackage{kmath,kerkis}
+\usepackage[T1]{fontenc}
+\DeclareMathSizes{10}{14}{11}{9}
+\DeclareMathSizes{11}{14}{11}{9}
+\DeclareMathSizes{12}{14}{11}{9}
+% https://tex.stackexchange.com/questions/8434/how-to-scale-math-font-only
+% \DeclareMathSizes {t-size} {mt-size} {s-size} {ss-size}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \ifPDFTeX\else
   % xetex/luatex font selection
 $if(mainfont)$
@@ -449,6 +469,7 @@ $endif$
   pdfcreator={LaTeX via pandoc}}
 
 $if(title)$
+%% CUSTOM %%
 \title$if(short-title)$[$short-title$]$endif${$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
 $if(subtitle)$

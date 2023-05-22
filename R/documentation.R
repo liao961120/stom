@@ -61,8 +61,8 @@ pandoc_pdf = function(fin, outfp, style="amsart") {
         "--shift-heading-level-by=-1",
         "--from=markdown+tex_math_dollars+raw_tex+raw_attribute",
         "--to=pdf",
-        "--pdf-engine=lualatex",
-        # "--pdf-engine=xelatex",
+        "--pdf-engine=xelatex",
+        # "--pdf-engine=lualatex",
         # "--pdf-engine=pdflatex",
         get_pandoc_pdf_args(style),
         "-o",
@@ -92,7 +92,7 @@ pandoc_html = function(fin, outfp, style=NULL) {
 get_pandoc_pdf_args = function(style="") {
   if ( style == "amsart" ) {
     header = tempfile()
-    writeLines( c(""), header )
+    writeLines(c(""), header )
     # Before body
     before_body = tempfile()
     writeLines(c(
@@ -128,10 +128,11 @@ get_pandoc_pdf_args = function(style="") {
       "--variable=documentclass:amsart",
       "--variable=classoption:reqno,12pt",
       # Fonts
+      "-V", "mathspec",
       '--variable=mainfont:"Adobe Caslon Pro"',
       "--variable=mainfontoptions:Scale=1.28,Numbers={Lining,Proportional}",
-      '--variable=mathfont:"Adobe Caslon Pro"',
-      "--variable=mathfontoptions:Scale=1,Ligatures={Common}",
+      # '--variable=mathfont:"Kerkis Italic"',
+      #"--variable=mathfontoptions:Scale=1,Ligatures={Common}",
       # "--variable=fontsize:12pt",
       ########
       # "--variable=linestretch:1.2",
