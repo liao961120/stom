@@ -22,6 +22,52 @@ bin_ext = function() {
 }
 
 
+
+#' Normalize to Unix paths
+#'
+#' @param x Character. Paths.
+#' @return Character
+#' @export
+#' @examples
+#' fp = 'C:\\Users\\rd\\bin\\export_docs_pdf.R'
+#' to_unix_path(fp)
+#' to_gitbash_path(fp)
+#' get_cli_programs(F) |> print_paths()
+to_unix_path = function(x) normalizePath(x, winslash = "/")
+
+
+#' @rdname to_unix_path
+#' @export
+to_gitbash_path = function(x) {
+    x = to_unix_path(x)
+    x = gsub("^([A-Za-z]):", "/\\1", x)
+    x
+}
+
+
+#' @rdname to_unix_path
+#' @export
+print_paths = function(x, win=T) {
+    if (win) x = normalizePath(x)
+    cat(x, sep="\n")
+}
+
+
+
+#' Copy to and from clipboard
+#'
+#' @param x Character.
+#' @export
+#' @examples
+#' fp = 'C:\\Users\\rd\\bin\\export_docs_pdf.R'
+#' fp |> xclip()  # copy to clipboard
+#' readclip() |> cat()
+xclip = function(x) clipr::write_clip(x)
+
+#' @rdname xclip
+#' @export
+readclip = function() clipr::read_clip()
+
 wait_for = function(what, refresh=3, fail_after=12) {
   cat("Waiting for creation of missing files:", what, "\n" )
   cat("Returns FALSE if files not found after", fail_after, "secs\n")
