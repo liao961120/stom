@@ -66,14 +66,14 @@ context of the studies is the evaluation of three different treatments for
 substance use disorder. Participants were recruited and randomly assigned to one
 of the three treatment conditions. Before (baseline) and after the treatment,
 data on treatment outcomes (amount of heavy drinking and drug use) and
-self-efficacy on the control of alcohol/drug use (measured through questionary)
-were collected. There were four such evaluations for the participants, including
-the baseline, thus resulting in a set of longitudinal data of four time points.
-The theoretical interest of @moniz-lewis2022\'s study is to examine the
-mediating role of self-efficacy between the treatments and the outcomes. In
-particular, previous studies have suggested that treatments for substance use
-problems work partly through the increase of participants' self-efficacy in the
-control of substance use.
+self-efficacy on the control of alcohol/drug use (measured through
+questionnaires) were collected. There were four such evaluations for the
+participants, including the baseline, thus resulting in a set of longitudinal
+data of four time points. The theoretical interest of @moniz-lewis2022\'s study
+is to examine the mediating role of self-efficacy between the treatments and the
+outcomes. In particular, previous studies have suggested that treatments for
+substance use problems work partly through the increase of participants'
+self-efficacy in the control of substance use.
 
 
 Causal Assumptions
@@ -153,22 +153,47 @@ Model Specification
 -------------------
 
 $$
-\begin{aligned}
-   & \text{\scriptsize Treatment Outcome Generative Process} \\
-   & D^{\ast}_{[Sid,~t]} \sim Normal( D_{[Sid,~t]}, \sigma )                       \\
-   & D_{[Sid,~t]} = \beta_{TD [T_{[Sid]}]} t + \beta_{AD} A_{[Sid]} + \beta_{ED} E_{[Sid,~t]}  \\
-   \\
-   & \text{\scriptsize Item Response Generative Process} \\
-   & R_{[Sid,~Iid,~t]} \sim OrderedLogit( \phi_{[Sid,~Iid,~t]}, \kappa )    \\
-   & \phi_{[Sid,~Iid,~t]} = E_{[Sid,~t]} + I_{[Iid]}                         \\
-   \\
-   & \text{\scriptsize Efficacy Generative Process} \\
-   & E_{[Sid,~t]} \sim Normal( \mu_{[Sid,~t]}, \tau )                   \\
-   & \mu_{[Sid,~t]} = \beta_{AE} A_{[Sid]}  + \beta_{TE [T_{[Sid]}]} t
-\end{aligned}
+\begin{equation}
+   \begin{aligned}
+                                                     & \text{\tiny Treatment Outcome Generative Process} \\
+      D^{\ast}_{[Sid,~t]}                            & \sim Normal( D_{[Sid,~t]}, \sigma )                       \\
+      D_{[Sid,~t]}                                   & = \alpha + (\alpha_{[Sid]} + \gamma_{TD[Sid]} t) + \beta_{TD [T_{[Sid]}]} t \\
+                                                     & \phantom{PP} + \beta_{AD} A_{[Sid]} + \beta_{ED} E_{[Sid,~t]} \\
+      \sigma                                         & \sim Exponential(1) \\
+      \begin{pmatrix} \alpha \\ \gamma \end{pmatrix} & \sim  MVNormal( 0, \pmb{\Sigma} ) \\
+      \alpha                                         & \sim Normal(0, 1.5) \\
+      \beta_{TD}, \beta_{AD}, \beta_{ED}             & \sim Normal(0, 1) 
+   \end{aligned}
+\end{equation}
+$$
+
+$$
+\begin{equation}
+   \begin{aligned}
+                           & \text{\tiny Item Response Generative Process} \\
+      R_{[Sid,~Iid,~t]}    &\sim OrderedLogit( \phi_{[Sid,~Iid,~t]}, \kappa )    \\
+      \phi_{[Sid,~Iid,~t]} &= E_{[Sid,~t]} + I_{[Iid]}                        \\
+      \kappa               &\sim Normal(0, 1)    \\
+      E                    &\sim Normal(0, 2)         \\
+      I                    &\sim Normal(0, \rho)      \\
+      \rho                 &\sim Exponential(1.5)
+   \end{aligned}
+\end{equation}
+$$
+
+$$
+\begin{equation}
+   \begin{aligned}
+                             & \text{\tiny Efficacy Generative Process} \\
+      E_{[Sid,~t]}           & \sim Normal( \mu_{[Sid,~t]}, \tau )                   \\
+      \mu_{[Sid,~t]}         & = \delta + \beta_{AE} A_{[Sid]}  + \beta_{TE [T_{[Sid]}]} t \\
+      \tau                   & \sim Exponential(1)  \\
+      \delta                 & \sim Normal(0, 1)  \\
+      \beta_{AE}, \beta_{TE} & \sim Normal(0, 1)
+   \end{aligned}
+\end{equation}
 $$
 
 
 References
 ----------
-
