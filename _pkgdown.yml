@@ -14,8 +14,6 @@ navbar:
 development:
   mode: auto
 
-
-
 # pkgdown::build_reference_index()
 reference:
 - title: "Stan"
@@ -49,7 +47,16 @@ reference:
   contents:
   - inline
   - as_c_num
+  - xclip
   - matches("docs|html|pdf")
+- title: "Command Line Builder"
+  desc: >
+    Command line program helpers.
+  contents:
+  - get_cli_programs
+  - to_unix_path
+  - to_gitbash_path
+  - matches("^cmd_")
 - title: "Index"
   desc: >
     All functions.
