@@ -66,14 +66,14 @@ context of the studies is the evaluation of three different treatments for
 substance use disorder. Participants were recruited and randomly assigned to one
 of the three treatment conditions. Before (baseline) and after the treatment,
 data on treatment outcomes (amount of heavy drinking and drug use) and
-self-efficacy on the control of alcohol/drug use (measured through questionary)
-were collected. There were four such evaluations for the participants, including
-the baseline, thus resulting in a set of longitudinal data of four time points.
-The theoretical interest of @moniz-lewis2022\'s study is to examine the
-mediating role of self-efficacy between the treatments and the outcomes. In
-particular, previous studies have suggested that treatments for substance use
-problems work partly through the increase of participants' self-efficacy in the
-control of substance use.
+self-efficacy on the control of alcohol/drug use (measured through
+questionnaires) were collected. There were four such evaluations for the
+participants, including the baseline, thus resulting in a set of longitudinal
+data of four time points. The theoretical interest of @moniz-lewis2022\'s study
+is to examine the mediating role of self-efficacy between the treatments and the
+outcomes. In particular, previous studies have suggested that treatments for
+substance use problems work partly through the increase of participants'
+self-efficacy in the control of substance use.
 
 
 Causal Assumptions
