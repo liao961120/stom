@@ -103,7 +103,7 @@ s = f2$summary(variables=c("W", "J", "Int"), "mean", "sd", "quantile2", "rhat", 
 plot( dat$W.ori, s[grepl("W", s$variable), "mean"] ); abline(0, 1)
 plot( dat$J.ori, s[grepl("J", s$variable), "mean"] ); abline(0, 1)
 plot( Int, s[grepl("Int", s$variable), "mean"] ); abline(0, 1)
-# saveRDS(f2, "wine2_normal_first_level2.RDS")
+f2$save_object("wine2_normal_first_level2.RDS")
 
 ################################################
 # Model 3

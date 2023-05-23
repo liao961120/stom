@@ -26,13 +26,7 @@
 #' received based on their quality alone. The simulation code of this data
 #' generating process is found in the `sim_dat()` function below.
 #'
-#' ```{.goat}
-#'         R <--- Ow
-#'        ^ ^     /
-#'       /   \   /
-#'      /     \ v
-#'     J       W
-#' ```
+#' ![Underlying data-generating process of the IRT Model](dag)
 #'
 #' The Original Model and its Problem
 #' ----------------------------------
