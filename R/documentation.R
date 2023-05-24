@@ -70,6 +70,25 @@ pandoc_pdf = function(fin, outfp, style="amsart") {
     )
 }
 
+
+#' @export
+pandoc_tex = function(fin, outfp, style="amsart") {
+    temp = pdf_filter(fin)
+    pandoc(
+        temp,
+        "--citeproc",
+        "--shift-heading-level-by=-1",
+        "--from=markdown+tex_math_dollars+raw_tex+raw_attribute",
+        "--to=latex",
+        # "--pdf-engine=lualatex",
+        # "--pdf-engine=pdflatex",
+        get_pandoc_pdf_args(style),
+        "-o",
+        outfp
+    )
+}
+
+
 #' @rdname pandoc_pdf
 #' @export
 pandoc_html = function(fin, outfp, style=NULL) {
@@ -132,9 +151,10 @@ get_pandoc_pdf_args = function(style="") {
       '--variable=mainfont:"Adobe Caslon Pro"',
       "--variable=mainfontoptions:Scale=1.28,Numbers={Lining,Proportional}",
       '--variable=monofont:"Monego"',
-      # "--variable=monofontoptions:Scale=1",
-      # '--variable=mathfont:"Kerkis Italic"',
-      #"--variable=mathfontoptions:Scale=1,Ligatures={Common}",
+      "--variable=monofontoptions:Scale=1",
+      '--variable=mathfont:"Adobe Caslon Pro"',
+      '--variable=greek-mathfont:"GFS Porson"',
+      "--variable=mathfontoptions:Scale=1.28,Numbers={Lining,Proportional}",
       # "--variable=fontsize:12pt",
       ########
       # "--variable=linestretch:1.2",

@@ -152,48 +152,46 @@ complication becomes clearer in the following description of the model
 Model Specification
 -------------------
 
-$$
-\begin{equation}
-   \begin{aligned}
-                                                     & \text{\tiny Treatment Outcome Generative Process} \\
-      D^{\ast}_{[Sid,~t]}                            & \sim Normal( D_{[Sid,~t]}, \sigma )                       \\
-      D_{[Sid,~t]}                                   & = \alpha + (\alpha_{[Sid]} + \gamma_{TD[Sid]} t) + \beta_{TD [T_{[Sid]}]} t \\
-                                                     & \phantom{PP} + \beta_{AD} A_{[Sid]} + \beta_{ED} E_{[Sid,~t]} \\
-      \sigma                                         & \sim Exponential(1) \\
-      \begin{pmatrix} \alpha \\ \gamma \end{pmatrix} & \sim  MVNormal( 0, \pmb{\Sigma} ) \\
-      \alpha                                         & \sim Normal(0, 1.5) \\
-      \beta_{TD}, \beta_{AD}, \beta_{ED}             & \sim Normal(0, 1) 
-   \end{aligned}
-\end{equation}
-$$
+\newcommand{\midx}[2]{ \mathrm{#1},\mathrm{#2} }
+\newcommand{\aidx}[3]{ \mathrm{#1},\mathrm{#2},\mathrm{#3} }
+\newcommand{\vidx}[1]{ \mathrm{#1} }
+\newcommand{\annot}[1]{ \begin{center} {\scriptsize #1} \end{center}}
+\newcommand{\bb}[1]{ \beta_{\mathrm{#1}} }
+\newcommand{\gm}[1]{ \gamma_{\mathrm{#1}} }
 
-$$
-\begin{equation}
-   \begin{aligned}
-                           & \text{\tiny Item Response Generative Process} \\
-      R_{[Sid,~Iid,~t]}    &\sim OrderedLogit( \phi_{[Sid,~Iid,~t]}, \kappa )    \\
-      \phi_{[Sid,~Iid,~t]} &= E_{[Sid,~t]} + I_{[Iid]}                        \\
-      \kappa               &\sim Normal(0, 1)    \\
-      E                    &\sim Normal(0, 2)         \\
-      I                    &\sim Normal(0, \rho)      \\
-      \rho                 &\sim Exponential(1.5)
-   \end{aligned}
-\end{equation}
-$$
+\annot{Treatment Outcome Generative Process}
 
-$$
-\begin{equation}
-   \begin{aligned}
-                             & \text{\tiny Efficacy Generative Process} \\
-      E_{[Sid,~t]}           & \sim Normal( \mu_{[Sid,~t]}, \tau )                   \\
-      \mu_{[Sid,~t]}         & = \delta + \beta_{AE} A_{[Sid]}  + \beta_{TE [T_{[Sid]}]} t \\
-      \tau                   & \sim Exponential(1)  \\
-      \delta                 & \sim Normal(0, 1)  \\
-      \beta_{AE}, \beta_{TE} & \sim Normal(0, 1)
-   \end{aligned}
-\end{equation}
-$$
+\begin{align*}
+   D^{\ast}_{\midx{Sid}{t}}                       & \sim \text{Normal}( D_{\midx{Sid}{t}}, \sigma )                       \\
+   D_{\midx{Sid}{t}}                              & = \alpha + (\alpha_{\vidx{Sid}} + \gm{TD[\vidx{Sid}]} \text{t}) + \bb{TD [T[\vidx{Sid}]]} \text{t} \\
+                                                  & \phantom{PP} + \bb{AD} \text{A}_{\vidx{Sid}} + \bb{ED} E_{\midx{Sid}{t}} \\
+   \sigma                                         & \sim \text{Exponential}(1) \\
+   \begin{bmatrix} \alpha \\ \gamma \end{bmatrix} & \sim \text{MVNormal}(\pmb{0}, \pmb{\Sigma}) \\
+   \alpha                                         & \sim \text{Normal}(0, 1.5) \\
+   \bb{TD}, \bb{AD}, \bb{ED}                      & \sim \text{Normal}(0, 1) 
+\end{align*}
 
+\annot{Item Response Generative Process}
+
+\begin{align*}
+   R_{\aidx{Sid}{Iid}{t}}    &\sim \text{OrderedLogit}( \phi_{\aidx{Sid}{Iid}{t}}, \kappa )    \\
+   \phi_{\aidx{Sid}{Iid}{t}} &= E_{\midx{Sid}{t}} + I_{\vidx{Iid}}                           \\
+   \kappa               &\sim \text{Normal}(0, 1)         \\
+   E                    &\sim \text{Normal}(0, 2)         \\
+   I                    &\sim \text{Normal}(0, \rho)      \\
+   \rho                 &\sim \text{Exponential}(1.5)
+\end{align*}
+
+\annot{Efficacy Generative Process}
+
+\begin{align*}
+   E_{\midx{Sid}{t}}           & \sim \text{Normal}( \mu_{\midx{Sid}{t}}, \tau )                   \\
+   \mu_{\midx{Sid}{t}}         & = \delta + \bb{AE} \text{A}_{\vidx{Sid}}  + \bb{TE [T_{\vidx{Sid}}]} \text{t}  \\
+   \tau                   & \sim \text{Exponential}(1)  \\
+   \delta                 & \sim \text{Normal}(0, 1)  \\
+   \bb{AE}, \bb{TE} & \sim \text{Normal}(0, 1)
+\end{align*}
+ 
 
 References
 ----------
