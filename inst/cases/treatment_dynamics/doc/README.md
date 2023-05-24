@@ -185,8 +185,9 @@ Model Specification
 \annot{Efficacy Generative Process}
 
 \begin{align*}
-   E_{\midx{Sid}{t}}           & \sim \text{Normal}( \mu_{\midx{Sid}{t}}, \tau )                   \\
-   \mu_{\midx{Sid}{t}}         & = \delta + \bb{AE} \text{A}_{\vidx{Sid}}  + \bb{TE [T_{\vidx{Sid}}]} \text{t}  \\
+   E_{\midx{Sid}{t}}      & \sim \text{Normal}( \mu_{\midx{Sid}{t}}, \tau )                   \\
+   \mu_{\midx{Sid}{t}}    & = \delta + (\delta_{\vidx{Sid}} + \gm{TE[\vidx{Sid}]} \text{t}) \\
+                        & \phantom{PP} + \bb{AE} \text{A}_{\vidx{Sid}}  + \bb{TE [T_{\vidx{Sid}}]} \text{t}  \\
    \tau                   & \sim \text{Exponential}(1)  \\
    \delta                 & \sim \text{Normal}(0, 1)  \\
    \bb{AE}, \bb{TE} & \sim \text{Normal}(0, 1)

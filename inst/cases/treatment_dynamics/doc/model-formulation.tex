@@ -32,7 +32,7 @@
 \begin{equation}
     \begin{aligned}
        D^{\ast}_{\midx{Sid}{t}}                       & \sim \text{Normal}( D_{\midx{Sid}{t}}, \sigma )                       \\
-       D_{\midx{Sid}{t}}                              & = \alpha + (\alpha_{\vidx{Sid}} + \gm{TD[\vidx{Sid}]} \text{t}) + \bb{TD [T[\vidx{Sid}]]} \text{t} \\
+       D_{\midx{Sid}{t}}                              & = \alpha + (\alpha_{\vidx{Sid}} + \gm{TD[\vidx{Sid}]} \text{t}) + \bb{TD [T_{\vidx{Sid}}]} \text{t} \\
                                                       & \phantom{PP} + \bb{AD} \text{A}_{\vidx{Sid}} + \bb{ED} E_{\midx{Sid}{t}} \\
        \sigma                                         & \sim \text{Exponential}(1) \\
        \begin{bmatrix} \alpha \\ \gamma \end{bmatrix} & \sim \text{MVNormal}(\pmb{0}, \pmb{\Sigma}) \\
@@ -56,15 +56,14 @@
 \annot{Efficacy Generative Process}
 \begin{equation}
     \begin{aligned}
-       E_{\midx{Sid}{t}}           & \sim \text{Normal}( \mu_{\midx{Sid}{t}}, \tau )                   \\
-       \mu_{\midx{Sid}{t}}         & = \delta + \bb{AE} \text{A}_{\vidx{Sid}}  + \bb{TE [T_{\vidx{Sid}}]} \text{t}  \\
+       E_{\midx{Sid}{t}}      & \sim \text{Normal}( \mu_{\midx{Sid}{t}}, \tau )                   \\
+       \mu_{\midx{Sid}{t}}    & = \delta + (\delta_{\vidx{Sid}} + \gm{TE[\vidx{Sid}]} \text{t}) \\
+                              & \phantom{PP} + \bb{AE} \text{A}_{\vidx{Sid}}  + \bb{TE [T_{\vidx{Sid}}]} \text{t}  \\
        \tau                   & \sim \text{Exponential}(1)  \\
        \delta                 & \sim \text{Normal}(0, 1)  \\
        \bb{AE}, \bb{TE} & \sim \text{Normal}(0, 1)
     \end{aligned}
 \end{equation}
-
-
 
 \end{document}
  
