@@ -61,12 +61,12 @@ print_paths = function(x, win=T) {
 #' @examples
 #' fp = 'C:\\Users\\rd\\bin\\export_docs_pdf.R'
 #' fp |> xclip()  # copy to clipboard
-#' readclip() |> cat()
+#' fclip() |> cat()
 xclip = function(x) clipr::write_clip(x)
 
 #' @rdname xclip
 #' @export
-readclip = function() clipr::read_clip()
+fclip = function() clipr::read_clip()
 
 wait_for = function(what, refresh=3, fail_after=12) {
   cat("Waiting for creation of missing files:", what, "\n" )
