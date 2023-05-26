@@ -4,13 +4,16 @@
     <loc>http://yongfu.name/stom/404.html</loc>
   </url>
   <url>
+    <loc>http://yongfu.name/stom/LICENSE-text.html</loc>
+  </url>
+  <url>
     <loc>http://yongfu.name/stom/authors.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/index.html</loc>
   </url>
   <url>
-    <loc>http://yongfu.name/stom/LICENSE-text.html</loc>
+    <loc>http://yongfu.name/stom/reference/array_type.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/as_c_num.html</loc>
@@ -34,7 +37,13 @@
     <loc>http://yongfu.name/stom/reference/export_docs.html</loc>
   </url>
   <url>
+    <loc>http://yongfu.name/stom/reference/extract2.html</loc>
+  </url>
+  <url>
     <loc>http://yongfu.name/stom/reference/get_cli_programs.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/get_param_info.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/get_pars.html</loc>

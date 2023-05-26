@@ -22,10 +22,13 @@ A \code{R6} \code{postParams} object.
 R6 representation of posterior samples
 }
 \examples{
-fp_sim = system.file("cases", "treatment_dynamics", "2-varying-effect-model", "simulation.R", package="stom")
-fp_mod = system.file("cases", "treatment_dynamics", "2-varying-effect-model", "m1-wider_Item_difficulty.RDS", package="stom")
+fp_sim = system.file("cases", "treatment_dynamics", "1-simplified-normal-model", "simulation.R", package="stom")
+fp_mod = system.file("cases", "treatment_dynamics", "1-simplified-normal-model", "m1.RDS", package="stom")
 source(fp_sim)
 d = sim_data()       # Simulated data
 m = readRDS(fp_mod)  # CmdStanFit model cache
 post = extract2(m, d$params)
+post$B_AD() |> str()
+post$B_TE() |> str()
+post$E() |> str()
 }

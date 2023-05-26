@@ -90,10 +90,13 @@ sim_data = function(B_AE = 1,
         B_AD = B_AD,
         E = E,
         I = ei,
-        kappa = kappa,
+        kappa = kappa
+
+    )
+    others = list(
         minA = minA
     )
-    return(list(dat = dat, params = true_params))
+    return(list(dat = dat, params = true_params, others=others))
 }
 
 

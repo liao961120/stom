@@ -96,24 +96,24 @@ $if(linestretch)$
 $endif$
 \usepackage{iftex}
 %%%%%%% CUSTOM %%%%
-\usepackage{fontspec}
-% \ifPDFTeX
-%   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
-%   \usepackage[utf8]{inputenc}
-%   \usepackage{textcomp} % provide euro and other symbols
-% \else % if luatex or xetex
-% $if(mathspec)$
-%   \ifXeTeX
-%     \usepackage{mathspec} % this also loads fontspec
-%   \else
-%     \usepackage{unicode-math} % this also loads fontspec
-%   \fi
-% $else$
-%   \usepackage{unicode-math} % this also loads fontspec
-% $endif$
-%   \defaultfontfeatures{Scale=MatchLowercase}$-- must come before Beamer theme
-%   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-% \fi
+% \usepackage{fontspec}
+\ifPDFTeX
+  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+$if(mathspec)$
+  \ifXeTeX
+    \usepackage{mathspec} % this also loads fontspec
+  \else
+    \usepackage{unicode-math} % this also loads fontspec
+  \fi
+$else$
+  \usepackage{unicode-math} % this also loads fontspec
+$endif$
+  \defaultfontfeatures{Scale=MatchLowercase}$-- must come before Beamer theme
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
 %%%%%%% CUSTOM %%%%
 $if(fontfamily)$
 $else$
@@ -147,11 +147,11 @@ $if(fontfamily)$
 $endif$
 
 %%%%%%%%%% CUSTOM %%%%%%%%%
-\usepackage{kmath,kerkis}
-\usepackage[T1]{fontenc}
-\DeclareMathSizes{10}{14}{10}{8}
-\DeclareMathSizes{11}{14}{10}{8}
-\DeclareMathSizes{12}{14}{10}{8}
+% \usepackage{kmath,kerkis}
+% \usepackage[T1]{fontenc}
+% \DeclareMathSizes{10}{14}{10}{8}
+% \DeclareMathSizes{11}{14}{10}{8}
+% \DeclareMathSizes{12}{14}{10}{8}
 % https://tex.stackexchange.com/questions/8434/how-to-scale-math-font-only
 % \DeclareMathSizes {t-size} {mt-size} {s-size} {ss-size}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -173,7 +173,11 @@ $endfor$
 $if(mathfont)$
 $if(mathspec)$
   \ifXeTeX
-    \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+     %%%% CUSTOM %%%%%%%%%%%
+    \setmathfont(Digits,Latin)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+    \setmathfont(Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$greek-mathfont$}
+    \setmathrm[Scale=1.28]{$mathfont$}
+    %%%% CUSTOM %%%%%%%%%%%
   \else
     \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
   \fi

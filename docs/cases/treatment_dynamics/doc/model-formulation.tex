@@ -1,0 +1,69 @@
+\documentclass[12pt,preview,border=5mm]{standalone}
+\usepackage{amsmath}
+
+% \usepackage{kmath,kerkis}
+\usepackage{mathspec}
+\usepackage{xltxtra}  % also loads fontspec
+\usepackage{xunicode}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
+\setromanfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
+% \setmathrm[Scale=1]{Adobe Caslon Pro}
+\setmathfont(Digits,Latin)[Numbers={Lining,Proportional}]{Adobe Caslon Pro}
+% \setmathsfont(Greek)[Uppercase=Regular,Lowercase=Italic,Scale=MatchUppercase]{GFS Porson}
+\setmathsfont(Greek)[Scale=1.2]{GFS Porson}
+
+
+\begin{document} 
+
+% With subscript i
+% \newcommand{\midx}[2]{ \mathrm{#1}[\mathit{i}],\mathrm{#2}[\mathit{i}] }
+% \newcommand{\aidx}[3]{ \mathrm{#1}[\mathit{i}],\mathrm{#2}[\mathit{i}],\mathrm{#3}[\mathit{i}] }
+% \newcommand{\vidx}[1]{ \mathrm{#1}[\mathit{i}] } 
+% Without subscript i
+\newcommand{\midx}[2]{ \mathrm{#1},\mathrm{#2} }
+\newcommand{\aidx}[3]{ \mathrm{#1},\mathrm{#2},\mathrm{#3} }
+\newcommand{\vidx}[1]{ \mathrm{#1} }
+\newcommand{\annot}[1]{ \begin{center} {\scriptsize #1} \end{center}}
+\newcommand{\bb}[1]{ \beta_{\mathrm{#1}} }
+\newcommand{\gm}[1]{ \gamma_{\mathrm{#1}} }
+
+\annot{Treatment Outcome Generative Process}
+\begin{equation}
+    \begin{aligned}
+       D^{\ast}_{\midx{Sid}{t}}                       & \sim \text{Normal}( D_{\midx{Sid}{t}}, \sigma )                       \\
+       D_{\midx{Sid}{t}}                              & = \alpha + (\alpha_{\vidx{Sid}} + \gm{TD[\vidx{Sid}]} \text{t}) + \bb{TD [T_{\vidx{Sid}}]} \text{t} \\
+                                                      & \phantom{PP} + \bb{AD} \text{A}_{\vidx{Sid}} + \bb{ED} E_{\midx{Sid}{t}} \\
+       \sigma                                         & \sim \text{Exponential}(1) \\
+       \begin{bmatrix} \alpha \\ \gamma \end{bmatrix} & \sim \text{MVNormal}(\pmb{0}, \pmb{\Sigma}) \\
+       \alpha                                         & \sim \text{Normal}(0, 1.5) \\
+       \bb{TD}, \bb{AD}, \bb{ED}                      & \sim \text{Normal}(0, 1)
+    \end{aligned}
+\end{equation}
+ 
+\annot{Item Response Generative Process}
+\begin{equation}
+    \begin{aligned}
+       R_{\aidx{Sid}{Iid}{t}}    &\sim \text{OrderedLogit}( \phi_{\aidx{Sid}{Iid}{t}}, \kappa )    \\
+       \phi_{\aidx{Sid}{Iid}{t}} &= E_{\midx{Sid}{t}} + I_{\vidx{Iid}}                           \\
+       \kappa               &\sim \text{Normal}(0, 1)         \\
+       E                    &\sim \text{Normal}(0, 2)         \\
+       I                    &\sim \text{Normal}(0, \rho)      \\
+       \rho                 &\sim \text{Exponential}(1.5)
+    \end{aligned}
+\end{equation}
+ 
+\annot{Efficacy Generative Process}
+\begin{equation}
+    \begin{aligned}
+       E_{\midx{Sid}{t}}      & \sim \text{Normal}( \mu_{\midx{Sid}{t}}, \tau )                   \\
+       \mu_{\midx{Sid}{t}}    & = \delta + (\delta_{\vidx{Sid}} + \gm{TE[\vidx{Sid}]} \text{t}) \\
+                              & \phantom{PP} + \bb{AE} \text{A}_{\vidx{Sid}}  + \bb{TE [T_{\vidx{Sid}}]} \text{t}  \\
+       \tau                   & \sim \text{Exponential}(1)  \\
+       \delta                 & \sim \text{Normal}(0, 1)  \\
+       \bb{AE}, \bb{TE} & \sim \text{Normal}(0, 1)
+    \end{aligned}
+\end{equation}
+
+\end{document}
+ 

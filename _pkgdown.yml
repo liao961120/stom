@@ -24,8 +24,10 @@ reference:
   - save_model
   - precis
   - extract
+  - extract2
   - get_pars
   - as_posterior_array
+  - get_param_info
   - matches("cmdstan")
 - title: "Stats"
   desc: >

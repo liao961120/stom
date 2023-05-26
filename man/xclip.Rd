@@ -2,12 +2,12 @@
 % Please edit documentation in R/sys.R
 \name{xclip}
 \alias{xclip}
-\alias{readclip}
+\alias{fclip}
 \title{Copy to and from clipboard}
 \usage{
 xclip(x)
 
-readclip()
+fclip()
 }
 \arguments{
 \item{x}{Character.}
@@ -18,5 +18,5 @@ Copy to and from clipboard
 \examples{
 fp = 'C:\\\\Users\\\\rd\\\\bin\\\\export_docs_pdf.R'
 fp |> xclip()  # copy to clipboard
-readclip() |> cat()
+fclip() |> cat()
 }

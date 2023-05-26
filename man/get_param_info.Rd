@@ -20,7 +20,7 @@ The input list can be nested in arbitrary levels, as long as the names at the
 last level matches those used in the corresponding Stan model.
 }
 \examples{
-fp = system.file("cases", "treatment_dynamics", "2-varying-effect-model", "simulation.R", package="stom")
+fp = system.file("cases", "treatment_dynamics", "1-simplified-normal-model", "simulation.R", package="stom")
 source(fp)
 d = sim_data()
 str(d$params)
