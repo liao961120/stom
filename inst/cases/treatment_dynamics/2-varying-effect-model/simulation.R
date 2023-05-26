@@ -131,8 +131,8 @@ sim_data = function(B_AE = 1,
         Tx     = dO$Tx,
         D      = dO$D             # outcome
     )
+    # Records only names that matches those used in stan
     true_params = list(
-        D = D,
         B_AE = B_AE,
         B_TE = B_TE,
         B_AD = B_AD,
@@ -141,9 +141,8 @@ sim_data = function(B_AE = 1,
         E = E,
         I = ei,
         kappa = kappa,
-        minA = minA,
         subj = list(
-            sigma = sigma,
+            sigma_subj = sigma,
             Rho = as.matrix(Rho),  # strip off attributes
             V_subj = subj_params,
             G_TE = G_TE,
@@ -152,10 +151,14 @@ sim_data = function(B_AE = 1,
             Alpha_TD = Alpha_TD
         )
     )
-
+    others = list(
+        D = D,
+        minA = minA
+    )
     return(list(
         dat = dat,
-        params = true_params
+        params = true_params,
+        others = others
     ))
 }
 

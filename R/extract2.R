@@ -42,20 +42,24 @@ extract2 = function(fit, sim_params, trim=T) {
     )
 
     par_info = get_param_info( sim_params )
-    if (trim)
+    if (trim) {
         post = stom::extract( fit, pars=names(par_info) )
-    else
+    }else {
         post = stom::extract( fit )
+    }
     post_samples = postParams$new( post=post, par_info=par_info )
     for ( p in names(par_info) ){
-        post_samples$add_function(p, function(idx=NULL) {
+        f = function( idx=NULL ) {
             if ( is.null(idx) )
-                return( self$get_param(p) )
-            return( self$get_param(p)[idx] )
-        })
+                return( self$get_param( name ) )
+            return( self$get_param( name )[idx] )
+        }
+        post_samples$add_function(p, f)
     }
     return(post_samples)
 }
+
+
 
 
 #' Get parameter info from simulation

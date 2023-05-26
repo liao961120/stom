@@ -82,7 +82,7 @@ B_TE = as_posterior_array( post, "B_TE" )
 
 
 empirical_obs = function(Sid, time=1:4) {
-    d$params$D[Sid, time]
+    d$others$D[Sid, time]
 }
 predict_obs = function(Sid, Tid=NULL, A=NULL, time=1:4, idx=1) {
     # # counter_factual = F
