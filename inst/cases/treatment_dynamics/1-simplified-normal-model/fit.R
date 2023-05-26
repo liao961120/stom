@@ -3,7 +3,7 @@ source("simulation.R")
 
 d = sim_data(B_AE=1)
 m = stan( "m1.stan", data=d$dat, chains=3, parallel_chains=3 )
-save_model(m, fp = "m1-AE_1.RDS")
+save_model(m, fp = "m1.RDS")
 # m = readRDS("model_4a5c159a2ff3_model.RDS")
 # m = readRDS("m0-1.RDS")
 
