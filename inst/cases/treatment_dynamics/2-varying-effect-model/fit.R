@@ -57,7 +57,7 @@ V_subj_true = d$params$subj$V_subj
 x = c( V_subj_upp, V_subj_low, V_subj_true )
 for ( p in pars ) {
     plot( 1, type="n", ylim=c(min(x), max(x)), xlim=c(0,90),
-          xlab = "Subject Effect", main=p ) 
+          xlab = "Subject Effect", main=p )
     abline( h=0, lty="dashed" )
     for ( i in 1:90 )
         lines( c(i,i), c(V_subj_upp[i,p],V_subj_low[i,p]), lwd=3, col=col.alpha(2) )
@@ -68,18 +68,23 @@ for ( p in pars ) {
 
 
 
+library(stom)
+source("simulation.R")
+d = sim_data()
+m = readRDS("m1-wider_Item_difficulty.RDS")
+s = stom::precis(m, 5)
 ############ Subject-level Posterior Predictions #############
 post = stom::extract(m)
-E = as_posterior_array( get_pars(post, "E") )
-V_subj = as_posterior_array( get_pars(post, "V_subj") )
-B_TD = as_posterior_array( get_pars(post, "B_TD") )
-B_TE = as_posterior_array( get_pars(post, "B_TE") )
+E = as_posterior_array( post, "E" )
+V_subj = as_posterior_array( post, "V_subj" )
+B_TD = as_posterior_array( post, "B_TD" )
+B_TE = as_posterior_array( post, "B_TE" )
 
 
 empirical_obs = function(Sid, time=1:4) {
     d$params$D[Sid, time]
 }
-predict_obs = function(Sid, Tid=NULL, A=NULL, time=1:4, idx=1, counterfactual=T) {
+predict_obs = function(Sid, Tid=NULL, A=NULL, time=1:4, idx=1) {
     # # counter_factual = F
     # if ( !is.null(Tid) || !is.null(A) )
     #     counter_factual = T
@@ -87,45 +92,41 @@ predict_obs = function(Sid, Tid=NULL, A=NULL, time=1:4, idx=1, counterfactual=T)
         Tid = d$dat$Tx[ d$dat$Sid_O == Sid ][1]
     if ( is.null(A) )
         A = d$dat$A[ d$dat$Sid_O == Sid ][1]
-    
+
     # Posterior sampling (parameters)
     alpha = post$alpha[idx]
     b_AD = post$B_AD[idx]
     b_ED = post$B_ED[idx]
     sigma_D = post$sigma_D[idx]
-    
+
     delta = post$delta[idx]
     b_AE = post$B_AE[idx]
     sigma_ET = post$sigma_ET
-    
+
     V = V_subj[[idx]]
     b_TD = B_TD[[idx]]
     b_TE = B_TE[[idx]]
-    
-    if (counterfactual) {
-        E = sapply( time, function(t) {
-            mu = delta + (V[Sid,2] + V[Sid,1]*(t-1) ) + b_AE*A  + b_TE[Tid]*(t-1)
-            rnorm( 1, mu, sigma_ET )
-        })    
-    } else {
-        E = E[[idx]][Sid,]        
-    }
-    
+
+    E = sapply( time, function(t) {
+        mu = delta + (V[Sid,2] + V[Sid,1]*(t-1) ) + b_AE*A  + b_TE[Tid]*(t-1)
+        rnorm( 1, mu, sigma_ET )
+    })
+
     D = sapply( time, function(t) {
         mu = alpha + (V[Sid,4] + V[Sid,3]*(t-1) ) + b_TD[Tid]*(t-1) + b_AD*A + b_ED*E[t]
         rnorm(1, mu, sigma_D )
     })
     D
 }
-plot_model_prediction = function(Sid=85, counterfactual=T) {
+plot_model_prediction = function(Sid=85) {
     obs = empirical_obs(Sid)
-    pred = sapply( sample(1:3000, 65), function(i) predict_obs(Sid=Sid, idx=i, counterfactual=counterfactual) )
+    pred = sapply( sample(1:3000, 65), function(i) predict_obs(Sid=Sid, idx=i) )
     # Compute posterior means with all samples
-    pred2 = sapply( 1:3000, function(i) predict_obs(Sid=Sid, idx=i, counterfactual=counterfactual) )
-    pred2 = apply(pred2, 1, function(x) 
-                            c( mean(x), quantile(x,.05), quantile(x,.95) ) 
+    pred2 = sapply( 1:3000, function(i) predict_obs(Sid=Sid, idx=i) )
+    pred2 = apply(pred2, 1, function(x)
+                            c( mean(x), quantile(x,.05), quantile(x,.95) )
                   ) |> t()
-    plot( 1, type="n", xlim=c(1,4), ylim=c(-15,15), 
+    plot( 1, type="n", xlim=c(1,4), ylim=c(-15,15),
           xlab = "Time", ylab = "Treatment Outcome",
           main = paste("Subject",Sid,"model predictions") )
     # Empirical curve
@@ -140,16 +141,17 @@ plot_model_prediction = function(Sid=85, counterfactual=T) {
     # Draw several posterior samples
     for ( s in 1:ncol(pred) ) {
         for ( t in 1:3 )
-            lines( c(t,t+1), c(pred[t,s],pred[t+1,s]), col=col.alpha(2,.1) )
+            lines( c(t,t+1), c(pred[t,s],pred[t+1,s]), col=col.alpha(2,.15) )
     }
 }
 set.seed(250)
-plot_model_prediction(Sid=85, counterfactual = T)  # Treatment 3
+plot_model_prediction(Sid=85)  # Treatment 3
 set.seed(250)
-plot_model_prediction(Sid=85, counterfactual = F)  # Treatment 3
+plot_model_prediction(Sid=85)  # Treatment 3
 plot_model_prediction(Sid=67)  # Treatment 3
 plot_model_prediction(Sid=55)  # Treatment 2
 plot_model_prediction(Sid=33)  # Treatment 2
 plot_model_prediction(Sid=27)  # Treatment 1
 plot_model_prediction(Sid=15)  # Treatment 1
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
