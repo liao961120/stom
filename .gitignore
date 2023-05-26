@@ -5,7 +5,7 @@
 #########################################
 
 *.rds
-!wine2_normal_first_level2.RDS
+!*.RDS
 .vscode
 *.exe
 .Rproj.user
