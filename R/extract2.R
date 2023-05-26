@@ -16,6 +16,9 @@
 #' d = sim_data()       # Simulated data
 #' m = readRDS(fp_mod)  # CmdStanFit model cache
 #' post = extract2(m, d$params)
+#' post$B_AD() |> str()
+#' post$B_TE() |> str()
+#' post$E() |> str()
 extract2 = function(fit, sim_params, trim=T) {
     postParams = R6::R6Class("postParams",
                              lock_objects=FALSE,
@@ -48,17 +51,20 @@ extract2 = function(fit, sim_params, trim=T) {
         post = stom::extract( fit )
     }
     post_samples = postParams$new( post=post, par_info=par_info )
+    # Programmatically add parameter names as method (allow access as $param)
     for ( p in names(par_info) ){
         f = function( idx=NULL ) {
+            fname = as.character( match.call()[[1]] )
+            fname = strsplit(fname, "$", fixed = T)
+            fname = rev(fname)[[1]]
             if ( is.null(idx) )
-                return( self$get_param( name ) )
-            return( self$get_param( name )[idx] )
+                return( self$get_param(fname) )
+            return( self$get_param(fname)[idx] )
         }
         post_samples$add_function(p, f)
     }
     return(post_samples)
 }
-
 
 
 
