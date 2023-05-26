@@ -10,8 +10,8 @@
 #' @return A `R6` `postParams` object.
 #' @export
 #' @examples
-#' fp_sim = system.file("cases", "treatment_dynamics", "2-varying-effect-model", "simulation.R", package="stom")
-#' fp_mod = system.file("cases", "treatment_dynamics", "2-varying-effect-model", "m1-wider_Item_difficulty.RDS", package="stom")
+#' fp_sim = system.file("cases", "treatment_dynamics", "1-simplified-normal-model", "simulation.R", package="stom")
+#' fp_mod = system.file("cases", "treatment_dynamics", "1-simplified-normal-model", "m1.RDS", package="stom")
 #' source(fp_sim)
 #' d = sim_data()       # Simulated data
 #' m = readRDS(fp_mod)  # CmdStanFit model cache
@@ -80,7 +80,7 @@ extract2 = function(fit, sim_params, trim=T) {
 #' @return A list of parameters with their dimension info.
 #' @export
 #' @examples
-#' fp = system.file("cases", "treatment_dynamics", "2-varying-effect-model", "simulation.R", package="stom")
+#' fp = system.file("cases", "treatment_dynamics", "1-simplified-normal-model", "simulation.R", package="stom")
 #' source(fp)
 #' d = sim_data()
 #' str(d$params)
