@@ -93,16 +93,22 @@ extract = function(fit, pars=NULL, lp=F) {
 #' d = extract( m )
 #' get_pars( d, "Int, Int_raw" )
 get_pars = function(d, pars) {
-  pars = parse_pars( pars )
-  pat = pat_param( pars )
-  # precis data frame
-  if ( "variable" %in% names(d) )
-    return( d[grepl(pat, d$variable),] )
-  # posterior sample data frame
-  idx_col = grepl( pat, names(d) )
-  return( d[, idx_col] )
+    pars = parse_pars(pars)
+    pat = pat_param(pars)
+    # precis data frame
+    if ("variable" %in% names(d)) {
+        suppressWarnings({
+            d = d[grepl(pat, d$variable), ]
+        })
+    } else {
+        # posterior sample data frame
+        idx_col = grepl(pat, names(d))
+        suppressWarnings({
+            d = d[, idx_col]
+        })
+    }
+    d
 }
-
 
 #' Convert posterior data frame to a list of array
 #'
