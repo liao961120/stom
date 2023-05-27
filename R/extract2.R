@@ -1,74 +1,81 @@
 # Posterior samples extraction
 
+# See https://mc-stan.org/posterior/articles/rvar.html for similar
+# implementation in package `posterior`
+# extract3 = function(fit, pars=NULL, lp=F) {
+#     pars = stom:::parse_pars( pars )
+#     d = posterior::as_draws_rvars( fit$draws(format="draws_df") )
+#     return(d)
+# }
+
 #' R6 representation of posterior samples
 #'
+#' `extract2()` provides an object-oriented interface to the posterior
+#' samples extracted from a Stan model. In particular, high dimensional
+#' parameters (i.e., vectors, matrices, and arrays) are gathered into arrays of
+#' corresponding dimensions in R. These restructured high dimensional
+#' parameters, as well as other scalar parameters, are exposed as public methods
+#' in the returned R6 object. See below for an example.
+#'
 #' @param fit  A `CmdStanFit` object passed to `stom::extract()`.
-#' @param sim_params List. A list of simulated parameter values. See argument
-#'        `fit` of `stom::get_param_info()`.
-#' @param trim Whether to trim off parameters not present in `sim_params` from
-#'        the posterior samples retrieved from `CmdStanFit`. By default, TRUE.
-#' @return A `R6` `postParams` object.
+#' @return An `R6`, `postParams` object.
 #' @export
 #' @examples
-#' fp_sim = system.file("cases", "treatment_dynamics", "1-simplified-normal-model", "simulation.R", package="stom")
 #' fp_mod = system.file("cases", "treatment_dynamics", "1-simplified-normal-model", "m1.RDS", package="stom")
-#' source(fp_sim)
-#' d = sim_data()       # Simulated data
 #' m = readRDS(fp_mod)  # CmdStanFit model cache
-#' post = extract2(m, d$params)
+#' post = extract2(m)
+#' str(post)
+#'
 #' post$B_AD() |> str()
 #' post$B_TE() |> str()
 #' post$E() |> str()
-extract2 = function(fit, sim_params, trim=T) {
+extract2 = function(fit) {
     postParams = R6::R6Class("postParams",
                              lock_objects=FALSE,
                              public = list(
                                  initialize = function( post, par_info ) {
-                                     self$.post = post
-                                     self$.par_info = par_info
-                                     self$.cache = list()
-                                 },
+                                     private$.post = post
+                                     private$.par_info = par_info
+                                 }
+                             ),
+                             private = list(
+                                 .cache = list(),
                                  add_function = function(name, meth) {
                                      self[[name]] <- meth
                                      environment(self[[name]]) <- environment(self$add_function)
                                  },
                                  get_param = function(p) {
-                                     if (self$.par_info[[p]]$cls == "vector" && self$.par_info[[p]]$dim == 1)
-                                         return( self$.post[[p]] )
-                                     if ( p %in% names(self$.cache) )
-                                         return( self$.cache[[p]] )
+                                     if ( p %in% names(private$.cache) )
+                                         return( private$.cache[[p]] )
+                                     if ( private$.par_info[[p]]$type == "scalar" )
+                                         return( private$.post[[p]] )
                                      # First query: cache results
-                                     self$.cache[[p]] = as_posterior_array(self$.post, p)
-                                     return( self$.cache[[p]] )
+                                     private$.cache[[p]] = as_posterior_array( private$.post, param=p )
+                                     return( private$.cache[[p]] )
                                  }
                              )
     )
 
-    par_info = get_param_info( sim_params )
-    if (trim) {
-        post = stom::extract( fit, pars=names(par_info) )
-    }else {
-        post = stom::extract( fit )
-    }
+    post = extract( fit, lp=T )
+    par_info = get_stan_param_info( colnames(post) )
     post_samples = postParams$new( post=post, par_info=par_info )
     # Programmatically add parameter names as method (allow access as $param)
-    for ( p in names(par_info) ){
+    for ( p in unique(names(par_info)) ){
         f = function( idx=NULL ) {
             fname = as.character( match.call()[[1]] )
             fname = strsplit(fname, "$", fixed = T)
             fname = rev(fname)[[1]]
             if ( is.null(idx) )
-                return( self$get_param(fname) )
-            return( self$get_param(fname)[idx] )
+                return( private$get_param(fname) )
+            return( private$get_param(fname)[idx] )
         }
-        post_samples$add_function(p, f)
+        post_samples$.__enclos_env__$private$add_function(p, f)
     }
     return(post_samples)
 }
 
 
-
-#' Get parameter info from simulation
+#' Get parameter information of a simulation
 #'
 #' The input list can be nested in arbitrary levels, as long as the names at the
 #' last level matches those used in the corresponding Stan model.
@@ -84,8 +91,8 @@ extract2 = function(fit, sim_params, trim=T) {
 #' source(fp)
 #' d = sim_data()
 #' str(d$params)
-#' get_param_info(d$params)
-get_param_info = function(lst) {
+#' get_sim_param_info(d$params)
+get_sim_param_info = function(lst) {
     paramInfo = make_info_store()
     get_param_info_recursive = function(lst, nm=NULL) {
         if ( !is.list(lst) ) {

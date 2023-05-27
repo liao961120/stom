@@ -134,16 +134,23 @@ as_posterior_array = function(d, param=NULL, sample_n=NULL) {
     if (!is.null(sample_n) && sample_n > 0)
         row_idx = sample(row_idx, size = sample_n, replace = F)
     vars = colnames(d)
-    dat = lapply( row_idx, function(i) {
-        arr = bracket_to_array(key=vars, val=unlist(d[i,]) )
+    dim_ = get_array_size(vars)
+    lapply( row_idx, function(i) {
+        arr = array( unlist(d[i,]), dim=dim_ )
     })
-    return(dat)
 }
 
 
 # x = c("zE[1,1]","zE[2,1]","zE[1,2]","zE[2,2]")
 # bracket_to_array(x, x)
 bracket_to_array = function(key, val) {
+    dim_ = get_array_size(key)
+    # Fill in values (stan's param order corresponds to R's array fill-in order)
+    arr = array( val, dim=dim_ )
+    arr
+}
+
+get_array_size = function(key) {
     size_info = split_bracket_expression(key)
 
     # Check
@@ -160,17 +167,14 @@ bracket_to_array = function(key, val) {
     } else {
         dim_ = apply( size_info_flat, 1, function(r) max(r) )
     }
-
-    # Fill in values (stan's param order corresponds to R's array fill-in order)
-    arr = array( val, dim=dim_ )
-    arr
+    return(dim_)
 }
 
 
 # x = c("zE[1,1]","zE[2,1]","zE[1,2]","zE[2,2]")
 # size_info = split_bracket_expression(x)
 split_bracket_expression = function(x) {
-    pat = "([^\\[\\]+)\\[(\\d+,?\\d*)\\]"
+    pat = "([^\\[\\]+)\\[(\\d+,?\\d*)\\]$"
     #gsub(pat, "\\2",  c("zE[1,1]","zE[1]") )
     letters = gsub(pat, "\\1", x)
     digits = gsub(pat, "\\2", x)
