@@ -4,30 +4,28 @@
 \alias{extract2}
 \title{R6 representation of posterior samples}
 \usage{
-extract2(fit, sim_params, trim = T)
+extract2(fit)
 }
 \arguments{
 \item{fit}{A \code{CmdStanFit} object passed to \code{stom::extract()}.}
-
-\item{sim_params}{List. A list of simulated parameter values. See argument
-\code{fit} of \code{stom::get_param_info()}.}
-
-\item{trim}{Whether to trim off parameters not present in \code{sim_params} from
-the posterior samples retrieved from \code{CmdStanFit}. By default, TRUE.}
 }
 \value{
-A \code{R6} \code{postParams} object.
+An \code{R6}, \code{postParams} object.
 }
 \description{
-R6 representation of posterior samples
+\code{extract2()} provides an object-oriented interface to the posterior
+samples extracted from a Stan model. In particular, high dimensional
+parameters (i.e., vectors, matrices, and arrays) are gathered into arrays of
+corresponding dimensions in R. These restructured high dimensional
+parameters, as well as other scalar parameters, are exposed as public methods
+in the returned R6 object. See below for an example.
 }
 \examples{
-fp_sim = system.file("cases", "treatment_dynamics", "1-simplified-normal-model", "simulation.R", package="stom")
 fp_mod = system.file("cases", "treatment_dynamics", "1-simplified-normal-model", "m1.RDS", package="stom")
-source(fp_sim)
-d = sim_data()       # Simulated data
 m = readRDS(fp_mod)  # CmdStanFit model cache
-post = extract2(m, d$params)
+post = extract2(m)
+str(post)
+
 post$B_AD() |> str()
 post$B_TE() |> str()
 post$E() |> str()

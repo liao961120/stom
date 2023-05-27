@@ -27,7 +27,8 @@ reference:
   - extract2
   - get_pars
   - as_posterior_array
-  - get_param_info
+  - get_sim_param_info
+  - get_stan_param_info
   - matches("cmdstan")
 - title: "Stats"
   desc: >
