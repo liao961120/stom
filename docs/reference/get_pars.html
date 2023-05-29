@@ -75,11 +75,34 @@
 <span class="r-in"><span><span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="va">fp</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="precis.html">precis</a></span><span class="op">(</span> <span class="va">m</span>, depth<span class="op">=</span><span class="fl">3</span> <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">get_pars</span><span class="op">(</span> <span class="va">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Int"</span>, <span class="st">"Int_raw"</span><span class="op">)</span> <span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (endsWith(x, "]")) {    x = gsub("[", "\\[", x, fixed = T)    x = gsub("]", "\\]", x, fixed = T)    return(x)}:</span> the condition has length &gt; 1</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      variable       mean        sd         q5       q95     rhat ess_bulk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41   Int[1,1]  1.4606586 0.4155012  0.7738191 2.1368475 1.005829 596.2273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42   Int[2,1]  1.6077615 0.3527793  1.0167770 2.1725515 1.004828 638.9929</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43   Int[1,2] -0.2932317 0.4002178 -0.9390186 0.3660294 1.007534 626.0339</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44   Int[2,2]  0.0000000 0.0000000  0.0000000 0.0000000       NA       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45 Int_raw[1]  1.4606586 0.4155012  0.7738191 2.1368475 1.005829 596.2273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46 Int_raw[2] -0.2932317 0.4002178 -0.9390186 0.3660294 1.007534 626.0339</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47 Int_raw[3]  1.6077615 0.3527793  1.0167770 2.1725515 1.004828 638.9929</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="precis.html">extract</a></span><span class="op">(</span> <span class="va">m</span> <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">get_pars</span><span class="op">(</span> <span class="va">d</span>, <span class="st">"Int, Int_raw"</span> <span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (endsWith(x, "]")) {    x = gsub("[", "\\[", x, fixed = T)    x = gsub("]", "\\]", x, fixed = T)    return(x)}:</span> the condition has length &gt; 1</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4,000 x 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    `Int[1,1]` `Int[2,1]` `Int[1,2]` `Int[2,2]` `Int_raw[1]` `Int_raw[2]`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>       1.59       1.83    -<span style="color: #BB0000;">0.237</span>           0         1.59      -<span style="color: #BB0000;">0.237</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>       1.40       1.74    -<span style="color: #BB0000;">0.600</span>           0         1.40      -<span style="color: #BB0000;">0.600</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>       1.85       1.89    -<span style="color: #BB0000;">0.083</span><span style="color: #BB0000; text-decoration: underline;">4</span>          0         1.85      -<span style="color: #BB0000;">0.083</span><span style="color: #BB0000; text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>       1.65       2.05    -<span style="color: #BB0000;">0.370</span>           0         1.65      -<span style="color: #BB0000;">0.370</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>       1.58       1.75    -<span style="color: #BB0000;">0.271</span>           0         1.58      -<span style="color: #BB0000;">0.271</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>       1.72       2.02    -<span style="color: #BB0000;">0.146</span>           0         1.72      -<span style="color: #BB0000;">0.146</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>       1.78       1.85    -<span style="color: #BB0000;">0.224</span>           0         1.78      -<span style="color: #BB0000;">0.224</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>       1.65       1.68    -<span style="color: #BB0000;">0.057</span><span style="color: #BB0000; text-decoration: underline;">2</span>          0         1.65      -<span style="color: #BB0000;">0.057</span><span style="color: #BB0000; text-decoration: underline;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>       1.60       1.85    -<span style="color: #BB0000;">0.620</span>           0         1.60      -<span style="color: #BB0000;">0.620</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>       1.26       1.62    -<span style="color: #BB0000;">0.644</span>           0         1.26      -<span style="color: #BB0000;">0.644</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># i 3,990 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># i 1 more variable: `Int_raw[3]` &lt;dbl&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
