@@ -67,6 +67,8 @@ extract2 = function(fit) {
             fname = rev(fname)[[1]]
             if ( is.null(idx) )
                 return( private$get_param(fname) )
+            if ( length(idx) == 1 )
+                return( private$get_param(fname)[[idx]] )
             return( private$get_param(fname)[idx] )
         }
         post_samples$.__enclos_env__$private$add_function(p, f)
