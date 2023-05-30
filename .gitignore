@@ -6,6 +6,7 @@
 
 *.rds
 !*.RDS
+inst/cases/treatment_dynamics/3-poisson-model/*.RDS
 .vscode
 *.exe
 .Rproj.user

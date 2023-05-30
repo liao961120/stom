@@ -1,5 +1,5 @@
 /*
-    Normal Outcome model (for testing)
+    Poisson Outcome model, with logarithmic base of log link set to 1.35
 */
 
 data {
@@ -22,7 +22,8 @@ data {
     array[NO] int<lower=0,upper=Nt-1> time_O;  // time point of obs.
     array[NO] real<lower=0,upper=20> A;        // Age scaled: (A-min(A))/10 
     array[NO] int<lower=1> Tx;                 // Treatment received
-    array[NO] real D;                          // Outcome: observed heavy drinking tendency (coined, for scaffolding larger models later)
+    // array[NO] real D;                          // Outcome: observed heavy drinking tendency (coined, for scaffolding larger models later)
+    array[NO] int<lower=0> D;
 }
 parameters {
     // IRT model params
@@ -42,7 +43,6 @@ parameters {
     real B_AD;               // Age on outcome
     real B_ED;               // Efficacy on outcome
     real alpha;              // global intercept (D linear model)
-    real<lower=2> sigma_D;   // std outcome, conditional on Efficacy, Age & Treatment
 
     // Subject varying effects parameters (non-centered parameterization)
     array[4] real<lower=0> sigma_subj;
@@ -77,7 +77,6 @@ model {
     B_AD ~ std_normal();
     B_ED ~ std_normal();
     alpha ~ std_normal();
-    sigma_D ~ exponential(1);
 
     to_vector(Z_subj) ~ std_normal();
     sigma_subj ~ exponential(1.8);
@@ -95,8 +94,8 @@ model {
         // mu =  alpha + (  Alpha_TD    +         G_TD * t       ) +     beta_TD*t         + beta_AD*A + B_ED*E
         mu[i] =  alpha + (V_subj[sid,4] + V_subj[sid,3]*time_O[i]) + B_TD[Tx[i]]*time_O[i] + B_AD*A[i] + B_ED*E[sid,time_O[i]+1];
     }
-    D ~ normal( mu, sigma_D );
-        
+    D ~ poisson( pow(1.35, -mu) );  // use base=1.35 instead of natural exponent
+
     // IRT submodel
     vector[NI] phi;
     for ( i in 1:NI )
@@ -112,13 +111,3 @@ generated quantities {
    G_TD      =  V_subj[,3];
    Alpha_TD  =  V_subj[,4];
 }
-
-/*
-    Next:
-        1. (zero-inflated) Poisson outcome
-            -> add random intercepts/slopes to reduce un-modeled variance, hence
-               naturally increasing the (modeled) dispersion on the outcome
-               scale, saving the need to utilize over-dispersed mixture models.
-        2. Random subject intercepts/slopes on alpha/B_TE
-            -> correlation among random intercepts/slopes (bivariate normal)
-*/
