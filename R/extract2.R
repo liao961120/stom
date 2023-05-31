@@ -77,39 +77,6 @@ extract2 = function(fit) {
 }
 
 
-#' Get parameter information of a simulation
-#'
-#' The input list can be nested in arbitrary levels, as long as the names at the
-#' last level matches those used in the corresponding Stan model.
-#'
-#' @param lst List. A list of parameter values from the simulation. Refer
-#'        to `system.file("cases", "treatment_dynamics", "2-varying-effect-model", "simulation.R", package="stom")`
-#'        for the data structure of the input. It should match the structure of
-#'        `sim_data()$params`.
-#' @return A list of parameters with their dimension info.
-#' @export
-#' @examples
-#' fp = system.file("cases", "treatment_dynamics", "1-simplified-normal-model", "simulation.R", package="stom")
-#' source(fp)
-#' d = sim_data()
-#' str(d$params)
-#' get_sim_param_info(d$params)
-get_sim_param_info = function(lst) {
-    paramInfo = make_info_store()
-    get_param_info_recursive = function(lst, nm=NULL) {
-        if ( !is.list(lst) ) {
-            paramInfo(lst, nm)
-            return(lst)
-        }
-        lst = lapply( names(lst), function(n) {
-            get_param_info_recursive(lst[[n]], n)
-        })
-        paramInfo()
-    }
-    return( get_param_info_recursive(lst) )
-}
-
-
 #' Simplified array data type of R to match Stan's parameter dimensions
 #' Vector: 1D;  matrix: 2D;  array: 3D or above
 array_type = function(x) {

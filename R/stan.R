@@ -87,27 +87,57 @@ extract = function(fit, pars=NULL, lp=F) {
 #' @examples
 #' fp = system.file("cases", "wine_network", "wine2_normal_first_level2.RDS", package="stom")
 #' m = readRDS(fp)
+#'
+#' # Posterior summary data frame
 #' d = precis( m, depth=3 )
 #' get_pars( d, c("Int", "Int_raw") )
 #'
+#' # Posterior sample data frame
 #' d = extract( m )
 #' get_pars( d, "Int, Int_raw" )
+#'
+#' # Simulation list
+#' d = list(
+#'     params = list(
+#'         B_AE = 2,
+#'         E = matrix(0, 2, 2),
+#'         kappa = 1:5,
+#'         subj = list(
+#'             sigma_subj = 1:3,
+#'             Rho = matrix(1, 2, 2),
+#'             Alpha_TD = 1
+#'         )
+#'     )
+#' )
+#' get_pars(d, "B_AE")
+#' get_pars( d, "kappa, Rho" )
 get_pars = function(d, pars) {
     pars = parse_pars(pars)
     pat = pat_param(pars)
-    # precis data frame
-    if ("variable" %in% names(d)) {
+    # Precis data frame
+    if ( "variable" %in% names(d) && is.data.frame(d) ) {
         suppressWarnings({
             d = d[grepl(pat, d$variable), ]
         })
-    } else {
-        # posterior sample data frame
+        return(d)
+    }
+    # Posterior sample data frame
+    if ( is.data.frame(d) ) {
         idx_col = grepl(pat, names(d))
         suppressWarnings({
             d = d[, idx_col]
         })
+        return(d)
     }
-    d
+    # Simulation list
+    if ( is.list(d) && "params" %in% names(d) ) {
+        if (length(pars) == 1)
+            return( get_deepest_elem_in_lst(d$params, pars[1]) )
+        lst = lapply( pars, function(p) get_deepest_elem_in_lst(d$params, p) )
+        names(lst) = pars
+        return(lst)
+    }
+    stop("Unsupported input data structure!")
 }
 
 #' Convert posterior data frame to a list of array
@@ -241,7 +271,7 @@ pat_depth_atom = function(depth=1) {
 }
 
 pat_param = function(x) {
-    if (endsWith(x, "]")) {
+    if (any(endsWith(x, "]"))) {
         x = gsub( "[", "\\[", x, fixed=T )
         x = gsub( "]", "\\]", x, fixed=T )
         return(x)
