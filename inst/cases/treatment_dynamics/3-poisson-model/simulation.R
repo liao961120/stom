@@ -8,16 +8,16 @@ sim_data = function(alpha = 0,  # outcome global intercept ( to shift poisson to
                     B_AE = .1,
                     B_TE = c(.3, .6, 1),
                     B_AD = .2,
-                    B_ED = .6,
+                    B_ED = 1,
                     B_TD = c(0, 0, 0),
                     outcome = "pois",
                     seed=187) {
 
     set.seed(seed)
 
-    Ns = 3 * 30  # number of subjects
-    Ntx = 3    # number of treatments
-    Nt = 4     # number of time points
+    Ns = 3 * 50  # number of subjects
+    Ntx = 3      # number of treatments
+    Nt = 4       # number of time points
     Tx = rep(1:Ntx, each = Ns / Ntx)
     A = rtnorm(
         Ns,

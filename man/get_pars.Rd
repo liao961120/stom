@@ -21,9 +21,28 @@ Select/Filter parameters from precis/extract data frames
 \examples{
 fp = system.file("cases", "wine_network", "wine2_normal_first_level2.RDS", package="stom")
 m = readRDS(fp)
+
+# Posterior summary data frame
 d = precis( m, depth=3 )
 get_pars( d, c("Int", "Int_raw") )
 
+# Posterior sample data frame
 d = extract( m )
 get_pars( d, "Int, Int_raw" )
+
+# Simulation list
+d = list(
+    params = list(
+        B_AE = 2,
+        E = matrix(0, 2, 2),
+        kappa = 1:5,
+        subj = list(
+            sigma_subj = 1:3,
+            Rho = matrix(1, 2, 2),
+            Alpha_TD = 1
+        )
+    )
+)
+get_pars(d, "B_AE")
+get_pars( d, "kappa, Rho" )
 }

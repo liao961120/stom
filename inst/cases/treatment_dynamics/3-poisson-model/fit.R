@@ -1,7 +1,7 @@
 library(stom)
 source("simulation.R")
 
-d = sim_data(outcome="pois", seed = 1999)
+d = sim_data(outcome="pois", alpha=-1, seed = 777)
 m = stan( "m2.stan", data=d$dat, chains=3, parallel_chains=3 )
 save_model(m)
 # m = readRDS("m1.RDS")
@@ -22,14 +22,14 @@ for ( p in c("E", "I", "kappa") ) {
 
 
 ######## Check Beta params recovery #########
-beta = c( "B_TE", "B_AE", "B_AD", "B_ED", "B_TD" )
+beta = c( "B_TE", "B_AE", "B_AD", "B_ED", "B_TD", "alpha" )
 b_true = lapply( beta, function(p) d$params[[p]] ) |> unlist()
 b_est = lapply( beta, function(p) get_pars(s, p)$mean ) |> unlist()
 b_est_upp = lapply( beta, function(p) get_pars(s, p)$q5 ) |> unlist()
 b_est_low = lapply( beta, function(p) get_pars(s, p)$q95 ) |> unlist()
-# b_true = c(b_true, rep(0,3) )  # no B_TD effect
+b_true = c(b_true, rep(-1,1) )  # no B_TD effect
 
-plot( b_true, pch=19, ylim=c(-1, 1.2) )
+plot( b_true, pch=19, ylim=c(-1.6, 1.6) )
 abline(h = 0, lty="dashed", col="grey")
 points( b_est, col=2 )
 for ( i in seq_along(b_est) )
@@ -152,8 +152,9 @@ plot_model_prediction(Sid=15)  # Treatment 1
 
 
 
-
-
+sigma = get_pars(s, "sigma_subj")$mean
+Rho = get_pars(s, "Rho")$mean |> matrix(nrow=4,ncol=4)
+diag(sigma) %*% Rho %*% diag(sigma)
 
 ####### Compute Estimands (treatment comparisons) #########
 
@@ -164,15 +165,20 @@ s = stom::precis(m, 5)
 post = stom::extract2(m)
 
 # generates to unseen population (simulate subjects from Rho)
-predict_new = function(Tid, Age=20, time=1:4, idx=1) {
+sim_V_subj = function(Ns, N=3000) {
+    S = matrix(0, nrow=4, ncol=4)
+    for ( i in 1:N ) {
+        Rho        = post$Rho(i)
+        sigma_subj = post$sigma_subj(i)
+        S = S + diag(sigma_subj) %*% Rho %*% diag(sigma_subj)
+    }
+    S = S / N
+    V = mvrnorm( Ns, mu=rep(0,4), Sigma=S )
+    colnames(V) = c('G_TE', 'Delta_TE', 'G_TD', 'Alpha_TD')
+    V
+}
+predict_new = function(Tid, V, Age=20, time=1:4, idx=1, latent=F) {
     A = ( Age - d$other$minA ) / 10
-
-    # Simulate new subject
-    Rho        = post$Rho(idx)
-    sigma_subj = post$sigma_subj(idx)
-    S = diag(sigma_subj) %*% Rho %*% diag(sigma_subj)
-    V = mvrnorm( 1, mu=rep(0,4), Sigma=S )
-    names(V) = c('G_TE', 'Delta_TE', 'G_TD', 'Alpha_TD')
 
     alpha   = post$alpha(idx)
     b_AD    = post$B_AD(idx)
@@ -186,48 +192,82 @@ predict_new = function(Tid, Age=20, time=1:4, idx=1) {
     b_TE = post$B_TE(idx)
 
 
-    muE = delta + (V[2] + V[1]*(time-1) ) + b_AE*A + b_TE[Tid]*(time-1)
-    E = rnorm( 1, muE, sigma_ET )
+    E = sapply( time, function(t) {
+        muE = delta + (V[2] + V[1]*(t-1) ) + b_AE*A + b_TE[Tid]*(t-1)
+        rnorm( 1, muE, sigma_ET )
+    })
 
-    muD = alpha + (V[4] + V[3]*(time-1) ) + b_TD[Tid]*(time-1) + b_AD*A + b_ED*E
-    D = rpois( 1, lambda=1.35^(-muD) )
+    D = sapply( time, function(t) {
+        muD = alpha + (V[4] + V[3]*(t-1) ) + b_TD[Tid]*(t-1) + b_AD*A + b_ED*E[t]
+        if (latent) return(muD)
+        rpois( 1, lambda=1.35^(-muD) )
+    })
     D
 }
 
 
-
-set.seed(10)
-
+set.seed(9878)
 N_distr = 3000
 age_y = rep(20:29, each=N_distr/10)
+V_Subj = sim_V_subj(Ns=N_distr)
 
+# Outcome (count) scale
 T1 = sapply( 1:N_distr, function(i) {
     age = age_y[i]
-    pre =  predict_new(Tid=1, Age=age, time = 1, idx = i)
-    post = predict_new(Tid=1, Age=age, time = 4, idx = i)
-    pre - post
+    V = V_Subj[i, ]
+    pred =  predict_new(Tid=1, V=V, Age=age, idx = i)
+    pred[4] - pred[1]
 })
 
 T2 = sapply( 1:N_distr, function(i) {
     age = age_y[i]
-    pre =  predict_new(Tid=2, Age=age, time = 1, idx = i)
-    post = predict_new(Tid=2, Age=age, time = 4, idx = i)
-    pre - post
+    V = V_Subj[i, ]
+    pred =  predict_new(Tid=2, V=V, Age=age, idx = i)
+    pred[4] - pred[1]
 })
 
 T3 = sapply( 1:N_distr, function(i) {
     age = age_y[i]
-    pre =  predict_new(Tid=3, Age=age, time = 1, idx = i)
-    post = predict_new(Tid=3, Age=age, time = 4, idx = i)
-    pre - post
+    V = V_Subj[i, ]
+    pred =  predict_new(Tid=3, V=V, Age=age, idx = i)
+    pred[4] - pred[1]
 })
 
-rethinking::simplehist(T3)
+rethinking::dens(T1, adj=1.8, ylim=c(0, .2), xlim=c(-15, 45))
+rethinking::dens(T2, adj=1.8, add=T, col=4)
+rethinking::dens(T3, adj=1.8, add=T, col=2)
+
+mean( T1 < 0 )
+mean( T2 < 0 )
+mean( T3 < 0 )
+mean( T1[T1 < 0] )
+mean( T2[T2 < 0] )
+mean( T3[T3 < 0] )
 
 
+# Latent scale
+T1_L = sapply( 1:N_distr, function(i) {
+    age = age_y[i]
+    V = V_Subj[i, ]
+    pred =  predict_new(Tid=1, V=V, Age=age, idx = i, latent = T)
+    pred[4] - pred[1]
+})
+
+T2_L = sapply( 1:N_distr, function(i) {
+    age = age_y[i]
+    V = V_Subj[i, ]
+    pred =  predict_new(Tid=2, V=V, Age=age, idx = i, latent = T)
+    pred[4] - pred[1]
+})
+
+T3_L = sapply( 1:N_distr, function(i) {
+    age = age_y[i]
+    V = V_Subj[i, ]
+    pred =  predict_new(Tid=3, V=V, Age=age, idx = i, latent = T)
+    pred[4] - pred[1]
+})
 
 
-
-
-
-
+rethinking::dens(T1_L, adj=.8, xlim=c(-20, 30))
+rethinking::dens(T2_L, adj=.8, add=T, col=4)
+rethinking::dens(T3_L, adj=.8, add=T, col=2)
