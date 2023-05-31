@@ -50,7 +50,9 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">precis</span><span class="op">(</span><span class="va">fit</span>, depth <span class="op">=</span> <span class="fl">1</span>, pars <span class="op">=</span> <span class="cn">NULL</span>, lp <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">extract</span><span class="op">(</span><span class="va">fit</span>, pars <span class="op">=</span> <span class="cn">NULL</span>, lp <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">extract</span><span class="op">(</span><span class="va">fit</span>, pars <span class="op">=</span> <span class="cn">NULL</span>, lp <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">erect</span><span class="op">(</span><span class="va">d</span>, <span class="va">pars</span>, col <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -74,6 +76,10 @@ Passed to the <code>variables</code> argument in cmdstanr's
 <dt>lp</dt>
 <dd><p>Boolean. Whether to include log probabilities in output.</p></dd>
 
+
+<dt>d</dt>
+<dd><p>data frame. Posterior summary data frame returned from <code>precis()</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -89,7 +95,8 @@ Passed to the <code>variables</code> argument in cmdstanr's
 <span class="r-in"><span><span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="va">fp</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Posterior distribution summary</span></span></span>
-<span class="r-in"><span><span class="fu">precis</span><span class="op">(</span> <span class="va">m</span>, depth<span class="op">=</span><span class="fl">2</span>, pars<span class="op">=</span><span class="st">"Int,J"</span> <span class="op">)</span>  <span class="co"># or pars=c("Int", "J")</span></span></span>
+<span class="r-in"><span><span class="va">d</span> <span class="op">=</span> <span class="fu">precis</span><span class="op">(</span> <span class="va">m</span>, depth<span class="op">=</span><span class="fl">2</span>, pars<span class="op">=</span><span class="st">"Int,J"</span> <span class="op">)</span>  <span class="co"># or pars=c("Int", "J")</span></span></span>
+<span class="r-in"><span><span class="va">d</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    variable        mean        sd         q5        q95     rhat  ess_bulk</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  Int[1,1]  1.46065860 0.4155012  0.7738191  2.1368475 1.005829  596.2273</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  Int[2,1]  1.60776153 0.3527793  1.0167770  2.1725515 1.004828  638.9929</span>
@@ -109,6 +116,27 @@ Passed to the <code>variables</code> argument in cmdstanr's
 <span class="r-out co"><span class="r-pr">#&gt;</span> 16    J[12]  1.80909484 0.2842524  1.3477965  2.2772970 1.005867 1017.2190</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 17    J[13]  0.06987397 0.2781449 -0.3794031  0.5328615 1.006137  983.5072</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18    J[14]  0.24525450 0.2882109 -0.2209305  0.7204153 1.008201  998.5836</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Reconstruct high-dimensional data structure from posterior means</span></span></span>
+<span class="r-in"><span><span class="fu">erect</span><span class="op">(</span> <span class="va">d</span>, <span class="st">"Int"</span> <span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]       [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.460659 -0.2932317</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.607762  0.0000000</span>
+<span class="r-in"><span><span class="fu">erect</span><span class="op">(</span> <span class="va">d</span>, <span class="st">"Int"</span>, <span class="st">"sd"</span> <span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.4155012 0.4002178</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.3527793 0.0000000</span>
+<span class="r-in"><span><span class="fu">erect</span><span class="op">(</span> <span class="va">d</span>, <span class="st">"Int,J"</span> <span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Int</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]       [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.460659 -0.2932317</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 1.607762  0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $J</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.38478502  1.40204140  0.17605415  0.34203082 -0.25537684 -0.40992786</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  0.46396758 -1.51783270 -0.94599734  0.74630456 -1.10221230  1.80909484</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13]  0.06987397  0.24525450</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Extract posterior samples</span></span></span>
 <span class="r-in"><span><span class="va">post</span> <span class="op">=</span> <span class="fu">extract</span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></span>

@@ -3,11 +3,14 @@
 \name{precis}
 \alias{precis}
 \alias{extract}
+\alias{erect}
 \title{Posterior summary and extraction from CmdStanFit objects}
 \usage{
 precis(fit, depth = 1, pars = NULL, lp = F)
 
 extract(fit, pars = NULL, lp = F)
+
+erect(d, pars, col = "mean")
 }
 \arguments{
 \item{fit}{A \code{CmdStanFit} object.}
@@ -21,6 +24,8 @@ Passed to the \code{variables} argument in cmdstanr's
 \verb{$summary()}/\verb{$draws()}.}
 
 \item{lp}{Boolean. Whether to include log probabilities in output.}
+
+\item{d}{data frame. Posterior summary data frame returned from \code{\link[=precis]{precis()}}.}
 }
 \value{
 A data frame
@@ -34,7 +39,13 @@ fp = system.file("cases", "wine_network", "wine2_normal_first_level2.RDS", packa
 m = readRDS(fp)
 
 # Posterior distribution summary
-precis( m, depth=2, pars="Int,J" )  # or pars=c("Int", "J")
+d = precis( m, depth=2, pars="Int,J" )  # or pars=c("Int", "J")
+d
+
+# Reconstruct high-dimensional data structure from posterior means
+erect( d, "Int" )
+erect( d, "Int", "sd" )
+erect( d, "Int,J" )
 
 # Extract posterior samples
 post = extract(m)
