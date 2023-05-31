@@ -18,7 +18,7 @@ development:
 reference:
 - title: "Stan"
   desc: >
-    Wrappers of cmdstanr.
+    Working with cmdstanr.
   contents:
   - stan
   - save_model
@@ -32,7 +32,7 @@ reference:
   - matches("cmdstan")
 - title: "Stats"
   desc: >
-    Utilities for working with stats.
+    Utilities for stats.
   contents:
   - rbern
   - rordlogit
@@ -41,7 +41,7 @@ reference:
   - standardize
 - title: "Plotting"
   desc: >
-    Plotting-related utilities.
+    Utilities for plotting.
   contents:
   - col.alpha
 - title: "Documentation"
@@ -54,7 +54,7 @@ reference:
   - matches("docs|html|pdf")
 - title: "Command Line Builder"
   desc: >
-    Command line program helpers.
+    Helpers for command line programs.
   contents:
   - get_cli_programs
   - to_unix_path
