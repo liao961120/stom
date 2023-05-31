@@ -30,6 +30,7 @@ reference:
   - get_sim_param_info
   - get_stan_param_info
   - matches("cmdstan")
+  - prepare_drive_model
 - title: "Stats"
   desc: >
     Utilities for stats.

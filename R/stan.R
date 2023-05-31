@@ -21,6 +21,7 @@ stan = function(stan_file, data, refresh = 250,...) {
 #' Save `CmdStanFit` object as RDS with a cross-platform consistent name
 #'
 #' @param m A `CmdStanFit` object returned from `stom::stan()`.
+#' @seealso [prepare_drive_model()]
 #' @export
 save_model = function(m, fp=NULL) {
     if ( is.null(fp) ) {

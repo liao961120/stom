@@ -4,9 +4,6 @@
 !*.*
 #########################################
 
-*.rds
-!*.RDS
-inst/cases/treatment_dynamics/3-poisson-model/*.RDS
 .vscode
 *.exe
 .Rproj.user
@@ -16,3 +13,8 @@ inst/cases/treatment_dynamics/3-poisson-model/*.RDS
 *.fdb_latexmk
 *.fls
 *.xdv
+
+# Cached models found in Google Drive
+*.rds
+*.RDS
+ToGDrive

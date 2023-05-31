@@ -18,3 +18,6 @@ Depends: R (>= 3.6.0)
 Suggests: 
     pdftools,
     R6
+Enhances: 
+    cli,
+    rprojroot
