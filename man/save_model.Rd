@@ -12,3 +12,6 @@ save_model(m, fp = NULL)
 \description{
 Save \code{CmdStanFit} object as RDS with a cross-platform consistent name
 }
+\seealso{
+\code{\link[=prepare_drive_model]{prepare_drive_model()}}
+}
