@@ -29,7 +29,7 @@ save_model = function(m, fp=NULL) {
         fp = stom::replace_file_ext(fp, ".RDS")
     }
     m$save_object(fp)
-    cat("CmdStanFit Object saved to", fp, "\n")
+    cli::cli_alert_success("CmdStanFit Object saved to {.file {fp}}")
 }
 
 
@@ -43,6 +43,7 @@ save_model = function(m, fp=NULL) {
 #'        Passed to the `variables` argument in cmdstanr's
 #'        `$summary()`/`$draws()`.
 #' @param lp Boolean. Whether to include log probabilities in output.
+#' @param d data frame. Posterior summary data frame returned from [precis()].
 #' @return A data frame
 #' @export
 #' @examples
@@ -51,7 +52,13 @@ save_model = function(m, fp=NULL) {
 #' m = readRDS(fp)
 #'
 #' # Posterior distribution summary
-#' precis( m, depth=2, pars="Int,J" )  # or pars=c("Int", "J")
+#' d = precis( m, depth=2, pars="Int,J" )  # or pars=c("Int", "J")
+#' d
+#'
+#' # Reconstruct high-dimensional data structure from posterior means
+#' erect( d, "Int" )
+#' erect( d, "Int", "sd" )
+#' erect( d, "Int,J" )
 #'
 #' # Extract posterior samples
 #' post = extract(m)
@@ -75,6 +82,20 @@ extract = function(fit, pars=NULL, lp=F) {
   if (!lp)
     d = d[ , colnames(d) != "lp__" ]
   return(d)
+}
+
+
+#' @rdname precis
+#' @export
+erect = function(d, pars, col="mean") {
+    pars = parse_pars( pars )
+    if ( length(pars) == 1 ) {
+        d = get_pars(d, pars)
+        return( bracket_to_array(d$variable, d[[col]]) )
+    }
+    out = lapply( pars, function(p) erect(d, p) )
+    names(out) = pars
+    out
 }
 
 
