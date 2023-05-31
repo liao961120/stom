@@ -32,7 +32,10 @@ prepare_drive_model = function() {
 
 
 list_local_models = function() {
+    ori_dir = getwd()
+    setwd(stom_root())
     fps = list.files("inst", "\\.RDS$", recursive = T, full.names = T)
+    setwd(ori_dir)
     fps
 }
 
