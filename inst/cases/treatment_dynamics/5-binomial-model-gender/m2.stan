@@ -23,7 +23,7 @@ data {
     array[NO] real<lower=0,upper=20> A;        // Age scaled: (A-min(A))/10 
     array[NO] int<lower=1> Tx;                 // Treatment received
     array[NO] int<lower=1,upper=2> G;          // Gender
-    array[NO] int<lower=0,upper=14> D;         // Binomial outcome (days of heavy drinks in last 14 days)
+    array[NO] int<lower=0,upper=14> D;         // Binomial outcome (days of heavy drinking in last 14 days)
 }
 parameters {
     // IRT model params
@@ -70,22 +70,25 @@ transformed parameters {
                                         // diag(sigma) %*%  L       %*%   Z   )^T
 }
 model {
+    // Priors for IRT parameters
     E_raw ~ normal(0, 2);
     zI_raw ~ std_normal();
     sigma_I ~ exponential(1);
 
-    // B_TE ~ std_normal(); 
+    // Priors for indirect treatment effects (T -> E -> D)
     mu_B_TE ~ std_normal();
     sigma_B_TE ~ exponential(1.5);
     B_AE ~ std_normal();
+    B_ED ~ std_normal();
     delta ~ std_normal();
     sigma_ET ~ exponential(1.5);
     
+    // Priors for direct treament effects (T -> D)
     B_TD ~ std_normal();
     B_AD ~ std_normal();
-    B_ED ~ std_normal();
     alpha ~ std_normal();
 
+    // Priors for subject (correlated) varying effects
     to_vector(Z_subj) ~ std_normal();
     sigma_subj ~ exponential(1.8);
     L_cholesky ~ lkj_corr_cholesky(2);
@@ -114,9 +117,8 @@ generated quantities {
     corr_matrix[4] Rho;
     cov_matrix[4] S;
     vector[4] v_sigma_subj = to_vector(sigma_subj);
-    // matrix[4,4] diag_sigma_subj = diag_matrix( to_vector(sigma_subj) );
     Rho =  multiply_lower_tri_self_transpose(L_cholesky);  // R = LL'
-    // S = diag_sigma_subj * Rho * diag_sigma_subj;
+    // S = diag(sigma_subj) %*% Rho %*% diag(sigma_subj) (R syntax)
     S = diag_post_multiply(
             diag_pre_multiply(v_sigma_subj, Rho), 
             v_sigma_subj

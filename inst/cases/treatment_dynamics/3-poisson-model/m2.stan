@@ -22,8 +22,7 @@ data {
     array[NO] int<lower=0,upper=Nt-1> time_O;  // time point of obs.
     array[NO] real<lower=0,upper=20> A;        // Age scaled: (A-min(A))/10 
     array[NO] int<lower=1> Tx;                 // Treatment received
-    // array[NO] real D;                          // Outcome: observed heavy drinking tendency (coined, for scaffolding larger models later)
-    array[NO] int<lower=0> D;
+    array[NO] int<lower=0> D;                  // Poisson outcome (days of heavy drinking)
 }
 parameters {
     // IRT model params

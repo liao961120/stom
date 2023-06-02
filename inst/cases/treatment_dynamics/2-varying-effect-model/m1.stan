@@ -111,10 +111,5 @@ generated quantities {
 
 /*
     Next:
-        1. (zero-inflated) Poisson outcome
-            -> add random intercepts/slopes to reduce un-modeled variance, hence
-               naturally increasing the (modeled) dispersion on the outcome
-               scale, saving the need to utilize over-dispersed mixture models.
-        2. Random subject intercepts/slopes on alpha/B_TE
-            -> correlation among random intercepts/slopes (bivariate normal)
+        1. Poisson outcome
 */

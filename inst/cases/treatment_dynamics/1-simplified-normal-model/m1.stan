@@ -4,7 +4,6 @@ data {
     int Nt;  // num of time points
     int Nk;  // num of Likert scale points
     int Ni;  // num of items in the self-efficacy scale
-    // int Nk2; // for kappa
 
     // Item-level responses (N=Ns*Ni*Nt)
     int NI;
@@ -17,7 +16,7 @@ data {
     int NO;
     array[NO] int<lower=1,upper=Ns> Sid_O;     // Subject ID
     array[NO] int<lower=0,upper=Nt-1> time_O;  // time point of obs.
-    array[NO] real<lower=0,upper=100> A;       // Age scaled: (A-min(A))/10 
+    array[NO] real<lower=0,upper=100> A;       // Age scaled: (A-min(A)) / 10 
     array[NO] int<lower=1> Tx;                 // Treatment received
     array[NO] real D;                          // Outcome: observed heavy drinking tendency (coined, for scaffolding larger models later)
 }
@@ -27,8 +26,6 @@ parameters {
     real<lower=0> sigma_I;
     vector[Ni-1] zI_raw;
     ordered[Nk-1] kappa;
-    // positive_ordered[Nk2] kappa_pos;
-    // positive_ordered[Nk2] kappa_neg;
 
     // Mediation model params
     vector[Ntx] B_TE;        // Treatment on Efficacy (indirect effect)
@@ -49,17 +46,8 @@ transformed parameters {
     I = sigma_I * append_row( zI_raw,-sum(zI_raw) );
     matrix[Ns,Nt] E;
     E = to_matrix( append_row(E_raw, -sum(E_raw)), Ns, Nt );
-    // vector[Nk-1] kappa;
-    // if ( fmod(Nk-1, 2) == 0 )
-    //     kappa = append_row( reverse(-kappa_neg), kappa_pos );
-    // else
-    //     kappa = append_row( 
-    //         append_row( reverse(-kappa_neg), 0 ),
-    //         kappa_pos
-    //     );
 }
 model {
-    // to_vector(E) ~ normal(0, 2.5);
     E_raw ~ normal(0, 2);
     zI_raw ~ std_normal();
     sigma_I ~ exponential(1);
@@ -69,7 +57,6 @@ model {
     alpha ~ normal(0, 1.5);
     sigma_ET ~ exponential(1);
     
-
     B_TD ~ normal(0, 1.5);
     B_AD ~ normal(0, 1.5);
     B_ED ~ normal(0, 1.5);
@@ -93,10 +80,7 @@ model {
 
 /*
     Next:
-        1. (zero-inflated) Poisson outcome
-            -> add random intercepts/slopes to reduce un-modeled variance, hence
-               naturally increasing the (modeled) dispersion on the outcome
-               scale, saving the need to utilize over-dispersed mixture models.
+        1. Poisson outcome
         2. Random subject intercepts/slopes on alpha/B_TE
             -> correlation among random intercepts/slopes (bivariate normal)
 */
