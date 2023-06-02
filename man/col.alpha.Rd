@@ -2,10 +2,20 @@
 % Please edit documentation in R/plotting.R
 \name{col.alpha}
 \alias{col.alpha}
-\title{RGB to RGBA}
+\alias{shade}
+\title{Functions stolen from the rethinking package}
 \usage{
 col.alpha(acol, alpha = 0.5)
+
+shade(
+  object,
+  lim,
+  label = NULL,
+  col = col.alpha("black", 0.15),
+  border = NA,
+  ...
+)
 }
 \description{
-Stolen from \code{rethinking::col.alpha()}.
+Functions stolen from the rethinking package
 }
