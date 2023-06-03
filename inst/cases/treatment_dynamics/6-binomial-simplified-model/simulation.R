@@ -26,7 +26,8 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
     E = sapply(t, function(time) {
         # latent trait across time points (including E0)
         b_TE = sapply( 1:Ns, function(i) B_TE[ G[i],Tx[i] ] )
-        E_subj + B_AE * A + b_TE * time
+        muE = E_subj + B_AE * A + b_TE * time
+        rnorm( Ns, muE, 0.3 )  # error on each time point of measurement
     })
     E = E - mean(E)  # 0-centered
     D_latent = sapply(t, function(time) {

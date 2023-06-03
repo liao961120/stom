@@ -26,7 +26,6 @@ data {
     array[NO] int<lower=1> Tx;                 // Treatment received
     array[NO] int<lower=1,upper=2> G;          // Gender
     array[NO] int<lower=0,upper=14> D;         // Binomial outcome (days of heavy drinking in last 14 days)
-
 }
 parameters {
     // IRT model params
@@ -42,7 +41,9 @@ parameters {
     // real <lower=0> sigma_B_TE; 
     real B_AE;                 // Age on Efficacy
     real delta;                // global intercept (E linear model)
-    real<lower=0> sigma_ET;    // std Efficacy, conditional on Treatment & Age
+    real<lower=0,upper=2> sigma_ET;   // std Efficacy, conditional on Treatment & Age
+    vector[Ns] z_E_subj;              // Baseline subject efficacy
+    real<lower=0,upper=2.5> sigma_E_subj;
 
     // Outcome params
     vector[Ntx] B_TD;        // Treatment on Outcome (direct effect)
@@ -56,6 +57,10 @@ transformed parameters {
     I = sigma_I * append_row( zI_raw,-sum(zI_raw) );
     matrix[Ns,Nt] E;
     E = to_matrix( append_row(E_raw, -sum(E_raw)), Ns, Nt );
+
+    // Partial pool subject intercept
+    vector[Ns] E_subj;
+    E_subj = z_E_subj * sigma_E_subj;
 
     // Partial-pooled B_TE
     // matrix[2,Ntx] B_TE;
@@ -74,7 +79,10 @@ model {
     B_AE ~ std_normal();
     B_ED ~ std_normal();
     delta ~ std_normal();
-    sigma_ET ~ exponential(1.5);
+    sigma_ET ~ normal(.5, .5);  // half-normal
+    // E_subj ~ std_normal();
+    z_E_subj ~ std_normal();
+    sigma_E_subj ~ normal(1, .5); // half-normal
     
     // Priors for direct treament effects (T -> D)
     B_TD ~ std_normal();
@@ -87,12 +95,12 @@ model {
     vector[NO] mu;
     for ( i in 1:NO ) {
         sid = Sid_O[i];
-        // mu = delta + beta_AE*A +         beta_TE*t
-        muET = delta + B_AE*A[i] + B_TE[G[i],Tx[i]]*time_O[i];
+        // mu = delta + E_subj     + beta_AE*A +         beta_TE*t
+        muET = delta + E_subj[sid] + B_AE*A[i] + B_TE[G[i],Tx[i]]*time_O[i];
         E[sid,time_O[i]+1] ~ normal( muET, sigma_ET );
-        // mu =  alpha +     beta_TD*t         + beta_AD*A + B_ED*E
-        mu[i] =  alpha + B_TD[Tx[i]]*time_O[i] + B_AD*A[i] + B_ED*E[sid,time_O[i]+1];
     }
+    for ( i in 1:NO )
+        mu[i] =  alpha + B_TD[Tx[i]]*time_O[i] + B_AD*A[i] + B_ED*E[sid,time_O[i]+1];
     D ~ binomial_logit( 14, -mu );
 
     // IRT submodel

@@ -4,7 +4,7 @@ source("simulation.R")
 set.seed(987)
 d = sim_data( alpha=-.5 )
 m = stan( "m1.stan", data=d$dat, chains=3, parallel_chains=3 )
-# save_model(m)
+save_model(m)
 # m = readRDS("m1.RDS")
 
 s = stom::precis(m, 5)
