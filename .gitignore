@@ -18,3 +18,4 @@
 *.rds
 *.RDS
 ToGDrive
+.DS_Store
