@@ -29,8 +29,7 @@ data {
 }
 parameters {
     // IRT model params
-    // vector[Ns*Nt-1] E_raw;
-    matrix[Ns,Nt] E_raw;
+    vector[Ns*Nt-1] E_raw;
     real<lower=0> sigma_I;
     vector[Ni-1] zI_raw;
     ordered[Nk-1] kappa;
@@ -41,12 +40,10 @@ parameters {
     // real mu_B_TE;
     // real <lower=0> sigma_B_TE; 
     real B_AE;                 // Age on Efficacy
-    real delta_raw;                // global intercept (E linear model)
-    real<lower=0> sigma_ET_raw;  // std Efficacy, conditional on Treatment & Age
-    
-    // vector[Ns] E_subj;
+    real delta;                // global intercept (E linear model)
+    real<lower=0> sigma_ET;    // std Efficacy, conditional on Treatment & Age
     vector[Ns] z_E_subj;         // Baseline subject efficacy
-    real<lower=0> sigma_E_subj;
+    real<lower=0,upper=2.5> sigma_E_subj;
 
     // Outcome params
     vector[Ntx] B_TD;        // Treatment on Outcome (direct effect)
@@ -59,14 +56,11 @@ transformed parameters {
     vector[Ni] I;
     I = sigma_I * append_row( zI_raw,-sum(zI_raw) );
     matrix[Ns,Nt] E;
-    E = 2 * E_raw;
-    // E = to_matrix( append_row(E_raw, -sum(E_raw)), Ns, Nt );
-
-    real delta = 2 * delta_raw;
+    E = to_matrix( append_row(E_raw, -sum(E_raw)), Ns, Nt );
 
     // Scale sigma_ET from sigma_ET_raw;
-    real sigma_ET;
-    sigma_ET = .5 + sigma_ET_raw;
+    // real<lower=0> sigma_ET;
+    // sigma_ET = .5 + .5 * sigma_ET_raw;
 
     // Partial pool subject intercept
     vector[Ns] E_subj;
@@ -78,7 +72,7 @@ transformed parameters {
 }
 model {
     // Priors for IRT parameters
-    to_vector(E_raw) ~ std_normal();
+    E_raw ~ normal(0, 2);
     zI_raw ~ std_normal();
     sigma_I ~ exponential(1);
 
@@ -88,9 +82,9 @@ model {
     to_vector(B_TE) ~ normal(0, 1.5);
     B_AE ~ std_normal();
     B_ED ~ std_normal();
-    delta_raw ~ std_normal();
-    // sigma_ET ~ normal(.5, .5);  // half-normal
-    sigma_ET_raw ~ std_normal();
+    delta ~ std_normal();
+    sigma_ET ~ normal(.5, .5);  // half-normal
+    // sigma_ET_raw ~ std_normal();
     // E_subj ~ std_normal();
     z_E_subj ~ std_normal();
     sigma_E_subj ~ normal(1, .5); // half-normal
@@ -103,13 +97,13 @@ model {
     // Mediation submodel
     int sid;
     real muET; 
+    vector[NO] mu;
     for ( i in 1:NO ) {
         sid = Sid_O[i];
         // mu = delta + E_subj     + beta_AE*A +         beta_TE*t
         muET = delta + E_subj[sid] + B_AE*A[i] + B_TE[G[i],Tx[i]]*time_O[i];
         E[sid,time_O[i]+1] ~ normal( muET, sigma_ET );
     }
-    vector[NO] mu;
     for ( i in 1:NO )
         mu[i] =  alpha + B_TD[Tx[i]]*time_O[i] + B_AD*A[i] + B_ED*E[sid,time_O[i]+1];
     D ~ binomial_logit( 14, -mu );

@@ -1,8 +1,9 @@
 library(stom)
 source("simulation.R")
 
-set.seed(987)
-d = sim_data( alpha=-.5 )
+set.seed(9877)
+d = sim_data( alpha=-.5,
+              delta=-1.276726)  # configured so that E sums to zero
 m = stan( "m1.stan", data=d$dat, chains=3, parallel_chains=3 )
 save_model(m)
 # m = readRDS("m1.RDS")
@@ -23,13 +24,13 @@ for ( p in c("E", "I", "kappa") ) {
 
 
 ######## Check Beta params recovery #########
-beta = c( "B_TE", "B_AE", "B_AD", "B_ED", "B_TD", "alpha" )
+beta = c( "B_TE", "B_AE", "B_AD", "B_ED", "B_TD", "alpha", "delta" )
 b_true = lapply( beta, function(p) d$params[[p]] ) |> unlist()
 b_est = lapply( beta, function(p) get_pars(s, p)$mean ) |> unlist()
 b_est_upp = lapply( beta, function(p) get_pars(s, p)$q5 ) |> unlist()
 b_est_low = lapply( beta, function(p) get_pars(s, p)$q95 ) |> unlist()
 
-plot( b_true, pch=19, ylim=c(-1.6, 1.6) )
+plot( b_true, pch=19, ylim=c(-2.2, 1.6) )
 abline(h = 0, lty="dashed", col="grey")
 points( b_est, col=2 )
 for ( i in seq_along(b_est) )
@@ -44,7 +45,7 @@ mtext( beta[6], at = 13 )
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
+plot(get_pars(s, "E_subj")$mean ,d$params$E_subj);abline(0,1)
 
 
 

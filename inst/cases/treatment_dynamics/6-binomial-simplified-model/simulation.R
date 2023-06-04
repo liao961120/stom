@@ -3,6 +3,7 @@
 library(stom)
 
 sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson to sensible location)
+                    delta = -1.5,
                     B_AE = .1,
                     B_TE = c(.3, .7,  1.3,
                              .3,  1,   .7),
@@ -22,14 +23,13 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
     A = (A - minA) / 10  # 1 unit of increase = 10 years of increase in original age
     t = 0:(Nt - 1)       # time points of measure
 
-    E_subj = rnorm( Ns, 1 )
+    E_subj = rnorm( Ns )
     E = sapply(t, function(time) {
         # latent trait across time points (including E0)
         b_TE = sapply( 1:Ns, function(i) B_TE[ G[i],Tx[i] ] )
-        muE = E_subj + B_AE * A + b_TE * time
+        muE = delta + E_subj + B_AE * A + b_TE * time
         rnorm( Ns, muE, 0.3 )  # error on each time point of measurement
     })
-    E = E - mean(E)  # 0-centered
     D_latent = sapply(t, function(time) {
         alpha + B_TD[Tx]*time + B_AD * A + B_ED * E[, time + 1]
     })
@@ -95,6 +95,7 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
     )
     true_params = list(
         alpha = alpha,
+        delta = delta,
         B_AE = B_AE,
         B_TE = B_TE,
         B_AD = B_AD,
