@@ -63,7 +63,7 @@ transformed parameters {
 
     // Partial pool subject intercept
     vector[Ns] E_subj;
-    E_subj = z_E_subj * (1 + .7 * sigma_E_subj);
+    E_subj = z_E_subj * (1 + .5 * sigma_E_subj);
 }
 model {
     // Priors for IRT parameters

@@ -3,12 +3,12 @@ source("simulation.R")
 
 set.seed(1877)
 d = sim_data( alpha=-.5,
-              delta=-1.276726)  # configured so that E sums to zero
-m = stan( "m1.stan", data=d$dat,
-          chains=3, parallel_chains=3,
-          adapt_delta=.9 )
-save_model(m)
-# m = readRDS("m1.RDS")
+              delta=-1.276726)
+# m = stan( "m1.stan", data=d$dat,
+#           chains=3, parallel_chains=3,
+#           adapt_delta=.9 )
+# save_model(m)
+m = readRDS("m1.RDS")
 
 s = stom::precis(m, 5)
 ####### Check IRT params recovery ########
@@ -48,8 +48,19 @@ mtext( beta[7], at = 14 )
 mtext( beta[8], at = 15 )
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+# Subject intercept
+E_subj = get_pars(s, "E_subj")
+plot(1, type="n", xlim=c(-3,3), ylim=c(-3,3),
+     xlab="Estimate", ylab="True")
+abline(0,1, col="grey")
+points( E_subj$mean, d$params$E_subj, col=2)
+for ( i in 1:d$dat$Ns ) {
+    m_t = d$params$E_subj[i]
+    q5 = E_subj$q5[i]
+    q95 = E_subj$q95[i]
+    lines( c(q5,q95), c(m_t,m_t), lwd=4, col=col.alpha(2,.3) )
+}
 
-plot(get_pars(s, "E_subj")$mean ,d$params$E_subj);abline(0,1)
 
 
 
