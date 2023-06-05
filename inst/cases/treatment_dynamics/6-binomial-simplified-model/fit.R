@@ -29,7 +29,7 @@ for ( p in c("E", "I", "kappa") ) {
 
 
 ######## Check Beta params recovery #########
-beta = c( "B_TE", "B_AE", "B_AD", "B_ED", "B_TD", "delta", "alpha" )
+beta = c( "B_TE", "B_AE", "B_AD", "B_ED", "B_TD", "delta", "alpha", "sigma_ET" )
 b_true = lapply( beta, function(p) d$params[[p]] ) |> unlist()
 b_est = lapply( beta, function(p) get_pars(s, p)$mean ) |> unlist()
 b_est_upp = lapply( beta, function(p) get_pars(s, p)$q5 ) |> unlist()

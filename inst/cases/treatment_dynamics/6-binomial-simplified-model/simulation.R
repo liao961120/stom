@@ -97,6 +97,7 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
     true_params = list(
         alpha = alpha,
         delta = delta,
+        sigma_ET = sigma_ET,
         B_AE = B_AE,
         B_TE = B_TE,
         B_AD = B_AD,
