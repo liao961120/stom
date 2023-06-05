@@ -36,8 +36,8 @@ parameters {
     real B_AE;           // Age on Efficacy
     real delta;          // global intercept (E linear model)
     
-    // vector[Ns] E_subj;
-    matrix[2,Ns] Z_subj;         // Baseline subject efficacy
+    // Subject efficacy (varying effects)
+    matrix[2,Ns] Z_subj;
     array[2] real<lower=0> sigma_subj;
     cholesky_factor_corr[2] L_cholesky;
 
