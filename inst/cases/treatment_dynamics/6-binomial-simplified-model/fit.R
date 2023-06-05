@@ -1,14 +1,17 @@
 library(stom)
 source("simulation.R")
-
-set.seed(1877)
-d = sim_data( alpha=-.5,
-              delta=-1.276726)
-# m = stan( "m1.stan", data=d$dat,
-#           chains=3, parallel_chains=3,
-#           adapt_delta=.9 )
-# save_model(m)
-m = readRDS("m1.RDS")
+set.seed(1977)
+d = sim_data( alpha=0,
+              delta=-1.8,
+              sigma_subj = .4 )
+m = stan( "m1.stan", data=d$dat,
+          chains=3, parallel_chains=3,
+          init = NULL,        # Initial values for parameters
+          adapt_delta = NULL, # default: .8 (larger results to smaller step sizes)
+          step_size = NULL    # initial step size (default:1)
+        )
+save_model(m)
+# m = readRDS("m1.RDS")
 
 s = stom::precis(m, 5)
 ####### Check IRT params recovery ########
@@ -26,13 +29,13 @@ for ( p in c("E", "I", "kappa") ) {
 
 
 ######## Check Beta params recovery #########
-beta = c( "B_TE", "B_AE", "B_AD", "B_ED", "B_TD", "alpha", "delta", "sigma_ET" )
+beta = c( "B_TE", "B_AE", "B_AD", "B_ED", "B_TD", "delta", "alpha" )
 b_true = lapply( beta, function(p) d$params[[p]] ) |> unlist()
 b_est = lapply( beta, function(p) get_pars(s, p)$mean ) |> unlist()
 b_est_upp = lapply( beta, function(p) get_pars(s, p)$q5 ) |> unlist()
 b_est_low = lapply( beta, function(p) get_pars(s, p)$q95 ) |> unlist()
 
-plot( b_true, pch=19, ylim=c(-2.2, 1.6) )
+plot( b_true, pch=19, ylim=c(-2.8, 2.8) )
 abline(h = 0, lty="dashed", col="grey")
 points( b_est, col=2 )
 for ( i in seq_along(b_est) )
@@ -50,6 +53,7 @@ mtext( beta[8], at = 15 )
 
 # Subject intercept
 E_subj = get_pars(s, "E_subj")
+
 plot(1, type="n", xlim=c(-3,3), ylim=c(-3,3),
      xlab="Estimate", ylab="True")
 abline(0,1, col="grey")
@@ -60,10 +64,6 @@ for ( i in 1:d$dat$Ns ) {
     q95 = E_subj$q95[i]
     lines( c(q5,q95), c(m_t,m_t), lwd=4, col=col.alpha(2,.3) )
 }
-
-
-
-
 
 
 

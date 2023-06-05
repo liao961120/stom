@@ -1,8 +1,13 @@
-library(dplyr)
+library(stom)
 source("simulation.R")
-set.seed(987)
-d = sim_data( alpha=-.5 )
+set.seed(1977)
+d = sim_data( alpha=0,
+              delta=-1.8,
+              sigma_subj = .4 )
 
+d$dat$D_latent |> sd()
+d$dat$D |> rethinking::simplehist()
+d$params$E_subj |> summary()
 
 
 empirical_obs = function(Tid, G, sample_n=3) {

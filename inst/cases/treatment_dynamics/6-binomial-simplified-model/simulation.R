@@ -4,7 +4,8 @@ library(stom)
 
 sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson to sensible location)
                     delta = -1.2,
-                    sigma_ET = .3,
+                    sigma_ET = 0.3,
+                    sigma_subj = 1,
                     B_AE = .1,
                     B_TE = c(.3, .7,  1.3,
                              .3,  1,   .7),
@@ -24,12 +25,11 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
     A = (A - minA) / 10  # 1 unit of increase = 10 years of increase in original age
     t = 0:(Nt - 1)       # time points of measure
 
-    E_subj = rnorm( Ns )
+    E_subj = rnorm( Ns, 0, sigma_subj )
     E = sapply(t, function(time) {
-        # latent trait across time points (including E0)
         b_TE = sapply( 1:Ns, function(i) B_TE[ G[i],Tx[i] ] )
         muE = delta + E_subj + B_AE * A + b_TE * time
-        rnorm( Ns, muE, sigma_ET )  # error on each time point of measurement
+        rnorm(Ns, muE, sigma_ET )
     })
     D_latent = sapply(t, function(time) {
         alpha + B_TD[Tx]*time + B_AD * A + B_ED * E[, time + 1]
@@ -40,7 +40,7 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
     })
 
     Ni = 20  # number of items
-    ei = seq(-6, 6, length = Ni)  # item easiness (sums to zero)
+    ei = seq(-6.3, 6.3, length = Ni)  # item easiness (sums to zero)
     kappa = logit(cumsum(simplex(c(1, 2, 3, 3, 2, 1))))
     kappa = kappa[-length(kappa)]
 
@@ -97,16 +97,17 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
     true_params = list(
         alpha = alpha,
         delta = delta,
-        sigma_ET = sigma_ET,
         B_AE = B_AE,
         B_TE = B_TE,
         B_AD = B_AD,
         B_ED = B_ED,
         B_TD = B_TD,
         E = E,
-        E_subj = E_subj,     # subject baseline Efficacy
         I = ei,
-        kappa = kappa
+        kappa = kappa,
+        # subject varying effects
+        E_subj = E_subj,     # subject baseline Efficacy
+        sigma_subj = sigma_subj
     )
     others = list(
         minA = minA,
