@@ -108,7 +108,7 @@ generated quantities {
             v_sigma_subj
         );
     
-    // Reconstruct E from non-centered parameterized zE and sigma_ET
+    // Reconstruct E from linear model
     matrix[Ns,Nt] E;
     int sid, time;
     for ( i in 1:NO ) {
