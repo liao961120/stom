@@ -9,12 +9,14 @@
 #' @export
 stan = function(stan_file, data, refresh = 250,...) {
   m = cmdstanr::cmdstan_model(stan_file)
+  cli::cli_alert_info("Start sampling at {Sys.time()}")
   # Fit object
   m$sample(
     data = data,
     refresh = refresh,
     ...
   )
+  cli::cli_alert_info("Finish sampling at {Sys.time()}")
 }
 
 
