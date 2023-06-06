@@ -66,7 +66,7 @@ model {
     B_AE ~ std_normal();
     B_ED ~ std_normal();
     delta ~ normal(0, 1.5);
-    sigma_ET ~ std_normal();
+    sigma_ET ~ normal(0.2, 0.5);
 
     // Priors for direct treament effects (T -> D)
     B_TD ~ std_normal();
@@ -90,7 +90,7 @@ model {
     for ( i in 1:NO ) {
         sid = Sid_O[i];
         time = time_O[i];
-        muE = delta + E_subj[sid] + B_AE*A[i] + B_TE[G[i],Tx[i]]*time;
+        muE = delta + B_AE*A[i] + B_TE[G[i],Tx[i]]*time;
         E[sid,time+1] ~ normal(muE, sigma_ET);
     }
 

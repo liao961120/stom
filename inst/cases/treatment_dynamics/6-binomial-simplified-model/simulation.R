@@ -5,6 +5,7 @@ library(stom)
 sim_data = function(alpha = -.5,  # outcome global intercept (to shift poisson to sensible location)
                     delta = -1.2,
                     sigma_ET = 0.3,
+                    # Small sigma_ET (<.4) -> difficult exploration for HMC
                     sigma_subj = 1,
                     B_AE = .1,
                     B_TE = c(.3, .7,  1.3,
