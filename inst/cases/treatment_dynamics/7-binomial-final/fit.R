@@ -1,16 +1,19 @@
 library(stom)
 source("simulation.R")
-set.seed(1877)
-d = sim_data( alpha=-.7,
-              delta=-1.5)
-# m = stan( "m1.stan", data=d$dat,
-#           chains=3, parallel_chains=3,
-#           init = .5,          # Initial values for parameters
-#           adapt_delta = .85,  # default: .8 (larger results to smaller step sizes)
-#           step_size = .05      # initial step size (default:1)
-#         )
-# save_model(m)
-m = readRDS("m1.RDS")
+set.seed(1977)
+d = sim_data( alpha=-.5,
+              delta=-1.8,
+              sigma_ET = .2 )
+m = stan( "m2.stan", data=d$dat,
+          chains=3, parallel_chains=3,
+          # seed = 2038786619,
+          save_warmup = TRUE,
+          init = NULL,        # Initial values for parameters
+          adapt_delta = NULL, # default: .8 (larger results to smaller step sizes)
+          step_size = NULL    # initial step size (default:1)
+)
+save_model(m)
+# m = readRDS("m2.RDS")
 
 s = stom::precis(m, 5)
 ####### Check IRT params recovery ########
@@ -28,7 +31,7 @@ for ( p in c("E", "I", "kappa") ) {
 
 
 ######## Check Beta params recovery #########
-beta = c( "B_TE", "B_AE", "B_AD", "B_ED", "B_TD", "alpha", "delta" )
+beta = c( "B_TE", "B_AE", "B_AD", "B_ED", "B_TD", "alpha", "delta", "sigma_ET" )
 b_true = lapply( beta, function(p) d$params[[p]] ) |> unlist()
 b_est = lapply( beta, function(p) get_pars(s, p)$mean ) |> unlist()
 b_est_upp = lapply( beta, function(p) get_pars(s, p)$q5 ) |> unlist()
@@ -68,24 +71,6 @@ points( E_subj, col=2 )
 
 plot(E_subj[,1], d$params$E_subj[,1]);abline(0,1)
 plot(E_subj[,2], d$params$E_subj[,2]);abline(0,1)
-
-
-
-
-
-plot(1, type="n", xlim=c(-3,3), ylim=c(-3,3),
-     xlab="Estimate", ylab="True")
-abline(0,1, col="grey")
-points( E_subj$mean, d$params$E_subj, col=2)
-for ( i in 1:d$dat$Ns ) {
-    m_t = d$params$E_subj[i]
-    q5 = E_subj$q5[i]
-    q95 = E_subj$q95[i]
-    lines( c(q5,q95), c(m_t,m_t), lwd=4, col=col.alpha(2,.3) )
-}
-
-
-
 
 
 

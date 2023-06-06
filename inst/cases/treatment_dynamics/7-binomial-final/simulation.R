@@ -4,7 +4,7 @@ library(stom)
 
 sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson to sensible location)
                     delta = -1.2,
-                    sigma_ET = .3,
+                    sigma_ET = .5,
                     B_AE = .1,
                     B_TE = c(.3, .7,  1.3,
                              .3,  1,   .7),
@@ -32,8 +32,7 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
     E = sapply(t, function(time) {
         b_TE = sapply( 1:Ns, function(i) B_TE[ G[i],Tx[i] ] )
         muE = delta + (E_subj[,1] + E_subj[,2] * time) + B_AE * A + b_TE * time
-        muE
-        #rnorm( Ns, muE, sigma_ET )  # error on each time point of measurement
+        rnorm( Ns, muE, sigma_ET )  # error on each time point of measurement
     })
     D_latent = sapply(t, function(time) {
         alpha + B_TD[Tx]*time + B_AD * A + B_ED * E[, time + 1]
@@ -45,7 +44,7 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
 
     Ni = 20  # number of items
     ei = seq(-6.3, 6.3, length = Ni)  # item easiness (sums to zero)
-    kappa = logit(cumsum(simplex(c(1, 2, 3, 3, 2, 1))))
+    kappa = logit(cumsum(simplex(c(1, 2, 4, 4, 2, 1))))
     kappa = kappa[-length(kappa)]
 
     # Item-level responses (subject-item-time)

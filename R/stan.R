@@ -9,14 +9,14 @@
 #' @export
 stan = function(stan_file, data, refresh = 250,...) {
   m = cmdstanr::cmdstan_model(stan_file)
-  cli::cli_alert_info("Start sampling at {Sys.time()}")
+  cli::cli_alert_info("Started sampling at {Sys.time()}")
   # Fit object
   m = m$sample(
     data = data,
     refresh = refresh,
     ...
   )
-  cli::cli_alert_info("Finish sampling at {Sys.time()}")
+  cli::cli_alert_info("Finished sampling at {Sys.time()}")
   m
 }
 
@@ -68,7 +68,7 @@ save_model = function(m, fp=NULL) {
 #' str(post)
 precis = function(fit, depth=1, pars=NULL, lp=F) {
   pars = parse_pars( pars )
-  d = fit$summary(pars, "mean", "sd", "quantile2", "rhat", "ess_bulk")
+  d = fit$summary(pars, "mean", "sd", "quantile2", "rhat", "ess_bulk", "ess_tail")
   if (!lp)
     d = d[ d$variable != "lp__", ]
   idx_vars = grepl( pat_depth(depth), d$variable )

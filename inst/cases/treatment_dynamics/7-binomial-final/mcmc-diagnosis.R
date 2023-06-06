@@ -1,5 +1,5 @@
 library(bayesplot)
-color_scheme_set("darkgray")
+color_scheme_set("viridis")
 
 ######## Visualize where divergences happen #######
 # See <https://mc-stan.org/bayesplot/reference/MCMC-parcoord.html>
