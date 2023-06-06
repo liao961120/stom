@@ -2,7 +2,7 @@
 
 library(stom)
 
-sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson to sensible location)
+sim_data = function(alpha = -.5,  # outcome global intercept (to shift poisson to sensible location)
                     delta = -1.2,
                     sigma_ET = 0.3,
                     sigma_subj = 1,
@@ -41,7 +41,7 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
 
     Ni = 20  # number of items
     ei = seq(-6.3, 6.3, length = Ni)  # item easiness (sums to zero)
-    kappa = logit(cumsum(simplex(c(1, 2, 3, 3, 2, 1))))
+    kappa = logit(cumsum(simplex(c(1, 2, 4, 4, 2, 1))))
     kappa = kappa[-length(kappa)]
 
     # Item-level responses (subject-item-time)
