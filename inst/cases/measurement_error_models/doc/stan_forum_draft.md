@@ -1,5 +1,5 @@
-Non-centered parameterization of hierarchical models when mu depends on other parameters and data
-======================================
+Change of Variables in hierarchical models to improve sampling
+==============================================================
 
 Hi everyone!
 
