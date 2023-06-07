@@ -11,14 +11,14 @@ d = sim_data()
 # sy = sd(d$dat$y)
 # for ( x in c("x_obs", "y", "z") )
 #     d$dat[[x]] = stom::standardize(d$dat[[x]])
-m = stan( "m1.stan", data=d$dat,
+m = stan( "m2.stan", data=d$dat,
           chains=3, parallel_chains=3,
           # seed = 2038786619,
           save_warmup = TRUE,
-          iter_warmup  = 2000,
+          iter_warmup  = 1000,
           iter_sampling = 1000,
           init = NULL,        # Initial values for parameters
-          adapt_delta = .99  , # default: .8 (larger results to smaller step sizes)
+          #adapt_delta = .99  , # default: .8 (larger results to smaller step sizes)
           step_size = NULL    # initial step size (default:1)
 )
 # save_model(m)
@@ -48,12 +48,10 @@ mcmc_trace(m$draws(pars), facet_args=list(ncol=2))
 
 p = stom::extract(m, pars)
 p = p[, pars]
-pairs(p)
+# pairs(p)
 
 
-s = stom::precis(m, depth = 5)
-plot(get_pars(s, pars)$mean, d$params[pars]);abline(0,1)
-
+plot(m$summary(pars)$mean, d$params[pars]);abline(0,1)
 plot(m$summary("x_true")$mean, d$params$x_true); abline(0,1)
 
 
