@@ -1,5 +1,5 @@
-Change of Variables in hierarchical models to avoid HMC sampling difficulty
-===========================================================================
+Change of Variables in hierarchical models to avoid MCMC sampling difficulty
+============================================================================
 
 Hi everyone!
 
@@ -90,7 +90,7 @@ variable) to get rid of `tau` and `x_true` in the sampling statement is required
 for the model to sample smoothly. But online examples on reparameterizations
 transform only parameters. I'm unsure whether this change of variable on
 non-parameter variables is a justifiable way to make MCMC sampling smoother.
-Hope anyone can provide some advice on this!
+Hope somebody could provide advice on this!
 
 ```stan
 data {
