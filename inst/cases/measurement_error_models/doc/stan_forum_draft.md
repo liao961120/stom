@@ -76,7 +76,7 @@ model {
 
 Here's the trace plot:
 
-![](https://raw.githubusercontent.com/liao961120/stom/main/inst/cases/measurement_error_models/trace-centered.png)
+![](https://raw.githubusercontent.com/liao961120/stom/main/inst/cases/measurement_error_models/doc/trace-centered.png)
 
 
 After some trial and error, I managed to re-express the model as `m2.stan` below
@@ -241,7 +241,7 @@ pars = c('mu_z', 'sigma_z', 'sigma_y', 'sigma_x', 'tau',
 mcmc_trace(m$draws(pars), facet_args=list(ncol=2))
 ```
 
-![](https://raw.githubusercontent.com/liao961120/stom/main/inst/cases/measurement_error_models/trace-centered.png)
+![](https://raw.githubusercontent.com/liao961120/stom/main/inst/cases/measurement_error_models/doc/trace-centered.png)
 
 
 
@@ -291,5 +291,5 @@ pars = c('mu_z', 'sigma_z', 'sigma_y', 'sigma_x', 'tau',
 mcmc_trace(m$draws(pars), facet_args=list(ncol=2))
 ```
 
-![](https://raw.githubusercontent.com/liao961120/stom/main/inst/cases/measurement_error_models/trace-noncentered.png)
+![](https://raw.githubusercontent.com/liao961120/stom/main/inst/cases/measurement_error_models/doc/trace-noncentered.png)
 
