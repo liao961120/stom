@@ -5,11 +5,11 @@ d = sim_data( alpha=0,
               delta=-1.8,
               sigma_ET = .2,
               sigma_subj = .5 )
-m = stan( "m1.stan", data=d$dat,
+m = stan( "m1-ncp.stan", data=d$dat,
           chains=3, parallel_chains=3,
           # seed = 2038786619,
           init = NULL,        # Initial values for parameters
-          adapt_delta = .99, # default: .8 (larger results to smaller step sizes)
+          #adapt_delta = .99, # default: .8 (larger results to smaller step sizes)
           step_size = NULL    # initial step size (default:1)
         )
 save_model(m)

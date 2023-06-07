@@ -39,8 +39,8 @@ parameters {
     real delta;          // global intercept (E linear model)
     
     // Subject baseline efficacy (varying intercepts)
-    // vector[Ns] Z_subj;
-    // real<lower=0> sigma_subj;
+    vector[Ns] Z_subj;
+    real<lower=0> sigma_subj;
 
     // Outcome params
     vector[Ntx] B_TD;  // Treatment on Outcome (direct effect)
@@ -53,18 +53,20 @@ transformed parameters {
     vector[Ni] I = sigma_I * append_row( zI_raw,-sum(zI_raw) );
 
     // Partial pool subject intercepts
-    // vector[Ns] E_subj = sigma_subj * Z_subj;
+    vector[Ns] E_subj = sigma_subj * Z_subj;
 }
 model {
     // Priors for IRT parameters
     zI_raw ~ std_normal();
     sigma_I ~ exponential(1);
+    kappa ~ std_normal();
 
     // Priors for indirect treatment effects (T -> E -> D)
     to_vector(B_TE) ~ normal(0, 1.5);
     B_AE ~ std_normal();
     B_ED ~ std_normal();
     delta ~ normal(0, 1.5);
+    sigma_ET ~ std_normal();
 
     // Priors for direct treament effects (T -> D)
     B_TD ~ std_normal();
@@ -72,20 +74,29 @@ model {
     alpha ~ normal(0, 1.5);
 
     // Priors for subject varying intercepts
-    // Z_subj ~ std_normal();
-    // sigma_subj ~ std_normal();  // half-normal
-    sigma_ET ~ normal(0, 1.5);
+    Z_subj ~ std_normal();
+    sigma_subj ~ std_normal();  // half-normal
 
     // Measurement model (IRT)
-    to_vector(E) ~ normal(0, 3.5);
+    to_vector(E) ~ normal(0, 2);
     vector[NI] phi;
     for ( i in 1:NI )
         phi[i] = E[Sid_I[i],time_I[i]+1] + I[Iid_I[i]];
     R ~ ordered_logistic( phi, kappa );
 
+    // Causes of E 
+    for ( i in 1:NO ) {
+        real zE;
+        int sid = Sid_O[i];
+        int time = time_O[i];
+        real muE = delta + B_AE*A[i] + B_TE[G[i],Tx[i]]*time;
+        zE = ( E[sid,time+1] - muE ) / sigma_ET;
+        zE ~ std_normal();
+        target += -2*log(sigma_ET);
+    }
+    
     // Causes of D
     int sid, time;
-    real muE;
     vector[NO] mu;
     for ( i in 1:NO ) {
         sid = Sid_O[i];
@@ -93,12 +104,4 @@ model {
         mu[i] = alpha + B_TD[Tx[i]]*time + B_AD*A[i] + B_ED*E[sid,time+1];
     }
     D ~ binomial_logit( 14, -mu );
-
-    // Causes of E
-    for ( i in 1:NO ) {
-        sid = Sid_O[i];
-        time = time_O[i];
-        muE = delta + B_AE*A[i] + B_TE[G[i],Tx[i]]*time;
-        E[sid,time+1] ~ normal(muE, sigma_ET);
-    }
 }
