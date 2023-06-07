@@ -37,7 +37,7 @@ b_est = lapply( beta, function(p) get_pars(s, p)$mean ) |> unlist()
 b_est_upp = lapply( beta, function(p) get_pars(s, p)$q5 ) |> unlist()
 b_est_low = lapply( beta, function(p) get_pars(s, p)$q95 ) |> unlist()
 
-plot( b_true, pch=19, ylim=c(-2.8, 2.8) )
+plot( b_true, pch=19, ylim=c(-4.8, 4.8) )
 abline(h = 0, lty="dashed", col="grey")
 points( b_est, col=2 )
 for ( i in seq_along(b_est) )

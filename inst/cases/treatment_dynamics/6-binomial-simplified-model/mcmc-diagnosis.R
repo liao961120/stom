@@ -34,7 +34,7 @@ x = sapply(colnames(s2), function(c_) {
     cor( s2[[c_]], dg$energy__ )
 })
 hist(x)
-which( abs(x) > .5 )
+x[which( abs(x) > .9 )]
 
 x_cor = cor(s2$sigma_ET, s2)
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
