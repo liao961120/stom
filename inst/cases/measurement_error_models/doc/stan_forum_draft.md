@@ -74,6 +74,11 @@ model {
 }
 ```
 
+Here's the trace plot:
+
+![](https://raw.githubusercontent.com/liao961120/stom/main/inst/cases/measurement_error_models/trace-centered.png)
+
+
 After some trial and error, I managed to re-express the model as `m2.stan` below
 (with some help from Stan User's Guide on [Changes of
 Variables](https://mc-stan.org/docs/stan-users-guide/changes-of-variables.html)).
