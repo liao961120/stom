@@ -1,5 +1,5 @@
-Change of Variables in hierarchical models to avoid sampling difficulty
-=======================================================================
+Change of Variables in hierarchical models to avoid HMC sampling difficulty
+===========================================================================
 
 Hi everyone!
 
