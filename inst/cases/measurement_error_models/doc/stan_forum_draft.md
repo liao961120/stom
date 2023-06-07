@@ -30,7 +30,8 @@ What I would like to model is expressed in the Directed Acyclic Graph (DAG)
 below. The extended model now assumes an influence on the unobserved $X$ by the
 variable $Z$.
 
-<img src="https://raw.githubusercontent.com/liao961120/stom/main/inst/cases/measurement_error_models/doc/dag.svg" width="200">
+<img src="https://raw.githubusercontent.com/liao961120/stom/main/inst/cases/measurement_error_models/doc/dag.svg" 
+style="display:block;margin-left:auto;margin-right:auto;width:200px">
 
 I constructed this model (`m1.stan`) in stan and found that the chains had 
 difficulty mixing well.
