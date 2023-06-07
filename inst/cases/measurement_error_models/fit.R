@@ -19,7 +19,8 @@ m$diagnostic_summary()
 x$step_size_adaptation
 # m = readRDS("m1.RDS")
 
-
+s = stom::precis(m, 5)
+s[s$rhat>1.01, ]
 
 ###### Check which params caused Low E-BFMI ########
 # See <https://mc-stan.org/misc/warnings.html#bfmi-low>
