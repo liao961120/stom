@@ -2,7 +2,6 @@ library(stom)
 
 sim_data = function() {
     N = 500
-
     mu_z = 0
     sigma_z = 1
     sigma_x = 1
@@ -13,7 +12,6 @@ sim_data = function() {
     b_yz = .7
     b_yx = .5
     a_yx = 3
-
 
     z = rnorm( N, mu_z, sigma_z )
     x_true = rnorm( N, b_xz*z + a_xz ,sigma_x )

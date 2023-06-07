@@ -26,7 +26,6 @@ transformed parameters {
     vector[N] x_true = x_true_std * sigma_x + (a_xz + b_xz * z);
 }
 model {
-    // Priors
     mu_z ~ std_normal();
     sigma_z ~ std_normal();
     sigma_x ~ std_normal();
@@ -38,11 +37,11 @@ model {
     b_yx ~ std_normal();
     a_yx ~ std_normal();
 
+    z ~ normal(mu_z, sigma_z);
     vector[N] x_obs_std = (x_obs - x_true) / tau;
     vector[N] J_diag = rep_vector(-2*log(tau), N);  // diagonals of Jacobian
     target += sum( log(J_diag) );  // Jacobian adjustment
     x_true_std ~ std_normal();
     x_obs_std ~ std_normal();
     y ~ normal( a_yx + b_yx * x_true + b_yz * z, sigma_y );
-    z ~ normal(mu_z, sigma_z);
 }

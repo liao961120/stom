@@ -18,7 +18,6 @@ parameters {
     real a_yx;
 }
 model {
-    // Priors
     mu_z ~ std_normal();
     sigma_z ~ std_normal();
     sigma_x ~ std_normal();
@@ -30,8 +29,8 @@ model {
     b_yx ~ std_normal();
     a_yx ~ std_normal();
 
-    y ~ normal( a_yx + b_yx * x_true + b_yz * z, sigma_y );
+    z ~ normal(mu_z, sigma_z);
     x_true ~ normal( a_xz + b_xz * z, sigma_x );
     x_obs ~ normal( x_true, tau );
-    z ~ normal(mu_z, sigma_z);
+    y ~ normal( a_yx + b_yx * x_true + b_yz * z, sigma_y );
 }

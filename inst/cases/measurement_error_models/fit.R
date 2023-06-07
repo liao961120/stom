@@ -3,14 +3,6 @@ source("simulation.R")
 set.seed(1977)
 d = sim_data()
 
-# mz = mean(d$dat$z)
-# sz = sd(d$dat$z)
-# mx = mean(d$dat$x_obs)
-# sx = sd(d$dat$x_obs)
-# my = mean(d$dat$y)
-# sy = sd(d$dat$y)
-# for ( x in c("x_obs", "y", "z") )
-#     d$dat[[x]] = stom::standardize(d$dat[[x]])
 m = stan( "m2.stan", data=d$dat,
           chains=3, parallel_chains=3,
           # seed = 2038786619,
