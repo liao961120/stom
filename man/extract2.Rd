@@ -4,10 +4,12 @@
 \alias{extract2}
 \title{R6 representation of posterior samples}
 \usage{
-extract2(fit)
+extract2(fit, ...)
 }
 \arguments{
-\item{fit}{A \code{CmdStanFit} object passed to \code{stom::extract()}.}
+\item{fit}{A \code{CmdStanFit} object passed to \code{\link[=extract]{extract()}}.}
+
+\item{...}{Arguments passed to \code{\link[=extract]{extract()}}.}
 }
 \value{
 An \code{R6}, \code{postParams} object.

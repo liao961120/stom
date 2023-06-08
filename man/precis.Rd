@@ -8,7 +8,7 @@
 \usage{
 precis(fit, depth = 1, pars = NULL, lp = F)
 
-extract(fit, pars = NULL, lp = F)
+extract(fit, pars = NULL, lp = F, chains = NULL)
 
 erect(d, pars, col = "mean")
 }
@@ -24,6 +24,9 @@ Passed to the \code{variables} argument in cmdstanr's
 \verb{$summary()}/\verb{$draws()}.}
 
 \item{lp}{Boolean. Whether to include log probabilities in output.}
+
+\item{chains}{Integer vector. Chains to extract. By default, NULL, which
+extracts all chains.}
 
 \item{d}{data frame. Posterior summary data frame returned from \code{\link[=precis]{precis()}}.}
 }

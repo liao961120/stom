@@ -46,6 +46,8 @@ save_model = function(m, fp=NULL) {
 #'        Passed to the `variables` argument in cmdstanr's
 #'        `$summary()`/`$draws()`.
 #' @param lp Boolean. Whether to include log probabilities in output.
+#' @param chains Integer vector. Chains to extract. By default, NULL, which
+#'        extracts all chains.
 #' @param d data frame. Posterior summary data frame returned from [precis()].
 #' @return A data frame
 #' @export
@@ -79,9 +81,14 @@ precis = function(fit, depth=1, pars=NULL, lp=F) {
 
 #' @rdname precis
 #' @export
-extract = function(fit, pars=NULL, lp=F) {
+extract = function(fit, pars=NULL, lp=F, chains=NULL) {
   pars = parse_pars( pars )
-  d = fit$draws(pars, format = "draws_df")
+  if (!is.null(chains)) {
+      d = fit$draws(pars, format="draws_array")[,chains,]
+      d = posterior::as_draws_df(d)
+  } else {
+      d = fit$draws(pars, format = "draws_df")
+  }
   if (!lp)
     d = d[ , colnames(d) != "lp__" ]
   return(d)

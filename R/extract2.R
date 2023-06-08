@@ -17,7 +17,8 @@
 #' parameters, as well as other scalar parameters, are exposed as public methods
 #' in the returned R6 object. See below for an example.
 #'
-#' @param fit  A `CmdStanFit` object passed to `stom::extract()`.
+#' @param fit  A `CmdStanFit` object passed to [extract()].
+#' @param ... Arguments passed to [extract()].
 #' @return An `R6`, `postParams` object.
 #' @export
 #' @examples
@@ -29,7 +30,7 @@
 #' post$B_AD() |> str()
 #' post$B_TE() |> str()
 #' post$E() |> str()
-extract2 = function(fit) {
+extract2 = function(fit, ...) {
     postParams = R6::R6Class("postParams",
                              lock_objects=FALSE,
                              public = list(
@@ -56,7 +57,7 @@ extract2 = function(fit) {
                              )
     )
 
-    post = extract( fit, lp=T )
+    post = extract( fit, lp=T, ... )
     par_info = get_stan_param_info( colnames(post) )
     post_samples = postParams$new( post=post, par_info=par_info )
     # Programmatically add parameter names as method (allow access as $param)
