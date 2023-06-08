@@ -8,7 +8,7 @@ d = sim_data( alpha=0,
               sigma_ET = .2,
               sigma_subj = .5 )
 
-m = readRDS("m1-ncp.RDS")
+# m = readRDS("m1-ncp.RDS")
 
 s = stom::precis(m, 5)
 
@@ -20,8 +20,15 @@ s2 = apply( d2, 2, function(c_) c(mean=mean(c_), q5=quantile(c_,.05), q95=quanti
 
 ######## Check Beta params recovery #########
 beta = c( "B_TE", "B_AE", "B_AD", "B_ED", "B_TD", "delta", "alpha", "sigma_ET" )
-pars = colnames(d1)
-pars = pars[grepl(paste(beta,collapse = "|"), pars)]
+# pars = colnames(d1)
+# pars = pars[grepl(paste(beta,collapse = "|"), pars)]
+# pars = pars[!grepl("_raw", pars)]
+# pars = sort(pars)
+pars = c('B_TE[1,1]', 'B_TE[2,1]', 'B_TE[1,2]',
+         'B_TE[2,2]', 'B_TE[1,3]', 'B_TE[2,3]',
+         'B_AE', 'B_AD', 'B_ED',
+         'B_TD[1]', 'B_TD[2]', 'B_TD[3]',
+         'delta', 'alpha', 'sigma_ET')
 
 b_true = lapply( beta, function(p) d$params[[p]] ) |> unlist()
 b_est = lapply( pars, function(p) s1["mean",p] ) |> unlist()
@@ -49,10 +56,10 @@ mtext( beta[8], at = 15 )
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
-
-
 library(bayesplot)
 color_scheme_set("viridis")
 pars = stom:::parse_pars("alpha,delta,B_TD,B_ED,B_AE,B_AD,B_TE,sigma_ET")
 mcmc_trace(m$draws()[,,], regex_pars = pars, facet_args = list(ncol=3))
+
+
+

@@ -4,7 +4,8 @@ set.seed(1977)
 d = sim_data( alpha=0,
               delta=-1.8,
               sigma_ET = .2,
-              sigma_subj = .5 )
+              sigma_subj = .5,
+              subj_eff = F)
 m = stan( "m1-ncp.stan", data=d$dat,
           chains=3, parallel_chains=3,
           # seed = 2038786619,
