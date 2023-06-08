@@ -1,7 +1,7 @@
 %\title{Using the forest package to create trees in LaTeX}
 % From http://tex.stackexchange.com/a/108728/23931 
 \documentclass[12pt,preview,border=0]{standalone}
-\usepackage[paperheight=8cm,paperwidth=8cm]{geometry}
+\usepackage[paperheight=8cm,paperwidth=6cm]{geometry}
 \usepackage{graphicx}
 % \usepackage{forest}
 \usepackage{amsmath}
@@ -35,6 +35,8 @@
 % % \setmathfont{Adobe Caslon Pro}
 % \mathfont{Cambria Math}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usetikzlibrary{backgrounds}
+
 \begin{document} 
 \begin{center}
 \begin{tikzpicture}[
@@ -45,6 +47,7 @@
 	thick, % line style
 	U/.style={circle, draw=black, inner sep=1.8pt, outer sep=1.5pt, minimum size=3mm, font=\large},  %draw=black, fill=white
 	O/.style={circle, inner sep=1.4pt, outer sep=-.75pt, minimum size=3mm, font=\large},              %draw=white, fill=white
+	background rectangle/.style={fill=white}, show background rectangle  % add backgroud
 	]
 	
 	% Nodes and their relative positions

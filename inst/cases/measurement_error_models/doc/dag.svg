@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="71.070747pt"
-   height="83.003952pt"
-   viewBox="0 0 71.070745 83.00395"
+   width="89.937492pt"
+   height="101.64062pt"
+   viewBox="0 0 89.93749 101.64062"
    version="1.2"
-   id="svg111"
+   id="svg118"
    sodipodi:docname="dag.pdf"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -12,7 +12,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
-     id="namedview113"
+     id="namedview120"
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
@@ -21,7 +21,7 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="pt" />
   <defs
-     id="defs40">
+     id="defs43">
     <g
        id="g38">
       <symbol
@@ -121,190 +121,205 @@
            id="path35" />
       </symbol>
     </g>
+    <clipPath
+       id="clip1">
+      <path
+         d="m 14,0 h 91 V 101.64062 H 14 Z m 0,0"
+         id="path40" />
+    </clipPath>
   </defs>
   <g
      id="surface1"
-     transform="translate(-44.278999,-5.5391254)">
+     transform="translate(-14.558594)">
+    <g
+       clip-path="url(#clip1)"
+       clip-rule="nonzero"
+       id="g47">
+      <path
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="M 14.558594,101.64062 V 0 h 89.937496 v 101.64062 z m 0,0"
+         id="path45" />
+    </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
-       d="M 9.359156,9.375e-5 C 9.359156,5.168062 5.16775,9.359469 -2.1875e-4,9.359469 -5.168188,9.359469 -9.355688,5.168062 -9.355688,9.375e-5 c 0,-5.16796875 4.1875,-9.35937475 9.35546925,-9.35937475 5.16796875,0 9.35937475,4.191406 9.35937475,9.35937475 z m 0,0"
-       transform="matrix(1,0,0,-1,79.801,46.504)"
-       id="path42" />
+       d="M 9.358406,0.00184375 C 9.358406,5.169813 5.167,9.357313 -9.6875e-4,9.357313 c -5.16796825,0 -9.35546825,-4.1875 -9.35546825,-9.35546925 0,-5.17187475 4.1875,-9.35937475 9.35546825,-9.35937475 5.16796875,0 9.35937475,4.1875 9.35937475,9.35937475 z m 0,0"
+       transform="matrix(1,0,0,-1,59.958,51.662)"
+       id="path49" />
     <g
        style="fill:#000000;fill-opacity:1"
-       id="g46">
+       id="g53">
       <use
          xlink:href="#glyph0-1"
-         x="74.540001"
-         y="50.852001"
-         id="use44"
+         x="54.696999"
+         y="56.009998"
+         id="use51"
          width="100%"
          height="100%" />
     </g>
     <g
        style="fill:#000000;fill-opacity:1"
-       id="g50">
+       id="g57">
       <use
          xlink:href="#glyph0-1"
-         x="72.468002"
-         y="14.336"
-         id="use48"
+         x="52.625"
+         y="19.493999"
+         id="use55"
          width="100%"
          height="100%" />
     </g>
     <g
        style="fill:#000000;fill-opacity:1"
-       id="g54">
+       id="g61">
       <use
          xlink:href="#glyph1-1"
-         x="81.505997"
-         y="16.488001"
-         id="use52"
+         x="61.662998"
+         y="21.646"
+         id="use59"
          width="100%"
          height="100%" />
     </g>
     <g
        style="fill:#000000;fill-opacity:1"
-       id="g58">
+       id="g65">
       <use
          xlink:href="#glyph0-2"
-         x="106.381"
-         y="82.054001"
-         id="use56"
+         x="86.538002"
+         y="87.211998"
+         id="use63"
          width="100%"
          height="100%" />
     </g>
     <g
        style="fill:#000000;fill-opacity:1"
-       id="g62">
+       id="g69">
       <use
          xlink:href="#glyph0-3"
-         x="43.153999"
-         y="82.411003"
-         id="use60"
+         x="23.311001"
+         y="87.569"
+         id="use67"
          width="100%"
          height="100%" />
     </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
-       d="M -7.672094,-7.671781 -23.176,-23.175688"
-       transform="matrix(1,0,0,-1,79.801,46.504)"
-       id="path64" />
+       d="M -7.672844,-7.673937 -23.17675,-23.177844"
+       transform="matrix(1,0,0,-1,59.958,51.662)"
+       id="path71" />
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       d="M 54.792969,71.511719 59.1875,70.046875 56.625,69.679688 56.257812,67.117188"
-       id="path66" />
+       d="m 34.949219,76.671875 4.394531,-1.464844 -2.5625,-0.367187 -0.367188,-2.566406"
+       id="path73" />
     <g
        style="fill:#000000;fill-opacity:1"
-       id="g70">
+       id="g77">
       <use
          xlink:href="#glyph2-1"
-         x="48.954498"
-         y="57.766602"
-         id="use68"
+         x="29.1131"
+         y="62.924702"
+         id="use75"
          width="100%"
          height="100%" />
     </g>
     <g
        style="fill:#000000;fill-opacity:1"
-       id="g76">
+       id="g83">
       <use
          xlink:href="#glyph3-1"
-         x="53.533901"
-         y="59.021702"
-         id="use72"
+         x="33.692501"
+         y="64.179802"
+         id="use79"
          width="100%"
          height="100%" />
       <use
          xlink:href="#glyph3-2"
-         x="56.5466"
-         y="59.021702"
-         id="use74"
+         x="36.7052"
+         y="64.179802"
+         id="use81"
          width="100%"
          height="100%" />
     </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
-       d="M -2.1875e-4,10.851656 V 21.437594"
-       transform="matrix(1,0,0,-1,79.801,46.504)"
-       id="path78" />
+       d="M -9.6875e-4,10.853406 V 21.439344"
+       transform="matrix(1,0,0,-1,59.958,51.662)"
+       id="path85" />
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       d="m 79.800781,22.476562 -2.070312,4.144532 2.070312,-1.554688 2.074219,1.554688"
-       id="path80" />
+       d="m 59.957031,27.632812 -2.070312,4.144532 2.070312,-1.554688 2.074219,1.554688"
+       id="path87" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
-       d="M 25.714625,-25.71475 10.210719,-10.210844"
-       transform="matrix(1,0,0,-1,79.801,46.504)"
-       id="path82" />
+       d="M 25.713875,-25.713 10.209969,-10.209094"
+       transform="matrix(1,0,0,-1,59.958,51.662)"
+       id="path89" />
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       d="m 88.179688,54.882812 1.464843,4.394532 0.367188,-2.5625 2.5625,-0.367188"
-       id="path84" />
+       d="m 68.335938,60.039062 1.464843,4.398438 0.367188,-2.566406 2.5625,-0.367188"
+       id="path91" />
     <g
        style="fill:#000000;fill-opacity:1"
-       id="g88">
+       id="g95">
       <use
          xlink:href="#glyph2-1"
-         x="99.562698"
-         y="58.746601"
-         id="use86"
+         x="79.719597"
+         y="63.904701"
+         id="use93"
          width="100%"
          height="100%" />
     </g>
     <g
        style="fill:#000000;fill-opacity:1"
-       id="g94">
+       id="g101">
       <use
          xlink:href="#glyph3-2"
-         x="104.1414"
-         y="60.001701"
-         id="use90"
+         x="84.299004"
+         y="65.159798"
+         id="use97"
          width="100%"
          height="100%" />
       <use
          xlink:href="#glyph3-3"
-         x="106.85283"
-         y="60.001701"
-         id="use92"
+         x="87.010429"
+         y="65.159798"
+         id="use99"
          width="100%"
          height="100%" />
     </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
-       d="m 23.495875,-31.109281 -43.257813,-0.25"
-       transform="matrix(1,0,0,-1,79.801,46.504)"
-       id="path96" />
+       d="m 23.495125,-31.111437 -43.257812,-0.246094"
+       transform="matrix(1,0,0,-1,59.958,51.662)"
+       id="path103" />
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       d="m 57.449219,77.875 4.15625,2.050781 -1.566407,-2.0625 1.542969,-2.082031"
-       id="path98" />
+       d="m 37.605469,83.035156 4.15625,2.046875 -1.566407,-2.0625 1.542969,-2.082031"
+       id="path105" />
     <g
        style="fill:#000000;fill-opacity:1"
-       id="g102">
+       id="g109">
       <use
          xlink:href="#glyph2-1"
-         x="74.495697"
-         y="86.178596"
-         id="use100"
+         x="54.653599"
+         y="91.3367"
+         id="use107"
          width="100%"
          height="100%" />
     </g>
     <g
        style="fill:#000000;fill-opacity:1"
-       id="g108">
+       id="g115">
       <use
          xlink:href="#glyph3-1"
-         x="79.074402"
-         y="87.433701"
-         id="use104"
+         x="59.233002"
+         y="92.591797"
+         id="use111"
          width="100%"
          height="100%" />
       <use
          xlink:href="#glyph3-3"
-         x="82.087105"
-         y="87.433701"
-         id="use106"
+         x="62.245701"
+         y="92.591797"
+         id="use113"
          width="100%"
          height="100%" />
     </g>
