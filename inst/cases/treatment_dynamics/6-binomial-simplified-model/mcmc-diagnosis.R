@@ -39,7 +39,7 @@ x[which( abs(x) > .9 )]
 x_cor = cor(s2$sigma_ET, s2)
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-pars = stom:::parse_pars("alpha,delta,B_AE,B_AD,B_TE")
+pars = stom:::parse_pars("alpha,delta,B_TD,B_ED,B_AE,B_AD,B_TE,sigma_ET")
 p = stom::extract(m, pars)
 
 s = sample(1:3000, 300, replace=F)

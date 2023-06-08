@@ -18,6 +18,15 @@ parameters {
     real a_yx;
 }
 model {
+    /*
+
+    z -> X -> Xo
+     \   |
+      v  v
+        Y
+
+    */
+
     mu_z ~ std_normal();
     sigma_z ~ std_normal();
     sigma_x ~ std_normal();
