@@ -3,7 +3,7 @@ color_scheme_set("viridis")
 
 ######## Visualize where divergences happen #######
 # See <https://mc-stan.org/bayesplot/reference/MCMC-parcoord.html>
-m = readRDS("m1.RDS")
+# m = readRDS("m1.RDS")
 s = stom::precis(m, 5)
 
 draws = m$draws(
@@ -40,10 +40,10 @@ x_cor = cor(s2$sigma_ET, s2)
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 pars = stom:::parse_pars("alpha,delta,B_TD,B_ED,B_AE,B_AD,B_TE,sigma_ET")
-p = stom::extract(m, pars)
-
-s = sample(1:3000, 300, replace=F)
-p[s,-(12:14)] |> pairs()
+# p = stom::extract(m, pars)
+#
+# s = sample(1:3000, 300, replace=F)
+# p[s,-(12:14)] |> pairs()
 
 
 

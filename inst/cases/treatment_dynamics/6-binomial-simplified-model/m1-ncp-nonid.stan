@@ -43,8 +43,7 @@ parameters {
     real<lower=0> sigma_subj;
 
     // Outcome params
-    vector[Ntx-1] B_TD_raw;  // Treatment on Outcome (direct effect)
-    real<lower=0> sigma_B_TD;
+    vector[Ntx] B_TD;  // Treatment on Outcome (direct effect)
     real B_AD;         // Age on outcome
     real B_ED;         // Efficacy on outcome
     real alpha;        // global intercept (D linear model)
@@ -64,10 +63,6 @@ transformed parameters {
         real muE = delta + B_AE*A[i] + B_TE[G[i],Tx[i]]*time;
         E[sid,time+1] = fma(zE[sid,time+1], sigma_ET, muE);
     }
-
-    // Direct treatment effect (Tx==1 as reference)
-    // Added to test if it allows the identification of the model
-    vector[Ntx] B_TD = append_row(0, B_TD_raw) * sigma_B_TD;
 }
 model {
     // Priors for IRT parameters
@@ -83,8 +78,7 @@ model {
     sigma_ET ~ std_normal();
 
     // Priors for direct treament effects (T -> D)
-    B_TD_raw ~ std_normal();
-    sigma_B_TD ~ std_normal();
+    B_TD ~ std_normal();
     B_AD ~ std_normal();
     alpha ~ normal(0, 1.5);
 

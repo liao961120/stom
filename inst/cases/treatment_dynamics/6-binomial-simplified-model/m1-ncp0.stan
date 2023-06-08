@@ -54,15 +54,6 @@ transformed parameters {
 
     // Partial pool subject intercepts
     vector[Ns] E_subj = sigma_subj * Z_subj;
-
-    matrix[Ns,Nt] E;
-    // Transformed E
-    for ( i in 1:NO ) {
-        int sid = Sid_O[i];
-        int time = time_O[i];
-        real muE = delta + B_AE*A[i] + B_TE[G[i],Tx[i]]*time;
-        E[sid,time+1] = fma(zE[sid,time+1], sigma_ET, muE);
-    }
 }
 model {
     // Priors for IRT parameters
@@ -86,22 +77,37 @@ model {
     Z_subj ~ std_normal();
     sigma_subj ~ std_normal();  // half-normal
 
-    // Causes of E 
+    // Causes of E
     to_vector(zE) ~ std_normal();
+    matrix[Ns,Nt] E;
+    for ( i in 1:NO ) {
+        int sid = Sid_O[i];
+        int time = time_O[i];
+        real muE = delta + B_AE*A[i] + B_TE[G[i],Tx[i]]*time;
+        E[sid,time+1] = fma(zE[sid,time+1], sigma_ET, muE); 
+    }
 
     // Measurement model (IRT)
     vector[NI] phi;
     for ( i in 1:NI )
         phi[i] = E[Sid_I[i],time_I[i]+1] + I[Iid_I[i]];
     R ~ ordered_logistic( phi, kappa );
-    
+
     // Causes of D
-    int sid, time;
     vector[NO] mu;
     for ( i in 1:NO ) {
-        sid = Sid_O[i];
-        time = time_O[i];
+        int sid = Sid_O[i];
+        int time = time_O[i];
         mu[i] = alpha + B_TD[Tx[i]]*time + B_AD*A[i] + B_ED*E[sid,time+1];
     }
     D ~ binomial_logit( 14, -mu );
+}
+generated quantities {
+    matrix[Ns,Nt] E;
+    for ( i in 1:NO ) {
+        int sid = Sid_O[i];
+        int time = time_O[i];
+        real muE = delta + B_AE*A[i] + B_TE[G[i],Tx[i]]*time;
+        E[sid,time+1] = fma(zE[sid,time+1], sigma_ET, muE); 
+    }
 }

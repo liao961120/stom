@@ -12,7 +12,8 @@ sim_data = function(alpha = -.5,  # outcome global intercept (to shift poisson t
                              .3,  1,   .7),
                     B_AD = .2,
                     B_ED = 1,
-                    B_TD = c(0, 0, 0) ) {
+                    B_TD = c(0, 0, 0),
+                    subj_eff = FALSE) {
 
     Ns = 3 * 50  # number of subjects
     Ntx = 3      # number of treatments
@@ -26,7 +27,7 @@ sim_data = function(alpha = -.5,  # outcome global intercept (to shift poisson t
     A = (A - minA) / 10  # 1 unit of increase = 10 years of increase in original age
     t = 0:(Nt - 1)       # time points of measure
 
-    E_subj = rnorm( Ns, 0, sigma_subj )
+    E_subj = rnorm( Ns, 0, sigma_subj ) * as.integer(subj_eff)
     E = sapply(t, function(time) {
         b_TE = sapply( 1:Ns, function(i) B_TE[ G[i],Tx[i] ] )
         muE = delta + E_subj + B_AE * A + b_TE * time
