@@ -1,19 +1,22 @@
 library(stom)
 source("simulation.R")
 set.seed(1977)
-d = sim_data( alpha=-.5,
+d = sim_data( alpha=-.7,
               delta=-1.8,
-              sigma_ET = .2 )
-m = stan( "m2.stan", data=d$dat,
-          chains=3, parallel_chains=3,
-          # seed = 2038786619,
-          save_warmup = TRUE,
-          init = NULL,        # Initial values for parameters
-          adapt_delta = NULL, # default: .8 (larger results to smaller step sizes)
-          step_size = NULL    # initial step size (default:1)
+              sigma_ET = .2,
+              sigma_subj = c(.5, .4 )
 )
-save_model(m)
-# m = readRDS("m2.RDS")
+
+# m = stan( "m3.stan", data=d$dat,
+#           chains=3, parallel_chains=3,
+#           # seed = 2038786619,
+#           # save_warmup = TRUE,
+#           init = NULL,        # Initial values for parameters
+#           adapt_delta = NULL, # default: .8 (larger results to smaller step sizes)
+#           step_size = NULL    # initial step size (default:1)
+# )
+# save_model(m)
+m = readRDS("m3.RDS")
 
 s = stom::precis(m, 5)
 ####### Check IRT params recovery ########
@@ -53,24 +56,23 @@ mtext( beta[7], at = 14 )
 mtext( beta[8], at = 15 )
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-# Subject intercept
 E_subj = erect(s, "E_subj")
-E_subj_q5 = erect(s , "E_subj", "q5")
-E_subj_q95 = erect(s , "E_subj", "q95")
+rng = c(E_subj, d$params$E_subj)
+ndg = .1*diff( range(rng) )
+rng = c( min(rng)-ndg, max(rng)+ndg )
+S = erect(s, "S")
 
-plot( d$params$E_subj, pch=19, ylim=c(-1.5,1.7), xlim=c(-1.8,1.5) )
+plot( d$params$E_subj, pch=19, ylim=rng, xlim=rng )
+curve_mvnorm(c(0,0), S)
 for ( i in 1:d$dat$Ns ) {
-    if ( sample(1:5, 1) != 1 ) next
-    x = c( E_subj_q5[i,1], E_subj_q95[i,1] )
-    y = c( E_subj_q5[i,2], E_subj_q95[i,2] )
-    lines( x, c(E_subj[i,2], E_subj[i,2]) , col=col.alpha(2,.3), lwd=2 )
-    lines( c(E_subj[i,1], E_subj[i,1]), y , col=col.alpha(2,.3), lwd=2 )
+    # True to est
+    cd_t = c(d$params$E_subj[i,1], d$params$E_subj[i,2])
+    cd_e = c(E_subj[i,1], E_subj[i,2])
+    lines( c(cd_t[1],cd_e[1]), c(cd_t[2],cd_e[2]), col=col.alpha(2,.3), lwd=3 )
 }
 points( E_subj, col=2 )
 
 
-plot(E_subj[,1], d$params$E_subj[,1]);abline(0,1)
-plot(E_subj[,2], d$params$E_subj[,2]);abline(0,1)
 
 
 

@@ -4,7 +4,8 @@ library(stom)
 
 sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson to sensible location)
                     delta = -1.2,
-                    sigma_ET = .5,
+                    sigma_ET = .2,
+                    sigma_subj = c( .5, .4 ),
                     B_AE = .1,
                     B_TE = c(.3, .7,  1.3,
                              .3,  1,   .7),
@@ -12,7 +13,7 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
                     B_ED = 1,
                     B_TD = c(0, 0, 0) ) {
 
-    Ns = 3 * 50  # number of subjects
+    Ns = 3 * 30  # number of subjects
     Ntx = 3      # number of treatments
     Nt = 4       # number of time points
     Tx = rep(1:Ntx, each = Ns / Ntx)  # Treatment condition for each subj
@@ -26,7 +27,7 @@ sim_data = function(alpha = -.5,  # outcome global intercept ( to shift poisson 
 
     Rho = matrix(c(   1, .25,
                     .25,   1), byrow = TRUE, nrow=2)
-    sigma_subj = c( .5, .4 )
+    sigma_subj = sigma_subj
     S = diag(sigma_subj) %*% Rho %*% diag(sigma_subj)
     E_subj = MASS::mvrnorm( Ns, mu=rep(0,2), Sigma=S )
     E = sapply(t, function(time) {

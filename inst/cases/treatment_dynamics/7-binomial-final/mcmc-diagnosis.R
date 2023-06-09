@@ -3,7 +3,7 @@ color_scheme_set("viridis")
 
 ######## Visualize where divergences happen #######
 # See <https://mc-stan.org/bayesplot/reference/MCMC-parcoord.html>
-m = readRDS("m1.RDS")
+# m = readRDS("m1.RDS")
 s = stom::precis(m, 5)
 
 draws = m$draws(
@@ -27,11 +27,30 @@ mcmc_parcoord(draws,
 ###### Check which params caused Low E-BFMI ########
 # See <https://mc-stan.org/misc/warnings.html#bfmi-low>
 dg = m$sampler_diagnostics(format = "df")
+p = stom:::parse_pars("sigma_ET,E,I,alpha,delta,B_AE,B_AD,B_TE")
 s2 = extract(m)
 
 x = sapply(colnames(s2), function(c_) {
     cor( s2[[c_]], dg$energy__ )
 })
 hist(x)
-which( abs(x) > .5 )
+x[which( abs(x) > .9 )]
+
+x_cor = cor(s2$sigma_ET, s2)
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+library(bayesplot)
+color_scheme_set("viridis")
+pars = stom:::parse_pars("alpha,delta,B_TD,B_ED,B_AE,B_AD,B_TE,sigma_ET")
+# p = stom::extract(m, pars)
+#
+# s = sample(1:3000, 300, replace=F)
+# p[s,-(12:14)] |> pairs()
+mcmc_trace(m$draws(), regex_pars = paste0("^", pars), facet_args = list(ncol=3))
+
+# mcmc_trace(m$draws()[,,],
+#            pars="sigma_ET",
+#            transformations = "log",
+#            facet_args = NULL
+#            )

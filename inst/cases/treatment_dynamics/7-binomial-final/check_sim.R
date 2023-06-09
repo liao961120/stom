@@ -1,9 +1,11 @@
 library(stom)
 source("simulation.R")
-set.seed(1877)
+set.seed(1977)
 d = sim_data( alpha=-.7,
-              delta=-1.5)
-
+              delta=-1.8,
+              sigma_ET = .2,
+              sigma_subj = c(.5, .4 )
+)
 
 d$dat$D_latent |> summary()
 d$dat$D |> hist()

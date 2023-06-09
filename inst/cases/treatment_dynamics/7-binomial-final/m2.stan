@@ -1,5 +1,5 @@
 /*
-    Binomial Outcome model, with no varying effects of subjects
+    Binomial Outcome model
 */
 
 data {
