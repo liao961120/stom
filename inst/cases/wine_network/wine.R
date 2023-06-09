@@ -24,7 +24,7 @@
 #' conceptual terms, consider the scenario that, for instance, French wines are
 #' rated higher by French judges, in addition to the scores they should have
 #' received based on their quality alone. The simulation code of this data
-#' generating process is found in the `sim_dat()` function below.
+#' generating process is found in the `sim_dat()` function in `wine.R`.
 #'
 #' ![Underlying data-generating process of the IRT Model](dag)
 #'
