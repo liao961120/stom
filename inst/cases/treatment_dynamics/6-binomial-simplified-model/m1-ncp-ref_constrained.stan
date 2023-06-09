@@ -43,8 +43,7 @@ parameters {
     real<lower=0> sigma_subj;
 
     // Outcome params
-    vector[Ntx] zB_TD;   // Treatment on Outcome (direct effect)
-    real muB_TD;
+    vector[Ntx-1] zB_TD;   // Treatment on Outcome (direct effect): reference constrained
     real<lower=0> sigma_B_TD;  // Common std among direct treatment effect
     real B_AD;           // Age on outcome
     real B_ED;           // Efficacy on outcome
@@ -77,7 +76,7 @@ transformed parameters {
                 seems more intuitive within a Bayesian workflow.
                 See `m1-ncp.stan` for 1 and `m1-ncp-ref_constrained.stan` for 2. 
         */
-    vector[Ntx] B_TD = fma(zB_TD, sigma_B_TD, muB_TD);
+    vector[Ntx] B_TD = append_row(0, sigma_B_TD * zB_TD);
 }
 model {
     // Priors for IRT parameters
@@ -94,7 +93,6 @@ model {
 
     // Priors for direct treament effects (T -> D)
     zB_TD ~ std_normal();
-    muB_TD ~ std_normal();
     sigma_B_TD ~ std_normal();
     B_AD ~ std_normal();
     alpha ~ normal(0, 1.5);
