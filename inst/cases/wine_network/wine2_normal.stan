@@ -24,6 +24,7 @@ transformed parameters {
   // mean wine quality for Ow=1 & Ow=2 (sum-zero-constraint)
   vector[2] a = append_row(a_raw, -sum(a_raw));
   // Interaction terms (fix 2,2 to zero)
+  //   Fix (2,2) to zero to allow model identification and comparison with simulation
   matrix[2,2] Int = [ [Int_raw[1],    Int_raw[2]], 
                       [Int_raw[3],    0] ];
   vector[Nj] J;
@@ -40,6 +41,10 @@ model{
   }
   
   // Submodel 2:  W --> R <-- J
+     /*                 ^
+                        |
+                        Ow (through interaction)
+     */                  
   vector[N] mu;
   to_vector(Int) ~ normal( 0, 1 );
   zJ ~ normal( 0 , 1 );
