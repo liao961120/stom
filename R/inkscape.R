@@ -32,9 +32,11 @@
 pdf2png = function(infile,
                    outfile = NULL,
                    page = NULL,
-                   dpi = 1200) {
+                   dpi = 1200,
+                   white = FALSE) {
     base_cmd = c(
-        "--export-background-opacity=0",
+        "--export-background-opacity=0"[!white],
+        "--export-background=white"[white],
         "--export-type=png",
         "--export-text-to-path",
         "--export-area-drawing",
@@ -52,9 +54,11 @@ pdf2png = function(infile,
 #' @rdname pdf2png
 pdf2svg = function(infile,
                    outfile = NULL,
-                   page = NULL) {
+                   page = NULL,
+                   white = FALSE) {
     base_cmd = c(
-        "--export-background-opacity=0",
+        "--export-background-opacity=0"[!white],
+        "--export-background=white"[white],
         "--export-type=svg",
         "--export-text-to-path",
         "--export-area-drawing",
