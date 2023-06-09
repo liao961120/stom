@@ -59,7 +59,7 @@ mtext( beta[8], at = 15 )
 library(bayesplot)
 color_scheme_set("viridis")
 pars = stom:::parse_pars("alpha,delta,B_TD,B_ED,B_AE,B_AD,B_TE,sigma_ET")
-mcmc_trace(m$draws()[,,], regex_pars = pars, facet_args = list(ncol=3))
+mcmc_trace(m$draws()[,,], regex_pars = paste0("^",pars), facet_args = list(ncol=3))
 
 
 
