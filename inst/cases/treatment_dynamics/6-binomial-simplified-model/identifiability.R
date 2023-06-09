@@ -18,7 +18,7 @@ m = readRDS("m1-ncp0.RDS")
 # There are more than one solutions, or peaks, in the posterior. Different
 # chains found different peaks.
 pars = stom:::parse_pars("alpha,delta,B_TD,B_ED,B_AE,B_AD,B_TE,sigma_ET")
-plt_trace = mcmc_trace(m$draws()[,,], regex_pars = pars,
+plt_trace = mcmc_trace(m$draws()[,,], regex_pars = paste0("^", pars),
                        facet_args = list(ncol=3),
                        #window = c(800, 1000)
                        ) +
