@@ -33,7 +33,7 @@ plt_trace = mcmc_trace(m$draws()[,,], regex_pars = paste0("^", pars),
     # legend_none() +
     labs(
         # title = "Ghosts glide around when one peak foregrounds"
-        title = "Tracks behind ghosts roaming high dimensional hills"
+        title = "Traces of ghosts roaming high dimensional hills"
     )
 plt_trace
 #1024,864
