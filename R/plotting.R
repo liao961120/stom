@@ -1,6 +1,5 @@
 #' Functions stolen from the rethinking package
 #'
-#'
 #' @export
 col.alpha = function (acol, alpha = 0.5) {
   acol <- col2rgb(acol)
@@ -47,4 +46,33 @@ shade = function (object, lim, label = NULL, col = col.alpha("black",
         ly <- max(y)/2
         text(lx, ly, label)
     }
+}
+
+
+#' Add multivariate normal contour to plot
+#'
+#' @param mu Vector of MVNormal center.
+#' @param Sigma Covariance matrix of MVNormal.
+#' @param col Color of the contours.
+#' @param alpha Opacity of the contours.
+#' @param level The values the of cumulative density to plot contours.
+#' @param ... Further arguments passed to [graphics::lines()].
+#' @examples
+#' mu = c(.5, .7)
+#' Rho = matrix(c(
+#'     1, .2,
+#'    .2,  1 ), nrow=2, byrow=T)
+#' s = c( 1.5, 1.2 )
+#' Sigma = diag(s) %*% Rho %*% diag(s)
+#' x = MASS::mvrnorm(50, mu, Sigma)
+#' plot(x)
+#' curve_mvnorm(mu, Sigma)
+#' @export
+curve_mvnorm = function(mu, Sigma, level = c(seq(.1,.9,.1),.99),
+                        col=1, alpha=.1, ... ) {
+    for ( l in level)
+        lines(
+            ellipse::ellipse(Sigma, centre=mu, level=l),
+            col = col.alpha("black",alpha, ...)
+        )
 }
