@@ -54,9 +54,6 @@ transformed parameters {
     // IRT item params (sum-to-zero contrained)
     vector[Ni] I = sigma_I * append_row( zI_raw,-sum(zI_raw) );
 
-    // Partial pool subject intercepts
-    vector[Ns] E_subj = sigma_subj * Z_subj;
-
     matrix[Ns,Nt] E;
     // Transformed E
     for ( i in 1:NO ) {
@@ -98,10 +95,6 @@ model {
     sigma_B_TD ~ std_normal();
     B_AD ~ std_normal();
     alpha ~ normal(0, 1.5);
-
-    // Priors for subject varying intercepts
-    Z_subj ~ std_normal();
-    sigma_subj ~ std_normal();  // half-normal
 
     // Causes of E (see transformed parameters block)
     to_vector(zE) ~ std_normal();
