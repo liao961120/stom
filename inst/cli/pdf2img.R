@@ -3,9 +3,9 @@
 out_ext = ".svg"
 if (!interactive())
     args = commandArgs(TRUE)
-if ( cmd_has(args, "--to=png") )
+if ( stom::cmd_has(args, "--to=png") )
     out_ext = ".png"
-dpi = cmd_get_value(args, "--dpi=")
+dpi = stom::cmd_get_value(args, "--dpi=")
 if ( !is.na(dpi) ) {
     dpi = as.integer(dpi)
 } else {

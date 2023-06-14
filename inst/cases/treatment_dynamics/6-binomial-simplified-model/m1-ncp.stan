@@ -52,7 +52,7 @@ parameters {
 }
 transformed parameters {
     // IRT item params (sum-to-zero contrained)
-    vector[Ni] I = sigma_I * append_row( zI_raw,-sum(zI_raw) );
+    vector[Ni] I = sigma_I * append_row( -sum(zI_raw), zI_raw );
 
     matrix[Ns,Nt] E;
     // Transformed E
