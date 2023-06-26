@@ -76,3 +76,21 @@ curve_mvnorm = function(mu, Sigma, level = c(seq(.1,.9,.1),.99),
             col = col.alpha("black",alpha, ...)
         )
 }
+
+
+#' Get graphical parameters
+#'
+#' @param x Parameter name.
+#' @examples
+#' par2("mar")
+#' par2("omi")
+#' @export
+par2 = function(x, ...) {
+    vals = par(x, ...)
+    params = c( "omi", "oma", "mar", "mai" )
+    if ( x %in% params )
+        names(vals) = c("b", "l", "t", "r")
+    vals
+}
+
+
