@@ -45,6 +45,9 @@ reference:
     Utilities for plotting.
   contents:
   - col.alpha
+  - shade
+  - curve_mvnorm
+  - par2
 - title: "Documentation"
   desc: >
     Helpers for documenting scripts in Markdown.

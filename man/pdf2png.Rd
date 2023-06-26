@@ -7,9 +7,9 @@
 \alias{svg2png}
 \title{Vector graphics conversion}
 \usage{
-pdf2png(infile, outfile = NULL, page = NULL, dpi = 1200)
+pdf2png(infile, outfile = NULL, page = NULL, dpi = 1200, white = FALSE)
 
-pdf2svg(infile, outfile = NULL, page = NULL)
+pdf2svg(infile, outfile = NULL, page = NULL, white = FALSE)
 
 svg2pdf(infile, outfile = NULL)
 
