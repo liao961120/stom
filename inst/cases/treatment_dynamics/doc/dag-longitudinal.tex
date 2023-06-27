@@ -1,7 +1,7 @@
 %\title{Using the forest package to create trees in LaTeX}
 % From http://tex.stackexchange.com/a/108728/23931 
 \documentclass[12pt,preview,border=0]{standalone}
-\usepackage[paperheight=20cm,paperwidth=11cm]{geometry}
+\usepackage[paperheight=20cm,paperwidth=15cm]{geometry}
 \usepackage{graphicx}
 % \usepackage{forest}
 \usepackage{amsmath}
@@ -33,34 +33,54 @@
 	% Nodes and their relative positions
 	% t = 0
    	\node[U] (E0) {$E_0$};
-    \node[U] (D0) [below = .8 of E0] {$D_0$};	
+    \node[U] (D0) [below = of E0] {$D_0$};	
+    \node[O] (C0) [below = .55 of E0] {};
 
-    \node[O] (A) [right = .7 of D0] {$A$};
-	\node[O] (R0) [above left = .65 of E0] {$R_0$};
-   	\node[O] (DD0) [below left = .65 of D0] {$D_0^\ast$};
+    \node[O] (A) [left = .6 of C0] {$A$};
+	\node[O] (R0) [above right = .65 of E0] {$R_0$};
+   	\node[O] (DD0) [below right = .65 of D0] {$D_0^\ast$};
     % t = 1
-    \node[U] (D1) [right = .7 of A] {$D_1$};	
-    \node[U] (E1) [above = .8 of D1] {$E_1$};
-    \node[O] (R1) [above left = .65 of E1] {$R_1$};
-   	\node[O] (DD1) [below left = .65 of D1] {$D_1^\ast$};
-   	\node[O] (T) [right = .7 of D1] {$T$};
-       
+    \node[U] (D1) [right = of D0] {$D_1$};
+    \node[U] (D2) [right = of D1] {$D_2$};
+    \node[U] (E1) [above = of D1] {$E_1$};
+    \node[U] (E2) [above = of D2] {$E_2$};
+    \node[O] (C1) [below = .55 of E1] {};
+    \node[O] (R1) [above right = .65 of E1] {$R_1$};
+    \node[O] (R2) [above right = .65 of E2] {$R_2$};
+   	\node[O] (DD1) [below right = .65 of D1] {$D_1^\ast$};
+    \node[O] (DD2) [below right = .65 of D2] {$D_2^\ast$};
+   	\node[O] (T) [right = .6 of C1] {$T$};
+
 	% Paths connecting nodes
+    \path[->] (A) edge (E0);
+    \path[->] (A) edge (D0);
+
     \path[->] (T) edge (D1);
     \path[->] (T) edge (E1);
+    \path[->] (T) edge (D2);
+    \path[->] (T) edge (E2);
     
-    \path[->] (E1) edge (R1);
-    \path[->] (E1) edge (D1);
-    
-    \path[->] (A) edge (D1);
-    \path[->] (A) edge (D0);
-    \path[->] (A) edge (E0);
     \path[->] (E0) edge (D0);
     \path[->] (E0) edge (R0);
     \path[->] (E0) edge (E1);
+    \path[->] (E0) edge[bend left=90] (E2);
+    
+
+    \path[->] (E1) edge (R1);
+    \path[->] (E1) edge (D1);
+    % \path[->] (E1) edge (E2);
+
+    \path[->] (E2) edge (R2);
+    \path[->] (E2) edge (D2);
     
     \path[->] (D0) edge (DD0);
+    \path[->] (D0) edge (D1);
+    \path[->] (D0) edge[bend right=90] (D2);
+    
     \path[->] (D1) edge (DD1);
+    
+    \path[->] (D2) edge (DD2);
+
 \end{tikzpicture}
 	
 

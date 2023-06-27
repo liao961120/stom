@@ -30,13 +30,13 @@ parameters {
     real<lower=0> sigma_I;
     vector[Ni-1] zI_raw;
     ordered[Nk-1] kappa;
-    matrix[Ns,Nt] zE;
 
     // E model params
     matrix[2,Ntx] B_TE;  // Treatment on Efficacy (indirect effect)
     real B_AE;           // Age on Efficacy
     real delta;          // global intercept (E linear model)
-    real<lower=0> tau;   // residual std (E linear model)
+    real<lower=0> tau;   // subj baseline std (E linear model)
+    vector[Ns] zSubj;     // subject baseline
     
     // D model params
     vector[Ntx] zB_TD;       // Treatment on Outcome (direct effect)
@@ -50,13 +50,16 @@ transformed parameters {
     // IRT item params (sum-to-zero contrained)
     vector[Ni] I = sigma_I * append_row( -sum(zI_raw), zI_raw );
 
+    // subject baseline efficacy
+    vector[Ns] subj;
+    subj = tau * zSubj;
+
     matrix[Ns,Nt] E;
     // Transformed E
     for ( i in 1:NO ) {
         int sid = Sid_O[i];
         int time = time_O[i];
-        real muE = delta + B_AE*A[i] + B_TE[G[i],Tx[i]]*time;
-        E[sid,time+1] = fma(zE[sid,time+1], tau, muE);
+        E[sid,time+1] = delta + subj[sid] + B_AE*A[i] + B_TE[G[i],Tx[i]]*time;
     }
 
     // Direct treatment effect
@@ -83,7 +86,7 @@ model {
     B_AE ~ std_normal();
     delta ~ normal(0, 1.5);
     tau ~ std_normal();
-    to_vector(zE) ~ std_normal();
+    zSubj ~ std_normal();
 
     // Priors for causes of D (T -> D <- E)
     zB_TD ~ std_normal();

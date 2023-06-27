@@ -10,31 +10,31 @@ sim_data = function(
         B_ED = 1,              # Effect of Efficacy on Outcome
         B_TD = c(0, 0, 0),     # Effect of Treatment on Outcome
         delta = -1.8,          # Intercept for "E model"
-        tau = 0.2,             # Residual std for "E model"
+        tau = 0.8,             # std for subject baseline
         alpha = 0              # Intercept for "D model"
     ){
-    
-    Ns = 3 * 30  # number of subjects
-    Ntx = 3      # number of treatments
-    Nt = 4       # number of time points
-    
+
+    Ntx = 3        # number of treatments
+    Ns = Ntx * 30  # number of subjects
+    Nt = 4         # number of time points
+
     Tx = rep(1:Ntx, each = Ns / Ntx)  # Treatment condition for each subj
     G = rep(1:2, times = Ns / 2)      # Gender of each subj
     A = rtnorm( Ns, m = 36, lower = 18, upper = 80, s = 20 )  # Age
-    
+
     # Transform Age to a reasonable scale
     minA = min(A)
     A = (A - minA) / 10  # 1 unit of increase = 10 years of increase in original age
-    
+
     B_TE = matrix( B_TE, nrow=2, byrow = T )
     row.names(B_TE) = c("male", "female")
     t = 0:(Nt - 1)  # time points of measure
-        
+
     # Causes of E
+    subj = rnorm(Ns, 0, tau)
     E = sapply(t, function(time) {
         b_TE = sapply( 1:Ns, function(i) B_TE[ G[i],Tx[i] ] )
-        muE = delta + B_AE * A + b_TE * time
-        rnorm( Ns, muE, tau )
+        delta + subj + B_AE * A + b_TE * time
     })
     # Causes of D
     D_latent = sapply(t, function(time) {
@@ -45,10 +45,10 @@ sim_data = function(
         mu = -D_latent[, time+1]
         rbinom( Ns, size=14, prob=logistic(mu) )
     })
-    
+
     # Item response model
     Ni = 20  # number of items
-    I = seq(-6.3, 6.3, length = Ni)  # item easiness (sums to zero)
+    I = seq(-4.5, 4.5, length = Ni)  # item easiness (sums to zero)
     kappa = logit(cumsum(simplex(c(1, 2, 4, 4, 2, 1))))
     kappa = kappa[-length(kappa)]
     # Item-level responses (subject-item-time)
@@ -59,7 +59,7 @@ sim_data = function(
             rordlogit(E[Sid[i], time[i] + 1] + I[Iid[i]], kappa = kappa)
         })
     }
-    
+
     # Outcome-level responses (subject-time)
     dO = expand.grid( Sid=1:Ns, time=t, KEEP.OUT.ATTRS=F )
     dO$A = with( dO, A[Sid] )
@@ -75,7 +75,7 @@ sim_data = function(
         dO$D_latent[i] = D_latent[s, t_]
         dO$D[i] = D[s, t_]
     }
-    
+
     # Gather data (for Stan)
     dat = list(
         Ns = Ns,                 # num of subjects
@@ -83,14 +83,14 @@ sim_data = function(
         Nt = Nt,                 # num of time-points
         Nk = length(kappa) + 1,  # num of ordinal choices
         Ni = Ni,                 # num of items
-        
+
         # Item-level responses (N=Ns*Ni*Nt)
         NI = Ns * Ni * Nt,
         Sid_I  = dI$Sid,
         Iid_I  = dI$Iid,
         time_I = dI$time,
         R      = dI$R,           # item responses
-        
+
         # Outcome-level responses (N=Ns*Nt)
         NO = Ns * Nt,
         Sid_O  = dO$Sid,
@@ -104,7 +104,6 @@ sim_data = function(
     true_params = list(
         alpha = alpha,
         delta = delta,
-        tau = tau,
         B_AE = B_AE,
         B_TE = B_TE,
         B_AD = B_AD,
@@ -112,7 +111,10 @@ sim_data = function(
         B_TD = B_TD,
         E = E,
         I = I,
-        kappa = kappa
+        sigma_I = sd(I),
+        kappa = kappa,
+        tau = tau,
+        subj = subj
     )
     others = list(
         minA = minA,
