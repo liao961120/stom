@@ -115,27 +115,29 @@ get_pandoc_pdf_args = function(style="") {
     # Before body
     before_body = tempfile()
     writeLines(c(
-      "\\vspace{-8pt}\\footnotesize\\begin{center}\\today\\end{center}\\vspace{12pt}\n",
-      "
-      \\makeatletter
-      \\let\\origsection\\section
-      \\renewcommand\\section{\\@ifstar{\\starsection}{\\nostarsection}}
-
-      \\newcommand\\nostarsection[1]
-      {\\sectionprelude\\origsection{#1}\\sectionpostlude}
-
-      \\newcommand\\starsection[1]
-      {\\sectionprelude\\origsection*{#1}\\sectionpostlude}
-
-      \\newcommand\\sectionprelude{%
-        \\vspace{.9em}
-      }
-
-      \\newcommand\\sectionpostlude{%
-        \\vspace{.35em}
-      }
-      \\makeatother
-      "),
+        ""
+      # "\\vspace{-8pt}\\footnotesize\\begin{center}\\today\\end{center}\\vspace{12pt}\n",
+      # "
+      # \\makeatletter
+      # \\let\\origsection\\section
+      # \\renewcommand\\section{\\@ifstar{\\starsection}{\\nostarsection}}
+      #
+      # \\newcommand\\nostarsection[1]
+      # {\\sectionprelude\\origsection{#1}\\sectionpostlude}
+      #
+      # \\newcommand\\starsection[1]
+      # {\\sectionprelude\\origsection*{#1}\\sectionpostlude}
+      #
+      # \\newcommand\\sectionprelude{%
+      #   \\vspace{.9em}
+      # }
+      #
+      # \\newcommand\\sectionpostlude{%
+      #   \\vspace{.35em}
+      # }
+      # \\makeatother
+      # "
+      ),
       before_body
     )
     return(c(
