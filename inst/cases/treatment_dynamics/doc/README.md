@@ -2,6 +2,7 @@
 title: Growth Curve Modeling of Latent Constructs with Embedded Item Response Submodels
 short-title: Growth Curve Modeling of Latent Constructs
 author: Yongfu Liao
+date: "May 24, 2023"
 format: 
    gfm:
       output-file: "index"
@@ -148,9 +149,10 @@ time points is influenced by age only *indirectly* through $E_0$. This slight
 complication becomes clearer in the following description of the model
 (data-generating process).
 
+\newpage
 
-Model Specification
--------------------
+Model Formulation
+-----------------
 
 \newcommand{\midx}[2]{ \mathrm{#1},\mathrm{#2} }
 \newcommand{\aidx}[3]{ \mathrm{#1},\mathrm{#2},\mathrm{#3} }
