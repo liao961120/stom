@@ -161,7 +161,7 @@ get_pandoc_pdf_args = function(style="") {
       ########
       # "--variable=linestretch:1.2",
       "--variable=indent:true",
-      "--variable=geometry:paperwidth=7in,paperheight=10in,text={5in,8in},left=1in,top=1in,headheight=0.25in,headsep=0.4in,footskip=0.4in"
+      "--variable='geometry:paperwidth=7in,paperheight=10in,text={5in,8in},left=1in,top=1in,headheight=0.25in,headsep=0.4in,footskip=0.4in'"
       ))
   }
   return(c())
