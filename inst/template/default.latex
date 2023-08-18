@@ -474,7 +474,7 @@ $endif$
 
 $if(title)$
 %% CUSTOM %%
-\title$if(short-title)$[$short-title$]$endif${$title$$if(thanks)$\thanks{$thanks$}$endif$}
+\title$if(short-title)$[{$short-title$}]$endif${$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
 $if(subtitle)$
 $if(beamer)$
