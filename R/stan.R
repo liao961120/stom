@@ -82,7 +82,8 @@ precis = function(fit, depth=1, pars=NULL, lp=F) {
 #' @rdname precis
 #' @export
 extract = function(fit, pars=NULL, lp=F, chains=NULL) {
-  pars = parse_pars( pars )
+  if (!is.null(pars))
+    pars = parse_pars( pars )
   if (!is.null(chains)) {
       d = fit$draws(pars, format="draws_array")[,chains,]
       d = posterior::as_draws_df(d)
