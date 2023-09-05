@@ -53,7 +53,7 @@ export_docs_html = function(path, outfp) {
 #' Pandoc wrappers for converting markdown to pre-styled documents
 #'
 #' @export
-pandoc_pdf = function(fin, outfp, style="amsart") {
+pandoc_pdf = function(fin, outfp, style="amsart", ...) {
     temp = pdf_filter(fin)
     pandoc(
         temp,
@@ -66,13 +66,14 @@ pandoc_pdf = function(fin, outfp, style="amsart") {
         # "--pdf-engine=pdflatex",
         get_pandoc_pdf_args(style),
         "-o",
-        outfp
+        outfp,
+        ...
     )
 }
 
 
 #' @export
-pandoc_tex = function(fin, outfp, style="amsart") {
+pandoc_tex = function(fin, outfp, style="amsart", ...) {
     temp = pdf_filter(fin)
     pandoc(
         temp,
@@ -84,7 +85,8 @@ pandoc_tex = function(fin, outfp, style="amsart") {
         # "--pdf-engine=pdflatex",
         get_pandoc_pdf_args(style),
         "-o",
-        outfp
+        outfp,
+        ...
     )
 }
 
@@ -110,8 +112,8 @@ pandoc_html = function(fin, outfp, style=NULL) {
 
 get_pandoc_pdf_args = function(style="") {
   if ( style == "amsart" ) {
-    header = tempfile()
-    writeLines(c(""), header )
+    header = system.file("template", "preamble.tex", package = "stom")
+    # writeLines(c(""), header )
     # Before body
     before_body = tempfile()
     writeLines(c(
