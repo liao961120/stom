@@ -523,6 +523,7 @@ $endif$
 % CUSTOM HEADER
 $if(date)$
     \vspace{-8pt}\footnotesize\begin{center}{$date$}\end{center}\vspace{12pt}
+$elseif(nodate)$
 $else$
     \vspace{-8pt}\footnotesize\begin{center}\today\end{center}\vspace{12pt}
 $endif$
