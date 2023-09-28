@@ -1,21 +1,21 @@
-#' Demonstration of observation equivalence when reversing an arrow 
-#' in a mediation model. Based on the model in Rohrer et al. (2022) Fig. 1 & the
-#' text in sect. "Comparing alternative models".
-#' 
-#' @references 
-#' Rohrer, J. M., Hünermund, P., Arslan, R. C., & Elson, M. (2022). 
-#'    That’s a Lot to Process! Pitfalls of Popular Path Models. 
-#'    Advances in Methods and Practices in Psychological Science, 5(2). 
+#' Demonstration of observation equivalence when reversing an arrow
+#' in a mediation model. Based on the model in Rohrer et al. (2022) Fig. 5 &
+#' sect. "Comparing alternative models" (p.7).
+#'
+#' @references
+#' Rohrer, J. M., Hünermund, P., Arslan, R. C., & Elson, M. (2022).
+#'    That’s a Lot to Process! Pitfalls of Popular Path Models.
+#'    Advances in Methods and Practices in Psychological Science, 5(2).
 #'    https://doi.org/10.1177/25152459221095827
 
 
 library(rethinking)
 
 # Simulation of true DGP
-# 
+#
 #   P
 #  ^ ^
-# /   \ 
+# /   \
 # S -> E
 set.seed(10)
 N = 400
@@ -34,7 +34,7 @@ dat = list(
 )
 
 # True DGP
-m1 = ulam( 
+m1 = ulam(
     alist(
         P ~ normal(muP, sP),
         muP <- bSP * S + bEP * E,
@@ -48,10 +48,10 @@ m1 = ulam(
         sS ~ exponential(1.5),
         sP ~ exponential(1.5),
         muS ~ normal(0, 2)
-    ), data=dat, chains=4, cores=4, sample=T, cmdstan=T, log_lik = T ) 
+    ), data=dat, chains=4, cores=4, sample=T, cmdstan=T, log_lik = T )
 
 # Alternative DGP
-m2 = ulam( 
+m2 = ulam(
     alist(
         P ~ normal(muP, sP),
         muP <- bSP * S + bEP * E,
@@ -65,8 +65,8 @@ m2 = ulam(
         sS ~ exponential(1.5),
         sP ~ exponential(1.5),
         muE ~ normal(0, 2)
-        
-    ), data=dat, chains=4, cores=4, sample=T, cmdstan=T, log_lik = T ) 
+
+    ), data=dat, chains=4, cores=4, sample=T, cmdstan=T, log_lik = T )
 
 
 precis(m1)
