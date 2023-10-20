@@ -3,6 +3,7 @@
 export(as_c_chr)
 export(as_c_num)
 export(as_posterior_array)
+export(as_vec)
 export(cmd_get_value)
 export(cmd_has)
 export(cmd_parse_args)

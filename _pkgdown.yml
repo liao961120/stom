@@ -52,6 +52,7 @@ reference:
   desc: >
     Helpers for documenting scripts in Markdown.
   contents:
+  - as_vec
   - inline
   - as_c_num
   - xclip

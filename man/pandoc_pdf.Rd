@@ -5,7 +5,7 @@
 \alias{pandoc_html}
 \title{Pandoc wrappers for converting markdown to pre-styled documents}
 \usage{
-pandoc_pdf(fin, outfp, style = "amsart")
+pandoc_pdf(fin, outfp, style = "amsart", ...)
 
 pandoc_html(fin, outfp, style = NULL)
 }
