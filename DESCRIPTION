@@ -22,3 +22,8 @@ Suggests:
 Enhances: 
     cli,
     rprojroot
+Imports: 
+    knitr,
+    markdown,
+    xfun,
+    yaml

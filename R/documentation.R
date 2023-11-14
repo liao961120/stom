@@ -103,6 +103,7 @@ pandoc_html = function(fin, outfp, args=NULL, style=NULL) {
           "--to=html5",
           "--katex",
           "--toc",
+          "--section-divs",
           "-M", "document-css=false",
           "-B", system.file("template", "before-body-yihui.html", package="stom"),
           "-A", system.file("template", "after-body.html", package="stom"),

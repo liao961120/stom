@@ -1,5 +1,5 @@
-<!-- 
-Markdeep Diagram parser 
+<!--
+Markdeep Diagram parser
     Parses all code blocks with `.goat` className as Markdeep diagram.
 -->
 <script>window.markdeepOptions = {mode: 'script', detectMath: false};</script>
@@ -16,4 +16,25 @@ Markdeep Diagram parser
     e.after(graph);
     e.remove();
   })
+</script>
+
+<!--
+Hack to apply the style of <https://cran.r-project.org/web/packages/markdown/vignettes/article.html>
+-->
+<script>
+    // Add body style
+    var newElem = document.createElement('div');
+    newElem.className = "body";
+    Array.prototype.forEach.call(document.querySelectorAll('section'), function(c){
+        newElem.appendChild(c);
+    });
+    document.body.appendChild(newElem);
+
+    // Add header style
+    document.getElementById('title-block-header').className = "frontmatter";
+
+    // Add anchor
+    document.querySelectorAll('section').forEach(h => {
+      if (h.id) h.querySelector('h1,h2,h3,h4,h5,h6').innerHTML += ` <span class="anchor"><a href="#${h.id}">#</a></span>`;
+    });
 </script>
