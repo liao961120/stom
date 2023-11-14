@@ -93,7 +93,7 @@ pandoc_tex = function(fin, outfp, style="amsart", ...) {
 
 #' @rdname pandoc_pdf
 #' @export
-pandoc_html = function(fin, outfp, style=NULL) {
+pandoc_html = function(fin, outfp, args=NULL, style=NULL) {
   if (Sys.info()['sysname'] == "Windows")
     Sys.setlocale("LC_TIME", "C")
   pandoc( fin,
@@ -102,10 +102,14 @@ pandoc_html = function(fin, outfp, style=NULL) {
           "--from=markdown+tex_math_dollars+raw_tex+raw_attribute",
           "--to=html5",
           "--katex",
+          "--toc",
+          "-M", "document-css=false",
+          "-B", system.file("template", "before-body-yihui.html", package="stom"),
           "-A", system.file("template", "after-body.html", package="stom"),
-          "-c", system.file("template", "pandoc.css", package="stom"),
+          # "-c", system.file("template", "pandoc.css", package="stom"),
           "-V", paste0("date=", '"', format.Date(Sys.Date(),"%B %d, %Y"), '"'),
           "-s",
+          args,
           "-o", outfp )
 }
 
