@@ -89,12 +89,13 @@ only <code>amsart</code> is available.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">(</span><span class="va">fin</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"cases"</span>, <span class="st">"wine_network"</span>, <span class="st">"wine.R"</span>, package <span class="op">=</span> <span class="st">"stom"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "C:/Users/rd/AppData/Local/Temp/RtmpEVuIFm/temp_libpath108b06f5529a9/stom/cases/wine_network/wine.R"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "C:/Users/rd/AppData/Local/Programs/R/R-4.1.3/library/stom/cases/wine_network/wine.R"</span>
 <span class="r-in"><span><span class="va">docstring</span> <span class="op">=</span> <span class="fu">export_docs</span><span class="op">(</span><span class="va">fin</span><span class="op">)</span>  <span class="co"># Return as character vector if `outfp=NULL`</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">docstring</span>, sep<span class="op">=</span><span class="st">"\n"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> title: Joint Estimation of Interaction and Piped Effects in an Item Response Model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> author: "Yongfu Liao"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> date: "April 27, 2023"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description</span>
@@ -110,12 +111,12 @@ only <code>amsart</code> is available.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3. $O_w$: Wine origin</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Furthermore, it is assumed that $O_w$ differentially influences $R$</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> based on the levels of another variable $O_j$, the origin of the judge</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> based on the levels of another variable $O_j$, the origin of the judge.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> In stats jargon, there's an interaction between $O_w$ and $O_j$. In simpler</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> conceptual terms, consider the scenario that, for instance, French wines are</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> rated higher by French judges, in addition to the scores they should have</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> received based on their quality alone. The simulation code of this data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> generating process is found in the `sim_dat()` function below.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> generating process is found in the `sim_dat()` function in `wine.R`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ![Underlying data-generating process of the IRT Model](dag)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

@@ -474,7 +474,7 @@ $endif$
 
 $if(title)$
 %% CUSTOM %%
-\title$if(short-title)$[$short-title$]$endif${$title$$if(thanks)$\thanks{$thanks$}$endif$}
+\title$if(short-title)$[{$short-title$}]$endif${$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
 $if(subtitle)$
 $if(beamer)$
@@ -489,7 +489,7 @@ $endif$
 \subtitle{$subtitle$}
 $endif$
 \author{$for(author)$$author$$sep$ \and $endfor$}
-\date{$date$}
+% \date{$date$}
 $if(beamer)$
 $if(institute)$
 \institute{$for(institute)$$institute$$sep$ \and $endfor$}
@@ -503,6 +503,7 @@ $endif$
 $endif$
 
 \begin{document}
+
 $if(has-frontmatter)$
 \frontmatter
 $endif$
@@ -518,6 +519,35 @@ $abstract$
 \end{abstract}
 $endif$
 $endif$
+
+% CUSTOM HEADER
+$if(date)$
+    \vspace{-8pt}\footnotesize\begin{center}{$date$}\end{center}\vspace{12pt}
+$elseif(nodate)$
+$else$
+    \vspace{-8pt}\footnotesize\begin{center}\today\end{center}\vspace{12pt}
+$endif$
+
+\makeatletter
+\let\origsection\section
+\renewcommand\section{\@ifstar{\starsection}{\nostarsection}}
+
+\newcommand\nostarsection[1]
+{\sectionprelude\origsection{#1}\sectionpostlude}
+
+\newcommand\starsection[1]
+{\sectionprelude\origsection*{#1}\sectionpostlude}
+
+\newcommand\sectionprelude{%
+  \vspace{.9em}
+}
+
+\newcommand\sectionpostlude{%
+  \vspace{.35em}
+}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 $for(include-before)$
 $include-before$

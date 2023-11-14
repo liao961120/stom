@@ -4,6 +4,7 @@
 #' ---
 #' title: Joint Estimation of Interaction and Piped Effects in an Item Response Model
 #' author: "Yongfu Liao"
+#' date: "April 27, 2023"
 #' ---
 #'
 #' Description
@@ -19,12 +20,12 @@
 #' 3. $O_w$: Wine origin
 #'
 #' Furthermore, it is assumed that $O_w$ differentially influences $R$
-#' based on the levels of another variable $O_j$, the origin of the judge
+#' based on the levels of another variable $O_j$, the origin of the judge.
 #' In stats jargon, there's an interaction between $O_w$ and $O_j$. In simpler
 #' conceptual terms, consider the scenario that, for instance, French wines are
 #' rated higher by French judges, in addition to the scores they should have
 #' received based on their quality alone. The simulation code of this data
-#' generating process is found in the `sim_dat()` function below.
+#' generating process is found in the `sim_dat()` function in `wine.R`.
 #'
 #' ![Underlying data-generating process of the IRT Model](dag)
 #'

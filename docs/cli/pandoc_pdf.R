@@ -12,8 +12,8 @@ fin = basename(fin)
 if (tolatex) {
     print("Compile to LaTex")
     fout = stom::replace_file_ext(fin, ".tex")
-    stom::pandoc_tex(fin, fout, style = "amsart")
+    stom::pandoc_tex(fin, fout, style = "amsart", args[-1])
 } else {
     fout = stom::replace_file_ext(fin, ".pdf")
-    stom::pandoc_pdf(fin, fout, style = "amsart")
+    stom::pandoc_pdf(fin, fout, style = "amsart", args[-1])
 }

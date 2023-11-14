@@ -1,6 +1,7 @@
 ---
 title: Growth Curve Modeling with Bayes
 author: Yongfu Liao
+date: "May 2, 2023"
 ---
 
 

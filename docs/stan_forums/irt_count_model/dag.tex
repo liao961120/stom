@@ -1,0 +1,67 @@
+%\title{Using the forest package to create trees in LaTeX}
+% From http://tex.stackexchange.com/a/108728/23931 
+\documentclass[12pt,preview,border=0]{standalone}
+\usepackage[paperheight=8cm,paperwidth=6.5cm]{geometry}
+\usepackage{graphicx}
+% \usepackage{forest}
+\usepackage{amsmath}
+% \usepackage{txfonts}  %pretty math font
+\usepackage{kmath,kerkis}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,positioning,backgrounds}
+
+% fontspec requires xelatex/lualatex
+% \usepackage{fontspec}
+% \setmainfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
+% \setromanfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
+
+%%%%%% XeLaTeX Math Font Setup #%%%%%%%%%%%%%%
+% \usepackage{bm}
+% \usepackage{mathspec}
+% \usepackage{xltxtra}  % also loads fontspec
+% \usepackage{xunicode}
+% \usepackage{fontspec}
+% \defaultfontfeatures{Mapping=tex-text}
+% \setmainfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
+% \setromanfont[Scale=1,Ligatures={Common}]{Adobe Caslon Pro}
+% \setmathrm[Scale=1]{Adobe Caslon Pro}
+% \setmathfont(Digits,Latin)[Numbers={Lining,Proportional}]{Adobe Caslon Pro}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \usepackage{fontspec,mathfont}
+% \setmainfont{Adobe Caslon Pro}
+% % \setmathfont{Adobe Caslon Pro}
+% \mathfont{Cambria Math}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document} 
+\begin{center}
+
+\begin{tikzpicture}[
+	> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 2cm, % distance between nodes
+	semithick, % line style
+	U/.style={circle, draw=black, inner sep=1.8pt, outer sep=1.5pt, minimum size=3mm, font=\Large},  %draw=black, fill=white
+	O/.style={circle, inner sep=3.4pt, outer sep=-.75pt, minimum size=3mm, font=\Large},    
+	background rectangle/.style={fill=white}, show background rectangle  % add backgroud          %draw=white, fill=white
+	]
+	
+	% Nodes and their relative positions
+	% t = 0
+    \node[O] (R) {$R$};
+    \node[U] (A) [below left = .8 of R] {$A$};	
+    \node[U] (D) [below right = .8 of R] {$D$};
+    \node[O] (T) [below = 1.5 of R] {$T$};
+       
+	% Paths connecting nodes
+	\path[->] (D) edge (R);
+	\path[->] (A) edge (R);
+	\path[->] (T) edge (D);
+	\path[->] (T) edge[densely dashed] (R);
+\end{tikzpicture}
+	
+
+\end{center}\end{document}

@@ -34,6 +34,10 @@ model{
   }
   
   // Submodel 2:  W --> R <-- J
+     /*                 ^
+                        |
+                        Ow (through interaction)
+     */                  
   vector[N] mu;
   to_vector(Int) ~ normal( 0, 1 );
   zJ ~ normal( 0 , 1 );

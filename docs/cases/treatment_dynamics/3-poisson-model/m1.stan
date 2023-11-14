@@ -1,3 +1,7 @@
+/*
+    Normal Outcome model (for testing)
+*/
+
 data {
     int Ns;  // num of subjects
     int Ntx; // num of treatments
@@ -16,7 +20,7 @@ data {
     int NO;
     array[NO] int<lower=1,upper=Ns> Sid_O;     // Subject ID
     array[NO] int<lower=0,upper=Nt-1> time_O;  // time point of obs.
-    array[NO] real<lower=0,upper=100> A;       // Age scaled: (A-min(A))/10 
+    array[NO] real<lower=0,upper=20> A;        // Age scaled: (A-min(A))/10 
     array[NO] int<lower=1> Tx;                 // Treatment received
     array[NO] real D;                          // Outcome: observed heavy drinking tendency (coined, for scaffolding larger models later)
 }
@@ -57,26 +61,26 @@ transformed parameters {
     //          G_TE, Delta_TE, G_TD, Alpha_TD
     matrix[Ns, 4] V_subj;
     V_subj = ( diag_pre_multiply( to_vector(sigma_subj), L_cholesky) * Z_subj )' ;
-                            // diag(sigma) %*%  L       %*%   Z   )^T
+                                        // diag(sigma) %*%  L       %*%   Z   )^T
 }
 model {
     E_raw ~ normal(0, 2);
     zI_raw ~ std_normal();
     sigma_I ~ exponential(1);
 
-    B_TE ~ normal(0, 1.5); 
-    B_AE ~ normal(0, 1.5);
-    delta ~ normal(0, 1.5);
-    sigma_ET ~ exponential(1);
+    B_TE ~ std_normal(); 
+    B_AE ~ std_normal();
+    delta ~ std_normal();
+    sigma_ET ~ exponential(1.5);
     
-    B_TD ~ normal(0, 1.5);
-    B_AD ~ normal(0, 1.5);
-    B_ED ~ normal(0, 1.5);
-    alpha ~ normal(0, 1.5);
+    B_TD ~ std_normal();
+    B_AD ~ std_normal();
+    B_ED ~ std_normal();
+    alpha ~ std_normal();
     sigma_D ~ exponential(1);
 
     to_vector(Z_subj) ~ std_normal();
-    sigma_subj ~ exponential(1);
+    sigma_subj ~ exponential(1.8);
     L_cholesky ~ lkj_corr_cholesky(2);
 
     // Mediation submodel
@@ -85,10 +89,10 @@ model {
     vector[NO] mu;
     for ( i in 1:NO ) {
         sid = Sid_O[i];
-        // mu = delta + ( Delta_TE    +         G_TE * t       ) + beta_AE*A +     beta_TE*t
+        // mu = delta + (  Delta_TE   +         G_TE * t       ) + beta_AE*A +     beta_TE*t
         muET = delta + (V_subj[sid,2] + V_subj[sid,1]*time_O[i]) + B_AE*A[i] + B_TE[Tx[i]]*time_O[i];
         E[sid,time_O[i]+1] ~ normal( muET, sigma_ET );
-        // mu =  alpha + (Alpha_TD      +         G_TD * t       ) +     beta_TD*t         + beta_AD*A + B_ED*E
+        // mu =  alpha + (  Alpha_TD    +         G_TD * t       ) +     beta_TD*t         + beta_AD*A + B_ED*E
         mu[i] =  alpha + (V_subj[sid,4] + V_subj[sid,3]*time_O[i]) + B_TD[Tx[i]]*time_O[i] + B_AD*A[i] + B_ED*E[sid,time_O[i]+1];
     }
     D ~ normal( mu, sigma_D );

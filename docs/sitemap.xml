@@ -22,6 +22,9 @@
     <loc>http://yongfu.name/stom/reference/as_posterior_array.html</loc>
   </url>
   <url>
+    <loc>http://yongfu.name/stom/reference/as_vec.html</loc>
+  </url>
+  <url>
     <loc>http://yongfu.name/stom/reference/bin_ext.html</loc>
   </url>
   <url>
@@ -32,6 +35,9 @@
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/col.alpha.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/curve_mvnorm.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/export_docs.html</loc>
@@ -73,7 +79,13 @@
     <loc>http://yongfu.name/stom/reference/logit.html</loc>
   </url>
   <url>
+    <loc>http://yongfu.name/stom/reference/n_samples.html</loc>
+  </url>
+  <url>
     <loc>http://yongfu.name/stom/reference/pandoc_pdf.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/par2.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/pat_depth.html</loc>
@@ -83,6 +95,9 @@
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/precis.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/prepare_drive_model.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/rbern.html</loc>
@@ -125,5 +140,8 @@
   </url>
   <url>
     <loc>http://yongfu.name/stom/template/after-body.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/template/before-body-yihui.html</loc>
   </url>
 </urlset>

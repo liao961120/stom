@@ -2,18 +2,22 @@
 
 library(stom)
 
+exponent = function(x, base=1.35) base^x
+
 sim_data = function(alpha = 0,  # outcome global intercept ( to shift poisson to sensible location)
                     B_AE = .1,
-                    B_TE = c(.15, .3, .6),
+                    B_TE = c(.3, .6, 1),
                     B_AD = .2,
-                    B_ED = .4,
-                    B_TD = c(0, 0, 0), seed=187) {
+                    B_ED = 1,
+                    B_TD = c(0, 0, 0),
+                    outcome = "pois",
+                    seed=187) {
 
     set.seed(seed)
 
-    Ns = 3 * 30  # number of subjects
-    Ntx = 3    # number of treatments
-    Nt = 4     # number of time points
+    Ns = 3 * 50  # number of subjects
+    Ntx = 3      # number of treatments
+    Nt = 4       # number of time points
     Tx = rep(1:Ntx, each = Ns / Ntx)
     A = rtnorm(
         Ns,
@@ -41,7 +45,7 @@ sim_data = function(alpha = 0,  # outcome global intercept ( to shift poisson to
     nm = "G_TE Delta_TE  G_TD  Alpha_TD"
     nm = strsplit(nm, "\\s+")[[1]]
             # G_TE delta_TE  G_TD  alpha_TD
-    sigma = c( .3,     .2,    .3,      .2 )   # hyper-parameters
+    sigma = c( .8,    1,     .8,     1 )   # hyper-parameters
     Rho = matrix(c(                         # hyper-parameters
         # G_TE delta_TE  G_TD  alpha_TD
              1,  -.3,     .4,      0,   # G_TE
@@ -82,12 +86,12 @@ sim_data = function(alpha = 0,  # outcome global intercept ( to shift poisson to
         # rnorm(Ns, (Alpha_TD + G_TD * time) + B_TD[Tx]*time + B_AD * A + B_ED * E[, time + 1] )
         alpha + (Alpha_TD + G_TD * time) + B_TD[Tx]*time + B_AD * A + B_ED * E[, time + 1]
     })
-    D_norm = sapply(t,, function(time) {
+    D_norm = sapply(t, function(time) {
         rnorm( Ns, D_raw[, time+1] )  # Normal outcome
     })
-    D = sapply(t, function(time) {
+    D_pois = sapply(t, function(time) {
         # rnorm( Ns, D_raw[, time+1] )  # Normal outcome
-        lambda = exp( -D_raw[, time+1] )
+        lambda = exponent( -D_raw[, time+1] )
         rpois( Ns, lambda )
     })
 
@@ -115,7 +119,7 @@ sim_data = function(alpha = 0,  # outcome global intercept ( to shift poisson to
         s = dO$Sid[i]
         t_ = dO$time[i] + 1
         dO$E[i] = E[s, t_]
-        dO$D[i] = D[s, t_]
+        dO$D_pois[i] = D_pois[s, t_]
         dO$D_norm[i] = D_norm[s, t_]
         dO$D_raw[i] = D_raw[s, t_]
     }
@@ -142,10 +146,15 @@ sim_data = function(alpha = 0,  # outcome global intercept ( to shift poisson to
         time_O = dO$time,
         A      = dO$A,
         Tx     = dO$Tx,
-        D_raw  = dO$D_raw,        # outcome (latent)
-        D_norm  = dO$D_norm,      # outcome (Normal)
-        D      = dO$D             # outcome (Poisson)
+        D_raw  = dO$D_raw         # outcome (latent)
+        # D_norm  = dO$D_norm,    # outcome (Normal)
+        # D_pois  = dO$D_pois     # outcome (Poisson)
     )
+    outcome = paste0( "D_", outcome )
+    if ( !outcome %in% colnames(dO) )
+        stop("Unsupported outcome distribution: ", outcome )
+    dat$D = dO[[outcome]]
+
     # Records only names that matches those used in stan
     true_params = list(
         B_AE = B_AE,
@@ -167,7 +176,8 @@ sim_data = function(alpha = 0,  # outcome global intercept ( to shift poisson to
         )
     )
     others = list(
-        D = D,
+        D =  list(D_pois=D_pois, D_norm=D_norm)[[outcome]],
+        D_raw = D_raw,
         minA = minA
     )
     return(list(
