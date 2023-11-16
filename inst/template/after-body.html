@@ -38,3 +38,16 @@ Hack to apply the style of <https://cran.r-project.org/web/packages/markdown/vig
       if (h.id) h.querySelector('h1,h2,h3,h4,h5,h6').innerHTML += ` <span class="anchor"><a href="#${h.id}">#</a></span>`;
     });
 </script>
+
+
+
+<!--
+Deal with multiple `\tag`s in equations (pandoc-crossref limitation)
+-->
+<script>
+    const regex = /\\tag\{[0-9.]+\}/g;
+    document.querySelectorAll(".math.display").forEach(e => {
+        e.innerText = e.innerText.replace(regex, '');
+    })
+</script>
+

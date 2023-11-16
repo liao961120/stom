@@ -1,0 +1,17 @@
+# doc: https://lierdakil.github.io/pandoc-crossref/
+figPrefixTemplate: $$i$$
+eqnPrefixTemplate: $$i$$
+tblPrefixTemplate: $$i$$
+lstPrefixTemplate: $$i$$
+secPrefixTemplate: $$i$$
+# equationNumberTeX: \\tag
+# eqnIndexTemplate: $$i$$
+linkReferences: true
+
+# figureTitle: "Figura"
+# tableTitle: "Tabla"
+# figPrefix: "fig."
+# eqnPrefix: "ec."
+# tblPrefix: "tbl."
+# loftitle: "# Lista de figuras"
+# lotTitle: "# Lista de tablas"

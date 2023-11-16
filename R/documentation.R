@@ -57,17 +57,18 @@ pandoc_pdf = function(fin, outfp, style="amsart", ...) {
     temp = pdf_filter(fin)
     pandoc(
         temp,
+        ...,
+        opts_pandoc_crossref(),
         "--citeproc",
         "--shift-heading-level-by=-1",
-        "--from=markdown+tex_math_dollars+raw_tex+raw_attribute",
+        "--from=markdown+tex_math_dollars+raw_tex+raw_attribute+bracketed_spans",
         "--to=pdf",
         "--pdf-engine=xelatex",
         # "--pdf-engine=lualatex",
         # "--pdf-engine=pdflatex",
         get_pandoc_pdf_args(style),
         "-o",
-        outfp,
-        ...
+        outfp
     )
 }
 
@@ -77,16 +78,17 @@ pandoc_tex = function(fin, outfp, style="amsart", ...) {
     temp = pdf_filter(fin)
     pandoc(
         temp,
+        ...,
+        opts_pandoc_crossref(),
         "--citeproc",
         "--shift-heading-level-by=-1",
-        "--from=markdown+tex_math_dollars+raw_tex+raw_attribute",
+        "--from=markdown+tex_math_dollars+raw_tex+raw_attribute+bracketed_spans",
         "--to=latex",
         # "--pdf-engine=lualatex",
         # "--pdf-engine=pdflatex",
         get_pandoc_pdf_args(style),
         "-o",
-        outfp,
-        ...
+        outfp
     )
 }
 
@@ -97,20 +99,21 @@ pandoc_html = function(fin, outfp, args=NULL, style=NULL) {
   if (Sys.info()['sysname'] == "Windows")
     Sys.setlocale("LC_TIME", "C")
   pandoc( fin,
+          args,
+          opts_pandoc_crossref(),
           "--citeproc",
           "--default-image-extension=svg",
-          "--from=markdown+tex_math_dollars+raw_tex+raw_attribute",
+          "--from=markdown+tex_math_dollars+raw_tex+raw_attribute+bracketed_spans",
           "--to=html5",
-          "--katex",
+          "--mathjax",
           "--toc",
           "--section-divs",
           "-M", "document-css=false",
           "-B", system.file("template", "before-body-yihui.html", package="stom"),
           "-A", system.file("template", "after-body.html", package="stom"),
           # "-c", system.file("template", "pandoc.css", package="stom"),
-          "-V", paste0("date=", '"', format.Date(Sys.Date(),"%B %d, %Y"), '"'),
+          # "-V", paste0("date=", '"', format.Date(Sys.Date(),"%B %d, %Y"), '"'),
           "-s",
-          args,
           "-o", outfp )
 }
 
@@ -121,30 +124,7 @@ get_pandoc_pdf_args = function(style="") {
     # writeLines(c(""), header )
     # Before body
     before_body = tempfile()
-    writeLines(c(
-        ""
-      # "\\vspace{-8pt}\\footnotesize\\begin{center}\\today\\end{center}\\vspace{12pt}\n",
-      # "
-      # \\makeatletter
-      # \\let\\origsection\\section
-      # \\renewcommand\\section{\\@ifstar{\\starsection}{\\nostarsection}}
-      #
-      # \\newcommand\\nostarsection[1]
-      # {\\sectionprelude\\origsection{#1}\\sectionpostlude}
-      #
-      # \\newcommand\\starsection[1]
-      # {\\sectionprelude\\origsection*{#1}\\sectionpostlude}
-      #
-      # \\newcommand\\sectionprelude{%
-      #   \\vspace{.9em}
-      # }
-      #
-      # \\newcommand\\sectionpostlude{%
-      #   \\vspace{.35em}
-      # }
-      # \\makeatother
-      # "
-      ),
+    writeLines(c(""),
       before_body
     )
     return(c(
@@ -175,8 +155,6 @@ get_pandoc_pdf_args = function(style="") {
 }
 
 
-
-
 pandoc = function(...) {
   pd = ifelse( Sys.info()['sysname'] == "Windows", "pandoc.exe", "pandoc" )
   args = c(...)
@@ -186,6 +164,15 @@ pandoc = function(...) {
 }
 
 
+opts_pandoc_crossref = function() {
+    c(
+        "--filter=pandoc-crossref",
+        "-M",
+        paste0('crossrefYaml="',
+               system.file("template", "pandoc-crossref.yaml", package="stom"),
+               '"')
+    )
+}
 
 
 pdf_filter = function(fin) {
