@@ -34,7 +34,7 @@ export_docs = function(path, outfp=NULL) {
 #' @rdname export_docs
 #' @export
 export_docs_pdf = function(path, outfp, style="amsart") {
-  fin = tempfile()
+  fin = tempfile2()
   export_docs(path, outfp=fin)
   pandoc_pdf(fin, outfp, style)
 }
@@ -43,7 +43,7 @@ export_docs_pdf = function(path, outfp, style="amsart") {
 #' @rdname export_docs
 #' @export
 export_docs_html = function(path, outfp) {
-  fin = tempfile()
+  fin = tempfile2()
   export_docs(path, outfp=fin)
   pandoc_html(fin, outfp)
 }
@@ -123,7 +123,7 @@ get_pandoc_pdf_args = function(style="") {
     header = system.file("template", "preamble.tex", package = "stom")
     # writeLines(c(""), header )
     # Before body
-    before_body = tempfile()
+    before_body = tempfile2()
     writeLines(c(""),
       before_body
     )
@@ -176,7 +176,7 @@ opts_pandoc_crossref = function() {
 
 
 pdf_filter = function(fin) {
-  fout = tempfile()
+  fout = tempfile2()
   lines = readLines(fin)
   lines = ignore_dollars_with_begin_equation(lines)
   writeLines(lines, fout)
@@ -199,5 +199,12 @@ ignore_dollars_with_begin_equation = function(lines) {
   if ( length(idx_ignore) > 0 )
     return( lines[-idx_ignore] )
   lines
+}
+
+
+tempfile2 = function(...) {
+    f = tempfile(...)
+    file.create(f)
+    tools::file_path_as_absolute(f)
 }
 
