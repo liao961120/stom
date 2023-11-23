@@ -11,8 +11,17 @@ https://yihui.org/en/2023/10/html-article/
 <script src="https://cdn.jsdelivr.net/combine/npm/@xiee/utils/js/sidenotes.min.js,npm/@xiee/utils/js/appendix.min.js,npm/@xiee/utils/js/right-quote.min.js" defer></script>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/rstudio/markdown@1.11/inst/resources/default.min.css,npm/@xiee/utils/css/article.min.css,npm/@xiee/utils/css/heading-anchor.min.css">
-<style type="text/css">
-    header{text-align: center;}
-    html {scroll-behavior: smooth;}
-</style>
 
+<!-- Style patch -->
+<style type="text/css">
+    html {
+        scroll-behavior: smooth;
+    }
+    header {
+        text-align: center;
+    }
+    pre > code {
+        padding: .7em .9em;
+        border-radius: 8px;
+    }
+</style>
