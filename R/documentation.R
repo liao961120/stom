@@ -96,25 +96,47 @@ pandoc_tex = function(fin, outfp, style="amsart", ...) {
 #' @rdname pandoc_pdf
 #' @export
 pandoc_html = function(fin, outfp, args=NULL, style=NULL) {
-  if (Sys.info()['sysname'] == "Windows")
-    Sys.setlocale("LC_TIME", "C")
-  pandoc( fin,
-          args,
+    args = parse_html_math_args(args, m=1)  # Default to katex with m=1
+    pandoc( fin,
+          args$args,
           opts_pandoc_crossref(),
           "--citeproc",
           "--default-image-extension=svg",
           "--from=markdown+tex_math_dollars+raw_tex+raw_attribute+bracketed_spans",
           "--to=html5",
-          "--mathjax",
           "--toc",
           "--section-divs",
           "-M", "document-css=false",
           "-B", system.file("template", "before-body-yihui.html", package="stom"),
           "-A", system.file("template", "after-body.html", package="stom"),
-          # "-c", system.file("template", "pandoc.css", package="stom"),
+          args$math,
           # "-V", paste0("date=", '"', format.Date(Sys.Date(),"%B %d, %Y"), '"'),
           "-s",
           "-o", outfp )
+}
+
+
+parse_html_math_args = function(args, m=1) {
+    if ( "--katex" %in% args & "--mathjax" %in% args ) {
+        message("Found both --katex and --mathjax, default to --katex!")
+        args = args[-which(args == "--mathax")]
+    }
+
+    mathcopy = c("-A", system.file("template", "math-copytex.html", package="stom"))
+    lib = list(
+        c( mathcopy, "-A", system.file("template", "katex.html",   package="stom") ),
+        c( mathcopy, "-A", system.file("template", "mathjax.html", package="stom") ),
+        NULL
+    )
+    args_new = args
+    if ( "--katex" %in% args ) {
+        args_new = args[-which(args == "--katex")]
+        m = 1
+    } else if ( "--mathjax" %in% args ) {
+        args_new = args[-which(args == "--mathjax")]
+        m = 2
+    }
+    list( args=args_new, math=lib[[m]] )
 }
 
 

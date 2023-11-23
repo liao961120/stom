@@ -1,0 +1,66 @@
+<!--
+    This file is based on the ideas in
+        https://yihui.org/en/2023/09/copy-button/
+        https://yihui.org/en/2023/09/code-folding/
+    to generate a copy-to-clipboard buttons for copying TeX commands found in
+    .math.display elements (rendered by Pandoc)
+
+    The Javascript in this file should be executed BEFORE katex or mathjax is
+    executed, i.e., katex & mathjax code come AFTER this script.
+
+    To see the effects of this file, see `stom::pandoc_html()`
+-->
+
+<script>
+    document.querySelectorAll(".math.display").forEach(e => {
+        // Create container
+        let div = document.createElement("div");
+        let fake_btn = document.createElement("div");
+        fake_btn.className = "math-copy copy-button-div";
+        fake_btn.innerHTML = "&nbsp;";
+        // Place TeX source at element
+        fake_btn.setAttribute('data-texsrc', e.innerText.replace(/\$+$/g, '').replace(/^\$+/g, '').trim() );
+        // insert elements
+        div.append(fake_btn);
+        e.before(div);
+        div.append(e);
+        div.classList.add("fullwidth");
+    })
+</script>
+
+<!-- modified from https://cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js -->
+<script>
+    (e => { const t = e.currentScript?.dataset; e.querySelectorAll(t?.selector || ".math-copy").forEach((t => { const o = e.createElement("span"), c = o.classList; function a(e) { c.add(e), setTimeout((() => c.remove(e)), 1e3) } o.className = "copy-button", o.onclick = () => navigator.clipboard.writeText(t.getAttribute("data-texsrc")).then((() => a("copy-success")), (() => a("copy-fail"))); const n = "CODE" === t.tagName && "PRE" === t?.parentNode.tagName ? t.parentNode : t; n.querySelector(".copy-button") || n.append(o), "static" === getComputedStyle(n).position && (n.style.position = "relative") })) })(document);
+</script>
+
+<!-- modified from https://cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css -->
+<style>
+.copy-button {
+    /* position: absolute;
+    display: none; */
+        float: right;
+    display: inline-block;
+    cursor: pointer;
+    inset: 5px 5px auto auto;
+    width: 1em;
+    height: 1em;
+    border: 1px solid;
+    box-shadow: -3px 3px #999
+}
+:hover>.copy-button {
+    display: inline-block
+}
+.copy-success {
+    box-shadow: none;
+    background-color: #999;
+        transition: box-shadow .3s ease-out, background-color .3s ease-out
+}
+.copy-fail {
+    border-style: dotted
+}
+.copy-button-div {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+}
+</style>
