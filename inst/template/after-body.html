@@ -37,9 +37,20 @@ Hack to apply the style of <https://cran.r-project.org/web/packages/markdown/vig
     document.querySelectorAll('section').forEach(h => {
       if (h.id) h.querySelector('h1,h2,h3,h4,h5,h6').innerHTML += ` <span class="anchor"><a href="#${h.id}">#</a></span>`;
     });
+
+    // Collect orphans (i.e., non-section elements) after nav and before div.body
+    function get_non_section_siblings(e) {
+        let sib = e[0].nextElementSibling;
+        if ( sib.className != "body" )
+            return get_non_section_siblings([ sib, ...e ]);
+        e = e.filter( (elem) => elem.nodeName != "SCRIPT" );
+        e.pop(); // remove last elem
+        return e;
+    }
+    h = get_non_section_siblings( [document.querySelector("nav")] );
+    body = document.querySelector("div.body");
+    h.forEach( el => body.insertBefore(el, body.firstChild) );
 </script>
-
-
 
 <!--
 Deal with multiple `\tag`s in equations (pandoc-crossref limitation)
