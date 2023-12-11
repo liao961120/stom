@@ -136,6 +136,9 @@
     <loc>http://yongfu.name/stom/reference/to_unix_path.html</loc>
   </url>
   <url>
+    <loc>http://yongfu.name/stom/reference/write_tcsv.html</loc>
+  </url>
+  <url>
     <loc>http://yongfu.name/stom/reference/xclip.html</loc>
   </url>
   <url>
@@ -143,5 +146,14 @@
   </url>
   <url>
     <loc>http://yongfu.name/stom/template/before-body-yihui.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/template/katex.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/template/math-copytex.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/template/mathjax.html</loc>
   </url>
 </urlset>

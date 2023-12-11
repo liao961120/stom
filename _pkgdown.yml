@@ -48,6 +48,11 @@ reference:
   - shade
   - curve_mvnorm
   - par2
+- title: "Data I/O"
+  desc: >
+    Reading and writing data.
+  contents:
+  - write_tcsv
 - title: "Documentation"
   desc: >
     Helpers for documenting scripts in Markdown.
