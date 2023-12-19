@@ -15,8 +15,44 @@ get_cli_programs = function(git_bash_path=T) {
     x
 }
 
+#' Print named lists as formatted messages
+#'
+#' @param lst A list. Input to be printed.
+#' @param name description
+#' @param indent Integer. The number of spaces padded on the left
+#'               of the output.
+#' @param message Logical. Whether to print the input as message.
+#'        Defaults to `TRUE`. If `FALSE`, returns a character vector
+#'        with formatted content.
+#' @param item_sep A string. The separator between the list elements.
+#'        Defaults to `\n`.
+#' @examples
+#' lst2message(list(xyz = 1, xy = 2:3))
+#' message("[Message]")
+#' #' lst2message(list(xyz = 1, xy = 2:3), indent=3)
+#' lst2message(list(xyz = 1, xy = 2:3), message=F)
+#' @export
+lst2message = function(lst, indent=0L, message=T, item_sep="\n") {
+    l = max(nchar(names(lst)))
+    name2 = stringr::str_pad(names(lst), width=l, side="right")
+    l = l + indent
+    name2 = stringr::str_pad(name2, width=l, side="left")
+    items = sapply(seq_along(lst), function(i) {
+        paste0( name2[i], ": ", compose_content(lst[[i]], l+2) )
+    })
+    msg = paste(items, collapse = item_sep)
+    if (!message) return(msg)
+    message(msg)
+}
 
-#' Full parsing of command line arguments
+compose_content = function(x, indent=0) {
+    indent = strrep(" ", indent)
+    sep = paste0("\n", indent)
+    paste(x, collapse = sep)
+}
+
+
+#' (Deprecated) Full parsing of command line arguments
 #'
 #' @param x A vector of command line arguments.
 #' @return A list of parsed arguments
@@ -94,7 +130,3 @@ cmd_has = function(args, has)
 cmd_parse_date = function(args, pre="--date=") {
     cmd_get_value(args, pre)
 }
-
-
-
-
