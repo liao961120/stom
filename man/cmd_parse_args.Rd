@@ -3,7 +3,7 @@
 \name{cmd_parse_args}
 \alias{cmd_parse_args}
 \alias{cmd_parse_key_val}
-\title{Full parsing of command line arguments}
+\title{(Deprecated) Full parsing of command line arguments}
 \usage{
 cmd_parse_args(x)
 
@@ -16,7 +16,7 @@ cmd_parse_key_val(x)
 A list of parsed arguments
 }
 \description{
-Full parsing of command line arguments
+(Deprecated) Full parsing of command line arguments
 }
 \examples{
 x = c("--date=2021", "--hi-w=y", "--hi_w=y", "./file-info.txt", "--hi")
