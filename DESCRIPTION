@@ -16,6 +16,7 @@ RoxygenNote: 7.2.3
 URL: http://yongfu.name/stom, https://github.com/liao961120/stom
 Depends: R (>= 3.6.0)
 Suggests: 
+    docopt,
     ellipse,
     pdftools,
     R6
