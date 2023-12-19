@@ -2,9 +2,13 @@ VERSION = "0.0.1"
 
 "Convert Pandoc's Markdown to PDF.
 
+Examples:
+    pandoc_html input.md -o out.html
+    pandoc_html input.md -o out.pdf --pandoc -- -V date=\"Jan 1, 2024\"
+
 Usage:
-    pandoc_html <fin> ( [-o <outfp>] | [--output=<outfp>] )
-    pandoc_html <fin> [--pandoc -- <pd_args>...]
+    pandoc_html INPUT ( [-o OUTFILE] | [--output=OUTFILE] )
+    pandoc_html INPUT [--pandoc -- PD_ARGS...]
 
 Options:
     -h --help   Show this screen.
@@ -20,9 +24,10 @@ if (!interactive()) {
     a = docopt::docopt(DOC, args=c("xxx.md"), version = VERSION)
 }
 # print(a)  # View parsed command line arguments
+# stop("TESTING")
 
 # Determine output path
-fin = tools::file_path_as_absolute(a$fin)
+fin = tools::file_path_as_absolute(a$INPUT)
 fout = stom::replace_file_ext(fin,".html")
 fout = file.path(getwd(), basename(fout))  # Generate output to CWD by default
 if (!is.null(a$output))
@@ -31,7 +36,7 @@ if (!is.null(a$output))
 # Compile document
 print("Compile to HTML")
 setwd(dirname(fin))  # WD as input file's directory
-stom::pandoc_html(fin, fout, unlist(a$pd_args))
+stom::pandoc_html(fin, fout, unlist(a$PD_ARGS))
 
 
 # Print I/O info

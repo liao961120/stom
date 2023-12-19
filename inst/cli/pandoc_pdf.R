@@ -2,12 +2,16 @@ VERSION = "0.0.1"
 
 "Convert Pandoc's Markdown to PDF.
 
+Examples:
+    pandoc_pdf input.md -o out.pdf
+    pandoc_pdf input.md -o out.pdf --pandoc -- -V date=\"Jan 1, 2024\"
+
 Usage:
-    pandoc_pdf <fin>
-    pandoc_pdf <fin> [-o <outfp>]
-    pandoc_pdf <fin> [--output=<outfp>]
-    pandoc_pdf <fin> [--latex]
-    pandoc_pdf <fin> [--pandoc -- <pd_args>...]
+    pandoc_pdf INPUT
+    pandoc_pdf INPUT [-o OUTFILE]
+    pandoc_pdf INPUT [--output=OUTFILE]
+    pandoc_pdf INPUT [--latex]
+    pandoc_pdf INPUT [--pandoc -- PD_ARGS...]
 
 Options:
     -h --help   Show this screen.
@@ -25,7 +29,7 @@ if (!interactive()) {
 # print(a)  # View parsed command line arguments
 
 # Determine output path
-fin = tools::file_path_as_absolute(a$fin)
+fin = tools::file_path_as_absolute(a$INPUT)
 fout = stom::replace_file_ext(fin, ifelse(a$latex,".tex",".pdf"))
 fout = file.path(getwd(), basename(fout))  # Generate output to CWD by default
 if (!is.null(a$output))
@@ -35,9 +39,9 @@ if (!is.null(a$output))
 setwd(dirname(fin))  # WD as input file's directory
 if (a$latex) {
     message("Compile to LaTex instead of PDF")
-    stom::pandoc_tex(fin, fout, style = "amsart", unlist(a$pd_args))
+    stom::pandoc_tex(fin, fout, style = "amsart", unlist(a$PD_ARGS))
 } else {
-    stom::pandoc_pdf(fin, fout, style = "amsart", unlist(a$pd_args))
+    stom::pandoc_pdf(fin, fout, style = "amsart", unlist(a$PD_ARGS))
 }
 
 
