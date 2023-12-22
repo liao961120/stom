@@ -8,67 +8,66 @@
 #' @export
 #' @examples
 #' (d = data.frame(
-#'     A_int = 1L:6L,
-#'     A_dbl = seq(0, 1, length=6),
-#'     A_cpl = (1:6) + 1i,
-#'     A_lgl = rep(c(T,F), 3),
-#'     A_fct = as.factor(head(LETTERS)),
-#'     A_chr = head(LETTERS),
-#'     A_utf8 = strsplit("你好我是大雄", "")[[1]])
-#' )
+#'     A_int = c(1L:4L, NA, NaN),
+#'     A_dbl = c(seq(0, 1, length=4), NA, NaN),
+#'     A_cpl = c((1:4) + 1i, NA, NaN),
+#'     A_lgl = c(T, F, F, T, T, NA),
+#'     A_chr = c(LETTERS[1:2], NA, "", '"', '\t'),
+#'     A_NA_int = rep(NA_integer_, 6)
+#' ))
 #' tmp = tempfile()
 #' write_tcsv(d, tmp)
 #' xfun::file_string(tmp)  # print file content
 #' read_tcsv(tmp)
-#'
-#' # May also set your preferred delimiter
-#' write_tcsv(d, tmp, sep = "\t")
-#' xfun::file_string(tmp)
-#' read_tcsv(tmp, sep = "\t")
-write_tcsv = function(dt, fout, sep=",") {
-    write_col_type(dt, fout, sep)
-    write_data(dt, fout, sep)
+write_tcsv = function(dt, fout) {
+    write_data(dt, fout)
 }
 
 #' @rdname write_tcsv
 #' @export
-read_tcsv = function(fin, sep=",") {
-    ctypes = read_col_type(fin, sep)
-    read_data(fin, ctypes, sep)
+read_tcsv = function(fin) {
+    read_data(fin)
 }
 
 
-
-write_col_type = function(dt, fout, sep) {
+get_col_type = function(dt) {
     ctypes = sapply(dt, function(c_) {
         c_ = class(c_)
-        if ( "ordered" %in% c_ )
+        if ( "ordered" %in% c_ | "factor" %in% c_ )
             stop("tcsv does not support columns with 'ordered' data type!\n\t",
                  "Please convert them to either 'character' or 'factor'\n\t",
                  "before writing to file.")
         return(c_)
     })
-    ctypes = paste(ctypes, collapse = sep)
-    writeLines(ctypes, fout, sep = "\n")
+    return(ctypes)
 }
 
-write_data = function(dt, fout, sep) {
-    suppressWarnings({
-        write.table(dt, fout, append=T,
-                    sep = sep, row.names = F, col.names = T,
-                    fileEncoding = "UTF-8" )
-    })
+# d0 = data.frame(a = 1:6,
+#                 b=c(T,F,T,NA, T,T),
+#                 c=c("a", "", '"', NA, ",", "\t"),
+#                 e = NA_integer_, f = "哈", f2="d" )
+
+write_data = function(dt, fout) {
+    ctypes = get_col_type(dt)
+    ctypes = paste0("<", ctypes, ">")
+    data = apply(dt, 2, function(c_) as.character(c_))
+    out = rbind( ctypes, data )
+    row.names(out) = NULL
+    out = as.data.frame(out)
+    readr::write_csv(out, fout, col_names = TRUE,
+                     quote = "all",
+                     escape = "double",
+                     na = "")
+    return(invisible(out))
 }
 
-read_col_type = function(fin, sep) {
-    ctypes = strsplit(readLines(fin, n = 1), sep)[[1]]
-    ctypes
-}
-
-read_data = function(fin, ctypes, sep) {
-    read.table(fin, sep = sep,
-               comment.char = "",
-               colClasses = ctypes,
-               fileEncoding = "UTF-8",
-               header = T, skip = 1 )
+read_data = function(fin) {
+    d = readr::read_csv(fin, col_types = "c",
+                        na = "", quote = '"',
+                        name_repair = "minimal")
+    ctypes = trimws(unlist(d[1,]), whitespace = "<|>")
+    d = d[2:nrow(d),]
+    for (i in seq_along(ctypes))
+        class(d[[i]]) = ctypes[i]
+    return(d)
 }
