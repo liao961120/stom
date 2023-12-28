@@ -19,7 +19,9 @@ Suggests:
     docopt,
     ellipse,
     pdftools,
-    R6
+    R6,
+    readr,
+    testthat (>= 3.0.0)
 Enhances: 
     cli,
     rprojroot
@@ -28,3 +30,5 @@ Imports:
     markdown,
     xfun,
     yaml
+Config/testthat/edition: 3
+Config/testthat/parallel: true
