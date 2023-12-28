@@ -3,11 +3,12 @@ d = data.frame(
     A_dbl = c(seq(0, 1, length=4), NA, NaN),
     A_cpl = c((1:4) + 1i, NA, NaN),
     A_lgl = c(T, F, F, T, T, NA),
-    A_chr = c(LETTERS[1:2], NA, "", '"', '\t'),
+    A_chr = c(LETTERS[1], ",", NA, "", '"', '\t'),
     A_NA_int = rep(NA_integer_, 6)
 )
 tmp = tempfile()
 write_tcsv(d, tmp)
+write_tcsv(d, "../tcsv-test.csv")
 d1 = read_tcsv(tmp)
 write_tcsv(d1, tmp)
 d2 = read_tcsv(tmp)

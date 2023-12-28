@@ -14,6 +14,9 @@
 *.fls
 *.xdv
 
+# Auto-generated test files
+tcsv-test.csv
+
 # Cached models found in Google Drive
 *.rds
 *.RDS
