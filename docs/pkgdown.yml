@@ -1,8 +1,8 @@
-pandoc: 2.19.2
+pandoc: 3.1.6
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles: {}
-last_built: 2023-12-19T05:33Z
+last_built: 2023-12-28T07:23Z
 urls:
   reference: http://yongfu.name/stom/reference
   article: http://yongfu.name/stom/articles

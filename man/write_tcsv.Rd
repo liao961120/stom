@@ -5,40 +5,34 @@
 \alias{read_tcsv}
 \title{I/O for data frames and \emph{typed CSV}s}
 \usage{
-write_tcsv(dt, fout, sep = ",")
+write_tcsv(dt, fout)
 
-read_tcsv(fin, sep = ",")
+read_tcsv(fin)
 }
 \arguments{
 \item{dt}{A data frame to be written to file.}
 
 \item{fout}{Output file path.}
 
+\item{fin}{Path to a typed CSV to be read in.}
+
 \item{sep}{Character. The delimiter used for the typed CSV.
 Defaults to comma (\verb{,}).}
-
-\item{fin}{Path to a typed CSV to be read in.}
 }
 \description{
 I/O for data frames and \emph{typed CSV}s
 }
 \examples{
 (d = data.frame(
-    A_int = 1L:6L,
-    A_dbl = seq(0, 1, length=6),
-    A_cpl = (1:6) + 1i,
-    A_lgl = rep(c(T,F), 3),
-    A_fct = as.factor(head(LETTERS)),
-    A_chr = head(LETTERS),
-    A_utf8 = strsplit("你好我是大雄", "")[[1]])
-)
+    A_int = c(1L:4L, NA, NaN),
+    A_dbl = c(seq(0, 1, length=4), NA, NaN),
+    A_cpl = c((1:4) + 1i, NA, NaN),
+    A_lgl = c(T, F, F, T, T, NA),
+    A_chr = c(LETTERS[1:2], NA, "", '"', '\t'),
+    A_NA_int = rep(NA_integer_, 6)
+))
 tmp = tempfile()
 write_tcsv(d, tmp)
 xfun::file_string(tmp)  # print file content
 read_tcsv(tmp)
-
-# May also set your preferred delimiter
-write_tcsv(d, tmp, sep = "\t")
-xfun::file_string(tmp)
-read_tcsv(tmp, sep = "\t")
 }

@@ -48,9 +48,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">write_tcsv</span><span class="op">(</span><span class="va">dt</span>, <span class="va">fout</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">write_tcsv</span><span class="op">(</span><span class="va">dt</span>, <span class="va">fout</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">read_tcsv</span><span class="op">(</span><span class="va">fin</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">read_tcsv</span><span class="op">(</span><span class="va">fin</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -63,283 +63,54 @@
 <dd><p>Output file path.</p></dd>
 
 
+<dt>fin</dt>
+<dd><p>Path to a typed CSV to be read in.</p></dd>
+
+
 <dt>sep</dt>
 <dd><p>Character. The delimiter used for the typed CSV.
 Defaults to comma (<code>,</code>).</p></dd>
-
-
-<dt>fin</dt>
-<dd><p>Path to a typed CSV to be read in.</p></dd>
 
 </dl></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">(</span><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    A_int <span class="op">=</span> <span class="fl">1L</span><span class="op">:</span><span class="fl">6L</span>,</span></span>
-<span class="r-in"><span>    A_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, length<span class="op">=</span><span class="fl">6</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    A_cpl <span class="op">=</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1i</span>,</span></span>
-<span class="r-in"><span>    A_lgl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">T</span>,<span class="cn">F</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    A_fct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    A_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    A_utf8 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="st">"你好我是大雄"</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    A_int A_dbl A_cpl A_lgl A_fct A_chr A_utf8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1   0.0  1+1i  TRUE     A     A      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      2   0.2  2+1i FALSE     B     B      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      3   0.4  3+1i  TRUE     C     C      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      4   0.6  4+1i FALSE     D     D      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      5   0.8  5+1i  TRUE     E     E      F</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      6   1.0  6+1i FALSE     F     F      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      1   0.0  1+1i  TRUE     A     A      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      2   0.2  2+1i FALSE     B     B      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      3   0.4  3+1i  TRUE     C     C      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     4   0.6  4+1i FALSE     D     D      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     5   0.8  5+1i  TRUE     E     E      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12     6   1.0  6+1i FALSE     F     F      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13     1   0.0  1+1i  TRUE     A     A      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14     2   0.2  2+1i FALSE     B     B      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15     3   0.4  3+1i  TRUE     C     C      D</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16     4   0.6  4+1i FALSE     D     D      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17     5   0.8  5+1i  TRUE     E     E      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18     6   1.0  6+1i FALSE     F     F      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19     1   0.0  1+1i  TRUE     A     A      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20     2   0.2  2+1i FALSE     B     B      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21     3   0.4  3+1i  TRUE     C     C      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22     4   0.6  4+1i FALSE     D     D      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23     5   0.8  5+1i  TRUE     E     E      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24     6   1.0  6+1i FALSE     F     F      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25     1   0.0  1+1i  TRUE     A     A      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26     2   0.2  2+1i FALSE     B     B      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27     3   0.4  3+1i  TRUE     C     C      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28     4   0.6  4+1i FALSE     D     D      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29     5   0.8  5+1i  TRUE     E     E      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30     6   1.0  6+1i FALSE     F     F      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31     1   0.0  1+1i  TRUE     A     A      F</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32     2   0.2  2+1i FALSE     B     B      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33     3   0.4  3+1i  TRUE     C     C      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34     4   0.6  4+1i FALSE     D     D      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35     5   0.8  5+1i  TRUE     E     E      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36     6   1.0  6+1i FALSE     F     F      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37     1   0.0  1+1i  TRUE     A     A      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38     2   0.2  2+1i FALSE     B     B      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39     3   0.4  3+1i  TRUE     C     C      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40     4   0.6  4+1i FALSE     D     D      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41     5   0.8  5+1i  TRUE     E     E      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42     6   1.0  6+1i FALSE     F     F      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43     1   0.0  1+1i  TRUE     A     A      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44     2   0.2  2+1i FALSE     B     B      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45     3   0.4  3+1i  TRUE     C     C      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46     4   0.6  4+1i FALSE     D     D      C</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47     5   0.8  5+1i  TRUE     E     E      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48     6   1.0  6+1i FALSE     F     F      &gt;</span>
+<span class="r-in"><span>    A_int <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1L</span><span class="op">:</span><span class="fl">4L</span>, <span class="cn">NA</span>, <span class="cn">NaN</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    A_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, length<span class="op">=</span><span class="fl">4</span><span class="op">)</span>, <span class="cn">NA</span>, <span class="cn">NaN</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    A_cpl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1i</span>, <span class="cn">NA</span>, <span class="cn">NaN</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    A_lgl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">T</span>, <span class="cn">F</span>, <span class="cn">F</span>, <span class="cn">T</span>, <span class="cn">T</span>, <span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    A_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="cn">NA</span>, <span class="st">""</span>, <span class="st">'"'</span>, <span class="st">'\t'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    A_NA_int <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA_integer_</span>, <span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   A_int     A_dbl  A_cpl A_lgl A_chr A_NA_int</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1 0.0000000   1+1i  TRUE     A       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2 0.3333333   2+1i FALSE     B       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3 0.6666667   3+1i FALSE  &lt;NA&gt;       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4 1.0000000   4+1i  TRUE             NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    NA        NA     NA  TRUE     "       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   NaN       NaN NaN+0i    NA    \t       NA</span>
 <span class="r-in"><span><span class="va">tmp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">write_tcsv</span><span class="op">(</span><span class="va">d</span>, <span class="va">tmp</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">xfun</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/xfun/man/file_string.html" class="external-link">file_string</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span>  <span class="co"># print file content</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> integer,numeric,complex,logical,factor,character,character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "A_int","A_dbl","A_cpl","A_lgl","A_fct","A_chr","A_utf8"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1,0,1+1i,TRUE,"A","A","&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2,0.2,2+1i,FALSE,"B","B","U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3,0.4,3+1i,TRUE,"C","C","+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4,0.6,4+1i,FALSE,"D","D","4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5,0.8,5+1i,TRUE,"E","E","F"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6,1,6+1i,FALSE,"F","F","6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1,0,1+1i,TRUE,"A","A","0"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2,0.2,2+1i,FALSE,"B","B","&gt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3,0.4,3+1i,TRUE,"C","C","&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4,0.6,4+1i,FALSE,"D","D","U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5,0.8,5+1i,TRUE,"E","E","+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6,1,6+1i,FALSE,"F","F","5"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1,0,1+1i,TRUE,"A","A","9"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2,0.2,2+1i,FALSE,"B","B","7"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3,0.4,3+1i,TRUE,"C","C","D"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4,0.6,4+1i,FALSE,"D","D","&gt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5,0.8,5+1i,TRUE,"E","E","&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6,1,6+1i,FALSE,"F","F","U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1,0,1+1i,TRUE,"A","A","+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2,0.2,2+1i,FALSE,"B","B","6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3,0.4,3+1i,TRUE,"C","C","2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4,0.6,4+1i,FALSE,"D","D","1"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5,0.8,5+1i,TRUE,"E","E","1"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6,1,6+1i,FALSE,"F","F","&gt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1,0,1+1i,TRUE,"A","A","&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2,0.2,2+1i,FALSE,"B","B","U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3,0.4,3+1i,TRUE,"C","C","+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4,0.6,4+1i,FALSE,"D","D","6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5,0.8,5+1i,TRUE,"E","E","6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6,1,6+1i,FALSE,"F","F","2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1,0,1+1i,TRUE,"A","A","F"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2,0.2,2+1i,FALSE,"B","B","&gt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3,0.4,3+1i,TRUE,"C","C","&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4,0.6,4+1i,FALSE,"D","D","U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5,0.8,5+1i,TRUE,"E","E","+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6,1,6+1i,FALSE,"F","F","5"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1,0,1+1i,TRUE,"A","A","9"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2,0.2,2+1i,FALSE,"B","B","2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3,0.4,3+1i,TRUE,"C","C","7"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4,0.6,4+1i,FALSE,"D","D","&gt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5,0.8,5+1i,TRUE,"E","E","&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6,1,6+1i,FALSE,"F","F","U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1,0,1+1i,TRUE,"A","A","+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2,0.2,2+1i,FALSE,"B","B","9"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3,0.4,3+1i,TRUE,"C","C","6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4,0.6,4+1i,FALSE,"D","D","C"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5,0.8,5+1i,TRUE,"E","E","4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6,1,6+1i,FALSE,"F","F","&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "A_int","A_dbl","A_cpl","A_lgl","A_chr","A_NA_int"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "&lt;numeric&gt;","&lt;numeric&gt;","&lt;complex&gt;","&lt;logical&gt;","&lt;character&gt;","&lt;integer&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "  1","0.0000000","  1+1i","TRUE","A",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "  2","0.3333333","  2+1i","FALSE","B",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "  3","0.6666667","  3+1i","FALSE",,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "  4","1.0000000","  4+1i","TRUE","",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ,,,"TRUE","""",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ,,,,"	",</span>
 <span class="r-in"><span><span class="fu">read_tcsv</span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    A_int A_dbl A_cpl A_lgl A_fct A_chr A_utf8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1   0.0  1+1i  TRUE     A     A      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      2   0.2  2+1i FALSE     B     B      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      3   0.4  3+1i  TRUE     C     C      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      4   0.6  4+1i FALSE     D     D      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      5   0.8  5+1i  TRUE     E     E      F</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      6   1.0  6+1i FALSE     F     F      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      1   0.0  1+1i  TRUE     A     A      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      2   0.2  2+1i FALSE     B     B      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      3   0.4  3+1i  TRUE     C     C      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     4   0.6  4+1i FALSE     D     D      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     5   0.8  5+1i  TRUE     E     E      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12     6   1.0  6+1i FALSE     F     F      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13     1   0.0  1+1i  TRUE     A     A      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14     2   0.2  2+1i FALSE     B     B      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15     3   0.4  3+1i  TRUE     C     C      D</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16     4   0.6  4+1i FALSE     D     D      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17     5   0.8  5+1i  TRUE     E     E      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18     6   1.0  6+1i FALSE     F     F      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19     1   0.0  1+1i  TRUE     A     A      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20     2   0.2  2+1i FALSE     B     B      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21     3   0.4  3+1i  TRUE     C     C      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22     4   0.6  4+1i FALSE     D     D      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23     5   0.8  5+1i  TRUE     E     E      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24     6   1.0  6+1i FALSE     F     F      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25     1   0.0  1+1i  TRUE     A     A      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26     2   0.2  2+1i FALSE     B     B      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27     3   0.4  3+1i  TRUE     C     C      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28     4   0.6  4+1i FALSE     D     D      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29     5   0.8  5+1i  TRUE     E     E      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30     6   1.0  6+1i FALSE     F     F      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31     1   0.0  1+1i  TRUE     A     A      F</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32     2   0.2  2+1i FALSE     B     B      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33     3   0.4  3+1i  TRUE     C     C      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34     4   0.6  4+1i FALSE     D     D      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35     5   0.8  5+1i  TRUE     E     E      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36     6   1.0  6+1i FALSE     F     F      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37     1   0.0  1+1i  TRUE     A     A      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38     2   0.2  2+1i FALSE     B     B      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39     3   0.4  3+1i  TRUE     C     C      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40     4   0.6  4+1i FALSE     D     D      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41     5   0.8  5+1i  TRUE     E     E      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42     6   1.0  6+1i FALSE     F     F      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43     1   0.0  1+1i  TRUE     A     A      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44     2   0.2  2+1i FALSE     B     B      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45     3   0.4  3+1i  TRUE     C     C      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46     4   0.6  4+1i FALSE     D     D      C</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47     5   0.8  5+1i  TRUE     E     E      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48     6   1.0  6+1i FALSE     F     F      &gt;</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># May also set your preferred delimiter</span></span></span>
-<span class="r-in"><span><span class="fu">write_tcsv</span><span class="op">(</span><span class="va">d</span>, <span class="va">tmp</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">xfun</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/xfun/man/file_string.html" class="external-link">file_string</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> integer	numeric	complex	logical	factor	character	character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "A_int"	"A_dbl"	"A_cpl"	"A_lgl"	"A_fct"	"A_chr"	"A_utf8"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	0	1+1i	TRUE	"A"	"A"	"&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2	0.2	2+1i	FALSE	"B"	"B"	"U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3	0.4	3+1i	TRUE	"C"	"C"	"+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4	0.6	4+1i	FALSE	"D"	"D"	"4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5	0.8	5+1i	TRUE	"E"	"E"	"F"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6	1	6+1i	FALSE	"F"	"F"	"6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	0	1+1i	TRUE	"A"	"A"	"0"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2	0.2	2+1i	FALSE	"B"	"B"	"&gt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3	0.4	3+1i	TRUE	"C"	"C"	"&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4	0.6	4+1i	FALSE	"D"	"D"	"U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5	0.8	5+1i	TRUE	"E"	"E"	"+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6	1	6+1i	FALSE	"F"	"F"	"5"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	0	1+1i	TRUE	"A"	"A"	"9"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2	0.2	2+1i	FALSE	"B"	"B"	"7"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3	0.4	3+1i	TRUE	"C"	"C"	"D"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4	0.6	4+1i	FALSE	"D"	"D"	"&gt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5	0.8	5+1i	TRUE	"E"	"E"	"&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6	1	6+1i	FALSE	"F"	"F"	"U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	0	1+1i	TRUE	"A"	"A"	"+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2	0.2	2+1i	FALSE	"B"	"B"	"6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3	0.4	3+1i	TRUE	"C"	"C"	"2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4	0.6	4+1i	FALSE	"D"	"D"	"1"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5	0.8	5+1i	TRUE	"E"	"E"	"1"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6	1	6+1i	FALSE	"F"	"F"	"&gt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	0	1+1i	TRUE	"A"	"A"	"&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2	0.2	2+1i	FALSE	"B"	"B"	"U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3	0.4	3+1i	TRUE	"C"	"C"	"+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4	0.6	4+1i	FALSE	"D"	"D"	"6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5	0.8	5+1i	TRUE	"E"	"E"	"6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6	1	6+1i	FALSE	"F"	"F"	"2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	0	1+1i	TRUE	"A"	"A"	"F"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2	0.2	2+1i	FALSE	"B"	"B"	"&gt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3	0.4	3+1i	TRUE	"C"	"C"	"&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4	0.6	4+1i	FALSE	"D"	"D"	"U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5	0.8	5+1i	TRUE	"E"	"E"	"+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6	1	6+1i	FALSE	"F"	"F"	"5"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	0	1+1i	TRUE	"A"	"A"	"9"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2	0.2	2+1i	FALSE	"B"	"B"	"2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3	0.4	3+1i	TRUE	"C"	"C"	"7"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4	0.6	4+1i	FALSE	"D"	"D"	"&gt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5	0.8	5+1i	TRUE	"E"	"E"	"&lt;"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6	1	6+1i	FALSE	"F"	"F"	"U"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	0	1+1i	TRUE	"A"	"A"	"+"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2	0.2	2+1i	FALSE	"B"	"B"	"9"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3	0.4	3+1i	TRUE	"C"	"C"	"6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4	0.6	4+1i	FALSE	"D"	"D"	"C"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5	0.8	5+1i	TRUE	"E"	"E"	"4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6	1	6+1i	FALSE	"F"	"F"	"&gt;"</span>
-<span class="r-in"><span><span class="fu">read_tcsv</span><span class="op">(</span><span class="va">tmp</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    A_int A_dbl A_cpl A_lgl A_fct A_chr A_utf8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1   0.0  1+1i  TRUE     A     A      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      2   0.2  2+1i FALSE     B     B      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      3   0.4  3+1i  TRUE     C     C      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      4   0.6  4+1i FALSE     D     D      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      5   0.8  5+1i  TRUE     E     E      F</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      6   1.0  6+1i FALSE     F     F      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      1   0.0  1+1i  TRUE     A     A      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      2   0.2  2+1i FALSE     B     B      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      3   0.4  3+1i  TRUE     C     C      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     4   0.6  4+1i FALSE     D     D      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     5   0.8  5+1i  TRUE     E     E      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12     6   1.0  6+1i FALSE     F     F      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13     1   0.0  1+1i  TRUE     A     A      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14     2   0.2  2+1i FALSE     B     B      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15     3   0.4  3+1i  TRUE     C     C      D</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16     4   0.6  4+1i FALSE     D     D      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17     5   0.8  5+1i  TRUE     E     E      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18     6   1.0  6+1i FALSE     F     F      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19     1   0.0  1+1i  TRUE     A     A      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20     2   0.2  2+1i FALSE     B     B      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21     3   0.4  3+1i  TRUE     C     C      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22     4   0.6  4+1i FALSE     D     D      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23     5   0.8  5+1i  TRUE     E     E      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24     6   1.0  6+1i FALSE     F     F      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25     1   0.0  1+1i  TRUE     A     A      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26     2   0.2  2+1i FALSE     B     B      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27     3   0.4  3+1i  TRUE     C     C      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28     4   0.6  4+1i FALSE     D     D      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29     5   0.8  5+1i  TRUE     E     E      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30     6   1.0  6+1i FALSE     F     F      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31     1   0.0  1+1i  TRUE     A     A      F</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32     2   0.2  2+1i FALSE     B     B      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33     3   0.4  3+1i  TRUE     C     C      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34     4   0.6  4+1i FALSE     D     D      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35     5   0.8  5+1i  TRUE     E     E      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36     6   1.0  6+1i FALSE     F     F      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37     1   0.0  1+1i  TRUE     A     A      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38     2   0.2  2+1i FALSE     B     B      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39     3   0.4  3+1i  TRUE     C     C      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40     4   0.6  4+1i FALSE     D     D      &gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41     5   0.8  5+1i  TRUE     E     E      &lt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42     6   1.0  6+1i FALSE     F     F      U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43     1   0.0  1+1i  TRUE     A     A      +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44     2   0.2  2+1i FALSE     B     B      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45     3   0.4  3+1i  TRUE     C     C      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46     4   0.6  4+1i FALSE     D     D      C</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47     5   0.8  5+1i  TRUE     E     E      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48     6   1.0  6+1i FALSE     F     F      &gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 x 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   A_int  A_dbl A_cpl A_lgl A_chr A_NA_int</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;cpl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1  0     1+1i  TRUE  <span style="color: #949494;">"</span>A<span style="color: #949494;">"</span>         <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2  0.333 2+1i  FALSE <span style="color: #949494;">"</span>B<span style="color: #949494;">"</span>         <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3  0.667 3+1i  FALSE  <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4  1     4+1i  TRUE   <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>       NA  TRUE  <span style="color: #949494;">"</span>\"<span style="color: #949494;">"</span>        <span style="color: #BB0000;">NA</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>    <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>       NA  <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
