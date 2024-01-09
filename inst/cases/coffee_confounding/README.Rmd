@@ -26,9 +26,7 @@ There are accumulating evidence showing that the amount of [coffee intake is ass
 
 Nope, we have to be careful for **alternative explanations** that also describe the observed phenomenon. One of such explanations may simply be that less healthy people avoid coffee. This can happen when people prone to anxiety tend to reduce coffee intake. The directed acyclic graph (DAG) below explicates this. The variable $A$ stands for the anxiety level of a person, which negatively impacts his or her health ($H$). Anxiety also influences the amount of coffee one consumes ($C$) since caffeine in coffee amplifies anxiety and anxiety-prone people know this and avoid drinking too much coffee.
 
-<div style="background:black">
 ![](dag-confound-coffee.svg)
-</div>
 
 In some sense, the amount of coffee intake in this fictitious example serve as a **segregating device** which separates (continuously) health people from the unhealthy. Therefore, more coffee intake indexes healthier people (i.e., those who are less anxiety-prone), and less coffee intake signals less health people.
 

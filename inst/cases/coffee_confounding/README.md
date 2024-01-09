@@ -32,11 +32,7 @@ Anxiety also influences the amount of coffee one consumes ($C$) since
 caffeine in coffee amplifies anxiety and anxiety-prone people know this
 and avoid drinking too much coffee.
 
-<div style="background:black">
-
 ![](dag-confound-coffee.svg)
-
-</div>
 
 In some sense, the amount of coffee intake in this fictitious example
 serve as a **segregating device** which separates (continuously) health
