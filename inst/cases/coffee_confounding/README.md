@@ -17,8 +17,8 @@ to (re)emphasize the importance of being careful with causal claims.
 There is accumulating evidence showing that the amount of [coffee intake
 is associated with health
 outcomes](https://en.wikipedia.org/wiki/Health_effects_of_coffee). In
-particular, it was found that having more coffee is associated with
-lower all-cause mortality, in a reasonable range of dosage.
+particular, it was found that coffee drinking, in a reasonable range of
+dosage, is associated with lower all-cause mortality.
 
 > Does this mean that **drinking coffee leads to better health**?
 
@@ -71,6 +71,7 @@ from the Poisson distribution to a reasonable range (i.e., to about
 illustrated in the figure below.
 
 ``` r
+set.seed(777)
 logistic = function(x) 1 / (1 + exp(-x))
 f = function(x) 1 / logistic(x + 1.5)
 
@@ -95,7 +96,6 @@ participants are simulated to demonstrate this spurious relationship
 between coffee and health.
 
 ``` r
-set.seed(777)
 N = 500
 A = rnorm(N)
 lambda = 1 / logistic(A+1.5)

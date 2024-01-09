@@ -21,7 +21,7 @@ This is a toy example demonstrating how confounding can arise in statistical mod
 Is coffee good for health?
 --------------------------
 
-There is accumulating evidence showing that the amount of [coffee intake is associated with health outcomes][wiki]. In particular, it was found that having more coffee is associated with lower all-cause mortality, in a reasonable range of dosage.
+There is accumulating evidence showing that the amount of [coffee intake is associated with health outcomes][wiki]. In particular, it was found that coffee drinking, in a reasonable range of dosage, is associated with lower all-cause mortality.
 
 > Does this mean that **drinking coffee leads to better health**? 
 
@@ -53,6 +53,7 @@ The last two lines state how health is related to anxiety in a population, which
 The term $\lambda$ characterizes the Poisson distribution that generates the amount of coffee intake $C$ (cups of coffee per day). $\lambda$ is also the expectation of the Poisson distribution, which amounts to the expected number of "cups of coffee per day" here. The expression $\frac{1}{\text{logistic}(A + 1.5)}$ is used to link anxiety levels to the expected amount of coffee intake such that they have a negative relationship (i.e., higher anxiety leads to lower coffee consumption). The $1.5$ term is added to $A$ in order to shift the draws from the Poisson distribution to a reasonable range (i.e., to about 8-10, instead of 20-30, cups of coffee for the upper bound). This is illustrated in the figure below.
 
 ```{r}
+set.seed(777)
 logistic = function(x) 1 / (1 + exp(-x))
 f = function(x) 1 / logistic(x + 1.5)
 
@@ -73,7 +74,6 @@ for ( x in seq(-3,3,by=.3) ) {
 The code below reproduces the generative model in (1). Five hundred participants are simulated to demonstrate this spurious relationship between coffee and health.
 
 ```{r}
-set.seed(777)
 N = 500
 A = rnorm(N)
 lambda = 1 / logistic(A+1.5)
