@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="84.42263pt"
+   height="53.956192pt"
+   viewBox="0 0 84.422632 53.956191"
+   version="1.2"
+   id="svg41"
+   sodipodi:docname="dag-confound-coffee.pdf"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview43"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="pt" />
+  <defs
+     id="defs16">
+    <g
+       id="g14">
+      <symbol
+         overflow="visible"
+         id="glyph0-0">
+        <path
+           style="stroke:none"
+           d=""
+           id="path2" />
+      </symbol>
+      <symbol
+         overflow="visible"
+         id="glyph0-1">
+        <path
+           style="stroke:none"
+           d="M 6.03125,-10.5625 H 4.59375 C 4.25,-9.6875 1.28125,-2.0625 1.125,-1.765625 0.703125,-0.96875 0.203125,-0.625 -0.578125,-0.484375 V 0 h 4.15625 v -0.484375 c -0.4375,-0.046875 -0.71875,-0.109375 -0.875,-0.1875 -0.328125,-0.15625 -0.5,-0.390625 -0.5,-0.75 0,-0.5625 0.609375,-2 0.78125,-2.5 h 4 l 0.78125,2 C 7.875,-1.625 7.9375,-1.40625 7.9375,-1.234375 c 0,0.4375 -0.46875,0.65625 -1.21875,0.75 V 0 H 11.0625 V -0.484375 C 10.515625,-0.5625 10.125,-0.75 9.890625,-1.015625 9.78125,-1.15625 9.578125,-1.578125 9.3125,-2.25 Z m -2.8125,5.96875 1.71875,-4.640625 1.78125,4.640625 z m 0,0"
+           id="path5" />
+      </symbol>
+      <symbol
+         overflow="visible"
+         id="glyph0-2">
+        <path
+           style="stroke:none"
+           d="m 3.421875,-6.015625 v -2.3125 c 0,-1.359375 0.203125,-1.609375 1.40625,-1.75 V -10.5625 h -4.34375 v 0.484375 L 0.875,-10.03125 c 0.875,0.125 1,0.625 1,1.703125 v 6.09375 c 0,1.359375 -0.203125,1.609375 -1.390625,1.75 V 0 h 4.34375 V -0.484375 L 4.4375,-0.53125 C 3.546875,-0.65625 3.421875,-1.140625 3.421875,-2.234375 V -5.34375 H 8.96875 v 3.109375 c 0,1.359375 -0.203125,1.609375 -1.390625,1.75 V 0 h 4.34375 V -0.484375 L 11.53125,-0.53125 c -0.875,-0.125 -1,-0.609375 -1,-1.703125 v -6.09375 c 0,-1.359375 0.1875,-1.609375 1.390625,-1.75 V -10.5625 h -4.34375 v 0.484375 l 0.390625,0.04688 c 0.875,0.125 1,0.625 1,1.703125 v 2.3125 z m 0,0"
+           id="path8" />
+      </symbol>
+      <symbol
+         overflow="visible"
+         id="glyph0-3">
+        <path
+           style="stroke:none"
+           d="M 9.8125,-10.421875 H 9.296875 L 8.96875,-9.765625 C 8.125,-10.4375 7.0625,-10.75 5.796875,-10.75 c -0.640625,0 -1.28125,0.140625 -1.953125,0.46875 -1.8125,0.875 -3.15625,2.546875 -3.15625,5.0625 0,1.59375 0.5,2.890625 1.546875,3.90625 1.015625,1 2.328125,1.515625 3.921875,1.515625 2,0 3.578125,-0.890625 4.71875,-2.671875 l -0.65625,-0.375 c -1.046875,1.546875 -2.3125,2.296875 -3.828125,2.296875 -0.5,0 -1,-0.109375 -1.5,-0.34375 -1.59375,-0.71875 -2.375,-2.171875 -2.375,-4.34375 0,-1.21875 0.28125,-2.265625 0.84375,-3.1875 0.671875,-1.0625 1.5625,-1.59375 2.71875,-1.59375 1.1875,0 2.203125,0.578125 3.03125,1.734375 0.234375,0.328125 0.5625,0.859375 0.953125,1.59375 h 0.5 z m 0,0"
+           id="path11" />
+      </symbol>
+    </g>
+  </defs>
+  <g
+     id="surface1"
+     transform="translate(-56.715374,6.700226e-5)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
+       d="M 11.338781,-0.00128125 C 11.338781,6.260437 6.260656,11.338562 -0.0010625,11.338562 -6.262781,11.338562 -11.337,6.260437 -11.337,-0.00128125 -11.337,-6.263 -6.262781,-11.337219 -0.0010625,-11.337219 c 6.2617185,0 11.3398435,5.074219 11.3398435,11.33593775 z m 0,0"
+       transform="matrix(1,0,0,-1,99.212,11.737)"
+       id="path18" />
+    <g
+       style="fill:#000000;fill-opacity:1"
+       id="g22">
+      <use
+         xlink:href="#glyph0-1"
+         x="94.053001"
+         y="17.051001"
+         id="use20"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       style="fill:#000000;fill-opacity:1"
+       id="g26">
+      <use
+         xlink:href="#glyph0-2"
+         x="56.230999"
+         y="53.834999"
+         id="use24"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       style="fill:#000000;fill-opacity:1"
+       id="g30">
+      <use
+         xlink:href="#glyph0-3"
+         x="130.263"
+         y="53.752998"
+         id="use28"
+         width="100%"
+         height="100%" />
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
+       d="M -9.426844,-9.427063 -26.934656,-26.934875"
+       transform="matrix(1,0,0,-1,99.212,11.737)"
+       id="path32" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="m 70.445312,40.503906 4.394532,-1.464844 -2.5625,-0.367187 -0.367188,-2.5625"
+       id="path34" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.79701;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
+       d="M 9.424719,-9.427063 26.936437,-26.934875"
+       transform="matrix(1,0,0,-1,99.212,11.737)"
+       id="path36" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="m 127.97656,40.503906 -1.46484,-4.394531 -0.36328,2.5625 -2.56641,0.367187"
+       id="path38" />
+  </g>
+</svg>
