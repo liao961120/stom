@@ -94,11 +94,12 @@ text(8, a+b*8 - .6, paste("r =", round(cor(C,H),2)), col=2)
 
 <style>
 img {
-    display: block;
-    margin: 0 auto;
-    padding: 0 auto;
+display: block;
+margin: 0 auto;
+padding: 0 auto;
+background: white;
 }
 strong, b {
-    color: red;
+color: red;
 }
 </style>
