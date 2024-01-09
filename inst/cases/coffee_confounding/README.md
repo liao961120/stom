@@ -1,29 +1,29 @@
 Confounding Coffee
 ================
-Yongfu Liao
+Yongfu Liao  
 Jan 9, 2024
 
 This is a toy example demonstrating how confounding can arise in
 statistical modeling. There are many many great examples out there, but
 I find the example here quite illuminating. Note that this example is
-presented **only for demonstration purposes** and do not intend to
-suggest anything about the empirical findings. We simply need better
-designed studies to elucidate the relationship between coffee
+presented **only for demonstration purposes** and does not intend to
+suggest anything about the empirical findings. We simply need
+better-designed studies to elucidate the relationship between coffee
 consumption and health. This demonstration, however, still serves well
-to (re)emphasized the importance of being careful with casual claims.
+to (re)emphasize the importance of being careful with causal claims.
 
 ## Is coffee good for health?
 
-There are accumulating evidence showing that the amount of [coffee
-intake is associated with health
+There is accumulating evidence showing that the amount of [coffee intake
+is associated with health
 outcomes](https://en.wikipedia.org/wiki/Health_effects_of_coffee). In
 particular, it was found that having more coffee is associated with
 lower all-cause mortality, in a reasonable range of dosage.
 
 > Does this mean that **drinking coffee leads to better health**?
 
-Nope, we have to be careful for **alternative explanations** that also
-describe the observed phenomenon. One of such explanations may simply be
+Nope, we have to watch out for **alternative explanations** that also
+describe the observed phenomenon. One such explanation may simply be
 that less healthy people avoid coffee. This can happen when people prone
 to anxiety tend to reduce coffee intake. The directed acyclic graph
 (DAG) below explicates this. The variable $A$ stands for the anxiety
@@ -32,13 +32,14 @@ Anxiety also influences the amount of coffee one consumes ($C$) since
 caffeine in coffee amplifies anxiety and anxiety-prone people know this
 and avoid drinking too much coffee.
 
-<img src="dag-confound-coffee.svg" style="background:white" />
+<img src="dag-confound-coffee.png"
+style="max-width:200px;display:block;margin:0 auto;padding:0 auto" />
 
 In some sense, the amount of coffee intake in this fictitious example
-serve as a **segregating device** which separates (continuously) health
+serves as a **segregating device** that separates (continuously) healthy
 people from the unhealthy. Therefore, more coffee intake indexes
 healthier people (i.e., those who are less anxiety-prone), and less
-coffee intake signals less health people.
+coffee intake signals less healthy people.
 
 ## Data Generative Process
 
@@ -59,7 +60,7 @@ The equations in (1) should be easier to read from bottom to top. The
 last two lines state how health is related to anxiety in a population,
 which describe formally the causal relationship $\overrightarrow{AH}$ in
 the DAG. The term $\lambda$ characterizes the Poisson distribution that
-generates the amount of coffee intake $C$ (cups of coffee day).
+generates the amount of coffee intake $C$ (cups of coffee per day).
 $\lambda$ is also the expectation of the Poisson distribution, which
 amounts to the expected number of “cups of coffee per day” here. The
 expression $\frac{1}{\text{logistic}(A + 1.5)}$ is used to link anxiety
