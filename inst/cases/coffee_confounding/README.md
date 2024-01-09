@@ -116,15 +116,3 @@ text(8, a+b*8 - .6, paste("r =", round(cor(C,H),2)), col=2)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.svg)<!-- -->
-
-<style>
-img {
-display: block;
-margin: 0 auto;
-padding: 0 auto;
-background: white;
-}
-strong, b {
-color: red;
-}
-</style>
