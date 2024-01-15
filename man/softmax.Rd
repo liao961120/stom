@@ -7,7 +7,7 @@
 softmax(x)
 }
 \arguments{
-\item{x}{Numeric. A vector of real values to convert to probabilities.}
+\item{x}{Numeric. A vector of reals to map to probabilities.}
 }
 \description{
 Numerically stable softmax function

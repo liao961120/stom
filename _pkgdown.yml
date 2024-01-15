@@ -39,6 +39,7 @@ reference:
   - rordlogit
   - rtnorm
   - logit
+  - softmax
   - standardize
 - title: "Plotting"
   desc: >

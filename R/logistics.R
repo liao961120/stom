@@ -16,7 +16,7 @@ logistic = inv_logit
 
 #' Numerically stable softmax function
 #'
-#' @param x Numeric. A vector of real values to convert to probabilities.
+#' @param x Numeric. A vector of reals to map to probabilities.
 #' @export
 #' @examples
 #' softmax(1:3)
