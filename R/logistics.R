@@ -14,20 +14,16 @@ inv_logit = function(x) 1 / (1 + exp(-x))  # Real -> P
 logistic = inv_logit
 
 
-
-# start.time = Sys.time()
-# x = replicate(1e4, {
-#   # logit( 1e-323 )
-#   inv_logit( seq(-10, 10, by=.01) )
-# })
-# end.time = Sys.time()
-# end.time - start.time
-#
-#
-# start.time = Sys.time()
-# x = replicate(1e4, {
-#   # qlogis( 1e-323 )
-#   plogis( seq(-10, 10, by=.01) )
-# })
-# end.time = Sys.time()
-# end.time - start.time
+#' Numerically stable softmax function
+#'
+#' @param x Numeric. A vector of real values to convert to probabilities.
+#' @export
+#' @examples
+#' softmax(1:3)
+#' softmax(1:3 + 9999999)
+#' softmax(c(12345, 67890, 99999999))
+softmax = function(x) {
+    x = x - max(x)
+    n = exp(x)
+    n / sum(n)
+}
