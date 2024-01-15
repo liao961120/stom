@@ -7,7 +7,7 @@
 \usage{
 inline(x, sep = ", ", last_sep = ", and ", two_sep = " and ")
 
-inline_zh(x, sep = "、", last_sep = "、", two_sep = " 與 ")
+inline_zh(x, sep = "<U+3001>", last_sep = "<U+3001>", two_sep = " <U+8207> ")
 }
 \description{
 These functions are expect to work with R Markdown's inline R chunk syntax
