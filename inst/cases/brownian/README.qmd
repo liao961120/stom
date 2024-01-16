@@ -75,7 +75,6 @@ for (r in 1:R)
 ```
 
 ```{r}
-set.seed(2024)
 R = 200
 t = 1
 x = replicate(R, W(t=t)$w)
@@ -178,7 +177,7 @@ x = replicate(5000, rev(W2(drift=1, scale=2, t=2)$w)[1])
 ```{r}
 # Simulate positions at t=1 for 5000 Brownian motions (drift=1, scale=2)
 plot(1, type="n", xlab="X", ylab="Density", 
-     main = "Density of X(t = 1)",
+     main = "Density of X(t = 2)",
      xlim=c(-6.5,11), ylim=c(0,.15))
 hist(x, probability=T, add=T, breaks=50)
 curve(dnorm(x,1*2, 2*sqrt(2)), from=-15, to=15, add=T, col=2, lwd=2)
@@ -240,35 +239,6 @@ legend(3.3, 1.1,
        lty    = c(1, 2, 1, 2),
        lwd    = 2)
 ```
-
-
-
-```{r}
-# Params
-alpha = 2
-bias = beta = 0.6
-drift = delta = 0.1
-tau = 0.3
-
-# Check simulation by comparing to functions in RWiener
-N = 5000
-x = rW(N, alpha=alpha, bias=bias, drift=drift, tau=tau)
-x2 = rwiener(N, alpha=alpha,beta=bias,delta=drift,tau=tau)
-
-plot(1, type="n", xlab="RT", ylab="Density", ylim=c(0,1.1), xlim=c(0,5))
-lines(density(x$q[x$resp == "upper"]), lwd=2, col=2 )
-lines(density(x$q[x$resp == "lower"]), lwd=2, col=2, lty=2)
-
-lines(density(x2$q[x2$resp == "upper"]), lwd=2, col=4)
-lines(density(x2$q[x2$resp == "lower"]), lwd=2, col=4, lty=2)
-
-legend(3.5, 1, 
-       legend = c("rW(): upper", "rW(): lower", "rwiener(): upper", "rwiener(): lower"),
-       col    = c(2, 2, 4, 4),
-       lty    = c(1, 2, 1, 2),
-       lwd    = 2)
-```
-
 
 
 ## See Also
