@@ -22,3 +22,6 @@ tcsv-test.csv
 *.RDS
 ToGDrive
 .DS_Store
+
+# Track Snakefile
+!Snakefile
