@@ -1,4 +1,4 @@
-"Fit simple model.
+"Fit one-subject model.
 
 Usage:
     fit STAN SIM UTILS (-o OUTPUT| --output=OUTPUT)

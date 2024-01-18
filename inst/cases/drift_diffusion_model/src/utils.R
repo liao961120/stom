@@ -27,6 +27,27 @@ init_files_one_subj = function(dir="init_one_subj",
 }
 
 
+init_files_multi_subj = function(dir="init_multi_subj",
+                               chains=1:N_CORES,
+                               seed=50) {
+    if (exists(".Random.seed")) {
+        old <- .Random.seed
+        on.exit( { .Random.seed <<- old } )
+    }
+    set.seed(seed)
+    if (! dir.exists(dir) ) dir.create(dir, recursive = T)
+
+    sapply( chains, function(chain) {
+        init = tibble::lst(
+            # To Do: construct stan program and write params here
+        )
+        fp = file.path(dir, paste0(chain,".json") )
+        cmdstanr::write_stan_json(init, fp)
+        fp
+    })
+}
+
+
 # Get posterior summaries
 get_post_summ = function(d_precis, params, stat="mean") {
     summ = lapply(params, \(x) erect(d_precis, x, stat))
