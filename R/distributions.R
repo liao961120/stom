@@ -23,10 +23,9 @@ rbern = function(prob, n=length(prob)) rbinom( n=n, size=1, prob=prob )
 rtnorm = function(n, m=0, s=1, lower=0, upper=Inf) {
   n_sampled = 0
   sampled = c()
-  while (n_sampled < n) {
+  while (length(sampled) < n) {
     x = rnorm( n, m, s )
     sampled = c( sampled, x[x > lower & x < upper] )
-    n_sampled = n_sampled + length(sampled)
   }
   sampled[seq(n)]
 }
