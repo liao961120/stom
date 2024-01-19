@@ -17,6 +17,19 @@ if os.name == 'nt':
 ######################
 #### Scaffolding #####
 ######################
+rule prior_check_multi_subj:
+    """Prior predictive checks for the hierachical model fitting to multi-subject DDM
+    """
+    input:
+        script = "src/multi_subj.prior.check.R"
+    output:
+        "docs/multi_subj.prior.check.pdf"
+    shell:
+        """
+        Rscript -e 'rmarkdown::render("{input.script}", "pdf_document", output_dir="docs")'
+        """
+
+
 rule fit_one_subj:
     """Fit single subject model
     """
