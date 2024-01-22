@@ -5,41 +5,43 @@
 #' links-as-notes: true
 #' ---
 #'
-#' In the model here (using the $\alpha$ parameter as an example), we assume:
+#' Using the boundary separation parameter $\alpha$ parameter as an example here,
+#' we present the hierarchical structure of our drift-diffusion model below:
 #'
 #' $$
 #' \begin{aligned}
 #' \alpha          & \sim exp( \mu_{\alpha} + \sigma_{\alpha} * z_{\alpha} ) \\
-#' \mu_{\alpha}    & \sim \text{Normal}(m_1, s_1)   \\
-#' \sigma_{\alpha} & \sim \text{Normal}^+(m_2, s_2) \\
+#' \mu_{\alpha}    & \sim \text{Normal}(m^{\alpha}_1, s^{\alpha}_1)   \\
+#' \sigma_{\alpha} & \sim \text{Normal}^+(m^{\alpha}_2, s^{\alpha}_2) \\
 #' z_{\alpha}      & \sim \text{Normal}(0, 1)
 #' \end{aligned}
 #' $$
 #'
-#' Other parameters ($\beta, \tau, \delta_1, \delta_2$) follow as well, where
+#' Other parameters ($\beta, \tau, \delta_1, \delta_2$) follow similarly, where
 #' there are also hyper-parameters $\mu_\ast$, $\sigma_\ast$, and $z_\ast$ that
 #' co-determine the prior distributions of the lower-level parameters. Our goal
-#' here is to pick $m_1$, $s_1$, $m_2$, and $s_2$ such that each of the
-#' lower-level parameters falls in a reasonable range.
+#' here is to pick $m^{\ast}_1$, $s^{\ast}_1$, $m^{\ast}_2$, and $s^{\ast}_2$
+#' such that each of the lower-level priors covers a reasonable range.
 #'
 #' Picking distributions for $\mu_\ast$, $\sigma_\ast$, and $z_\ast$
-#' (i.e., determining $m_1$, $s_1$, $m_2$, and $s_2$) could be quite difficult
-#' as the variation in these hyper-parameters interact to influence the
-#' lower-level prior.
+#' (i.e., determining $m^{\ast}_1$, $s^{\ast}_1$, $m^{\ast}_2$, and $s^{\ast}_2$)
+#' could be quite difficult as variations in these hyper-parameters interact
+#' to co-determine the lower-level priors.
 #' Intuitions for setting non-hierarchical priors can result in unreasonably
-#' wide priors in cases where there are hierarchical structures in
-#' the parameters.
+#' wide priors in cases where there are hierarchical structures
+#' in the parameters (like our model here).
 #'
-#' The only reliable solution to specify good hyper-priors is interactive
-#' simulations. We first pick some hyper-priors in order to simulate lower-level
-#' priors and observed variables. This provides feedback on the sanity of our
-#' hyper-priors such that we can then perform future rounds of simulations to
-#' improve the hyper-priors. The technical term for this is
+#' The only solution to reliably arrive at good hyper-priors is interactive
+#' simulations. In such a scenario, we first pick some hyper-priors, use these
+#' hyper-priors to simulate lower-level priors as well as observed variables,
+#' and look at whether they fall within a reasonable range (by comparing it
+#' against your knowledge about the phenomena and/or previous studies).
+#' Often, we have to repeat for several rounds to arrive at good priors.
+#' The technical term for this is
 #' [*prior predictive checks*](https://mc-stan.org/docs/stan-users-guide/prior-predictive-checks.html).
 
-library(stom)
 library(ggplot2)
-set.seed(2029)
+set.seed(2024)
 
 # Function factory for creating link functions
 trans_func = function(lnk = \(x) x) {
@@ -59,12 +61,12 @@ sim = list(
 )
 
 
-#' Parameter prior distribution simulation
-#' ---------------------------------------
+#' Prior distribution simulations
+#' ------------------------------
 #'
-#' The code below documents the generation of
-#' prior distributions based on the final hyper-priors
-#' we have zoomed in on based on multiple rounds of simulations.
+#' The code below documents the simulation of prior distributions
+#' based on a set of hyper-priors, which we have arrived at through
+#' multiple rounds of interactive simulations.
 
 ####   (Sanity check for hyper-parameters)   ####
 a   = sim$alpha(m1=.1,s1=.4,m2=0,s2=.3)
@@ -75,13 +77,13 @@ d2  = sim$delta2(m1=-1,s1=.4,m2=0,s2=.4)
 plot(1, type="n", xlim=c(-3,3), ylim=c(0,3.8),
      xlab="Parameter value", ylab="Density",
      main="Priors (generated from hyper-priors)")
-polygon(density(a),  border = col.alpha(2,1), lwd=2 )
-polygon(density(t),  border = col.alpha(4,1), lwd=2 )
-polygon(density(b),  border = col.alpha(6,1), lwd=2 )
-polygon(density(d1), border = col.alpha(8,1), lwd=2 )
-polygon(density(d2), border = col.alpha(9,1), lwd=2 )
+polygon(density(a),  border = stom::col.alpha(2,1), lwd=2 )
+polygon(density(t),  border = stom::col.alpha(4,1), lwd=2 )
+polygon(density(b),  border = stom::col.alpha(6,1), lwd=2 )
+polygon(density(d1), border = stom::col.alpha(8,1), lwd=2 )
+polygon(density(d2), border = stom::col.alpha(9,1), lwd=2 )
 legend(1.7,3.5,
-       legend=as_vec("alpha,tau,beta,delta1,delta2"),
+       legend = stom::as_vec("alpha,tau,beta,delta1,delta2"),
        col = c(2,4,6,8,9),
        lwd = 2)
 
@@ -89,10 +91,9 @@ legend(1.7,3.5,
 #' Prior predictive checks
 #' -----------------------
 #'
-#' The code below uses the above priors to simulate observations based
-#' on the drift-diffusion model (for a single-subject).
-#' The results are plotted for visual inspections of the range in
-#' which the observations fall in.
+#' The code below uses the above priors to simulate observations from a
+#' single subject based on our drift-diffusion model.
+#' The results are visualized as the reaction time distributions below.
 sim_draws = function(n, a, t, b, d) {
     dt = list(
         q = vector("double", n),
