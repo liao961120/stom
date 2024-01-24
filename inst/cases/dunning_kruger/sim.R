@@ -13,7 +13,7 @@ Rp = rnorm(N, A + B, 1)
 # Regression towards the mean happens to Rp with this operation since
 # Ro/Rp are positively correlated, and therefore in the more extreme quantiles
 # (e.g., the 1th/bottom and 4th/top quantiles), Ro will tend to be more extreme
-# compared than Rp. Thus, Rp are said to regress toward the mean.
+# compared to Rp. Thus, Rp are said to regress toward the mean.
 # A flatter slope of Rp along the quantiles is hence observed.
 #
 # See http://haines-lab.com/post/2021-01-10-modeling-classic-effects-dunning-kruger/2021-01-10-modeling-classic-effects-dunning-kruger/
