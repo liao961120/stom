@@ -41,6 +41,12 @@ reference:
   - logit
   - softmax
   - standardize
+- title: "Wrangling"
+  desc: >
+    Utilities for data wrangling.
+  contents:
+  - as_vec
+  - year
 - title: "Plotting"
   desc: >
     Utilities for plotting.
