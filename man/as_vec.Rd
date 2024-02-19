@@ -4,13 +4,16 @@
 \alias{as_vec}
 \title{Handy vector construction from string}
 \usage{
-as_vec(x)
+as_vec(x, cast_num = TRUE)
 }
 \arguments{
 \item{x}{String. A string to construct a vector from (see examples).
 If \code{x} has length > 1, \code{stom::as_c_num} or \code{stom::as_c_chr}
 would be called (depending on input type) to print out the
 concatenation syntax \code{c(...)} in the console.}
+
+\item{cast_num}{Boolean. Whether to convert string to numeric when
+applicable. See examples.}
 }
 \description{
 Handy vector construction from string
@@ -18,11 +21,10 @@ Handy vector construction from string
 \examples{
 # Construct vector from string
 as_vec("a b c")
-as_vec("1 2 -3.1")  # Auto type casting to numeric vector
-as_vec("4, 5, 6")
-as_vec("4, 5  6")   # Commas have precedence over spaces
+as_vec("d, e  f")   # Commas have precedence over spaces
 
-# Construct concatenation syntax from vector
-as_vec(letters[1:3])
-as_vec(1:3)
+# Auto typecasting
+as_vec("1 2 -3.1")
+as_vec("04, 05")
+as_vec("04, 05", cast_num=FALSE)  # Disable typecasting
 }
