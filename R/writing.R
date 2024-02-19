@@ -54,27 +54,21 @@ as_c_chr = function(x) {
 #'          If `x` has length > 1, `stom::as_c_num` or `stom::as_c_chr`
 #'          would be called (depending on input type) to print out the
 #'          concatenation syntax `c(...)` in the console.
+#' @param cast_num Boolean. Whether to convert string to numeric when
+#'        applicable. See examples.
 #' @export
 #' @rdname as_vec
 #' @examples
 #' # Construct vector from string
 #' as_vec("a b c")
-#' as_vec("1 2 -3.1")  # Auto type casting to numeric vector
-#' as_vec("4, 5, 6")
-#' as_vec("4, 5  6")   # Commas have precedence over spaces
+#' as_vec("d, e  f")   # Commas have precedence over spaces
 #'
-#' # Construct concatenation syntax from vector
-#' as_vec(letters[1:3])
-#' as_vec(1:3)
-as_vec = function(x) {
+#' # Auto typecasting
+#' as_vec("1 2 -3.1")
+#' as_vec("04, 05")
+#' as_vec("04, 05", cast_num=FALSE)  # Disable typecasting
+as_vec = function(x, cast_num=TRUE) {
     if ( is.null(x) ) return(NULL)
-    if (length(x) > 1) {
-        if ( is.numeric(x) )
-            return( as_c_num(x) )
-        if ( is.character(x) )
-            return( as_c_chr(x) )
-        return( x )
-    }
 
     x = trimws(x)
     if ( grepl(",",x) ) {
@@ -82,7 +76,7 @@ as_vec = function(x) {
     } else if ( grepl("\\s+", x) ) {
         x = trimws( strsplit(x, "\\s+")[[1]] )
     }
-    if ( all( grepl("^[0-9.-]+$",x) ) )
+    if ( all( grepl("^[0-9.-]+$",x) ) & cast_num )
         return( as.numeric(x) )
     return(x)
 }
