@@ -38,7 +38,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Forest plot for multiple densities</h1>
-      <small class="dont-index">Source: <a href="https://github.com/liao961120/stom/blob/HEAD/R/baseR-forests.R" class="external-link"><code>R/baseR-forests.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/liao961120/stom/blob/HEAD/R/plot_forest.R" class="external-link"><code>R/plot_forest.R</code></a></small>
       <div class="d-none name"><code>plot_forest.Rd</code></div>
     </div>
 
@@ -53,6 +53,7 @@
 <span>  <span class="va">labels</span>,</span>
 <span>  shade_inv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">0.75</span><span class="op">)</span>,</span>
 <span>  center <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"median"</span>, <span class="st">"mode"</span><span class="op">)</span>,</span>
+<span>  decreasing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  vert_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  col <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  xlim <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -82,6 +83,13 @@ regions are shaded.</p></dd>
 <dt>center</dt>
 <dd><p>String. The statistic used for drawing the central
 tendency line. Defaults to <code>mean</code>.</p></dd>
+
+
+<dt>decreasing</dt>
+<dd><p>Logical. Whether to decreasingly sort the distributions
+according to their central tendency measures. If NULL, the
+distributions will be arranged according to the order in which
+they are passed in.</p></dd>
 
 
 <dt>vert_ref</dt>
@@ -115,16 +123,15 @@ values shifting them upwards and negative values downwards.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Set up the data</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">data1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1e6</span>, <span class="fl">0</span>, <span class="fl">1.5</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1e6</span>, <span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">data3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1e6</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1.2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">data4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1e6</span>, <span class="fl">1.5</span>, <span class="fl">1.8</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1e6</span>, <span class="fl">0</span>, <span class="fl">1.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1e6</span>, <span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1e6</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1.2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1e6</span>, <span class="fl">1.5</span>, <span class="fl">1.8</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">plot_forest</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">data1</span>,<span class="va">data2</span>,<span class="va">data3</span>,<span class="va">data4</span><span class="op">)</span>, labels<span class="op">=</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,</span></span>
-<span class="r-in"><span>            vert_ref <span class="op">=</span> <span class="fl">0</span>, center<span class="op">=</span><span class="st">"mode"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="fl">10</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>            main <span class="op">=</span> <span class="st">"A comparision of four Normal distributions"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plot_forest</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">A</span>,<span class="va">B</span>,<span class="va">C</span>,<span class="va">D</span><span class="op">)</span>, labels<span class="op">=</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>            vert_ref <span class="op">=</span> <span class="fl">0</span>, center<span class="op">=</span><span class="st">"mode"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">8</span>,<span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            main <span class="op">=</span> <span class="st">"A comparision of 4 normal distributions"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_forest-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
