@@ -51,6 +51,7 @@ reference:
   desc: >
     Utilities for plotting.
   contents:
+  - plot_forest
   - col.alpha
   - shade
   - curve_mvnorm
