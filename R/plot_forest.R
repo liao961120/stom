@@ -11,7 +11,8 @@
 #'        they are passed in.
 #' @param shade_inv Numeric vector of length 2. The central area to
 #'        be shaded in the distributions By default, the central 50%
-#'        regions are shaded.
+#'        regions are shaded. Set `shade_inv` to NULL to disable the
+#'        shading.
 #' @param vert_ref Numeric. The position of the vertical reference line.
 #'        If NULL, nothing is plotted.
 #' @param col Integer or String. A color code recognized by base R.

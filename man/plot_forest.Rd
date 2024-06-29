@@ -26,7 +26,8 @@ a set of observations from a distribution.}
 
 \item{shade_inv}{Numeric vector of length 2. The central area to
 be shaded in the distributions By default, the central 50\%
-regions are shaded.}
+regions are shaded. Set \code{shade_inv} to NULL to disable the
+shading.}
 
 \item{center}{String. The statistic used for drawing the central
 tendency line. Defaults to \code{mean}.}
