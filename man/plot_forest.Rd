@@ -9,6 +9,7 @@ plot_forest(
   labels,
   shade_inv = c(0.25, 0.75),
   center = c("mean", "median", "mode"),
+  decreasing = FALSE,
   vert_ref = NULL,
   col = 2,
   xlim = NULL,
@@ -29,6 +30,11 @@ regions are shaded.}
 
 \item{center}{String. The statistic used for drawing the central
 tendency line. Defaults to \code{mean}.}
+
+\item{decreasing}{Logical. Whether to decreasingly sort the distributions
+according to their central tendency measures. If NULL, the
+distributions will be arranged according to the order in which
+they are passed in.}
 
 \item{vert_ref}{Numeric. The position of the vertical reference line.
 If NULL, nothing is plotted.}
@@ -52,13 +58,12 @@ Forest plot for multiple densities
 \examples{
 # Set up the data
 set.seed(100)
-data1 <- rnorm(1e6, 0, 1.5)
-data2 <- rnorm(1e6, 1, 1.5)
-data3 <- rnorm(1e6, -1, 1.2)
-data4 <- rnorm(1e6, 1.5, 1.8)
+A <- rnorm(1e6, 0, 1.5)
+B <- rnorm(1e6, 1, 1.5)
+C <- rnorm(1e6, -1, 1.2)
+D <- rnorm(1e6, 1.5, 1.8)
 
-plot_forest(list(data1,data2,data3,data4), labels=LETTERS[1:4],
-            vert_ref = 0, center="mode", xlim=c(-10,10),
-            main = "A comparision of four Normal distributions")
-
+plot_forest(list(A,B,C,D), labels=LETTERS[1:4],
+            vert_ref = 0, center="mode", xlim=c(-8,8),
+            main = "A comparision of 4 normal distributions")
 }

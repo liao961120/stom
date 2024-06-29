@@ -5,6 +5,10 @@
 #' @param labels Character vector. Labels plotted on the y-axis.
 #' @param center String. The statistic used for drawing the central
 #'        tendency line. Defaults to `mean`.
+#' @param decreasing Logical. Whether to decreasingly sort the distributions
+#'        according to their central tendency measures. If NULL, the
+#'        distributions will be arranged according to the order in which
+#'        they are passed in.
 #' @param shade_inv Numeric vector of length 2. The central area to
 #'        be shaded in the distributions By default, the central 50%
 #'        regions are shaded.
@@ -23,19 +27,19 @@
 #' @examples
 #' # Set up the data
 #' set.seed(100)
-#' data1 <- rnorm(1e6, 0, 1.5)
-#' data2 <- rnorm(1e6, 1, 1.5)
-#' data3 <- rnorm(1e6, -1, 1.2)
-#' data4 <- rnorm(1e6, 1.5, 1.8)
+#' A <- rnorm(1e6, 0, 1.5)
+#' B <- rnorm(1e6, 1, 1.5)
+#' C <- rnorm(1e6, -1, 1.2)
+#' D <- rnorm(1e6, 1.5, 1.8)
 #'
-#' plot_forest(list(data1,data2,data3,data4), labels=LETTERS[1:4],
-#'             vert_ref = 0, center="mode", xlim=c(-10,10),
-#'             main = "A comparision of four Normal distributions")
-#'
+#' plot_forest(list(A,B,C,D), labels=LETTERS[1:4],
+#'             vert_ref = 0, center="mode", xlim=c(-8,8),
+#'             main = "A comparision of 4 normal distributions")
 #' @export
 plot_forest = function(dat, labels, shade_inv=c(.25,.75),
-                       center=c("mean", "median", "mode"), vert_ref=NULL,
-                       col=2, xlim=NULL, sep_fct=.5, adj=-.00, ...) {
+                       center=c("mean", "median", "mode"), decreasing=FALSE,
+                       vert_ref=NULL, col=2, xlim=NULL, sep_fct=.5, adj=-.00,
+                       ...) {
     dens = lapply(dat, \(x) density(x))
     n_distr = length(dat)
     n_distr_per_side = as.integer(n_distr / 2)
@@ -44,6 +48,14 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
         ylim = ylim + c(-1, 1)*sep_fct
     if (is.null(xlim))
         xlim = range( unlist(lapply(dens, \(x) x$x)))
+
+    # Sort distribution
+    if (!is.null(decreasing)) {
+        centers = sapply(dat, \(x) get_central_stat(x, center=center[1]))
+        idx_reorder = order(rank(centers), decreasing = decreasing)
+        dens = dens[idx_reorder]
+        labels = labels[idx_reorder]
+    }
 
     # Set up distribution positions
     y_centers = seq(from=ylim[1]+sep_fct, to=ylim[2]-sep_fct, length=n_distr)
@@ -88,10 +100,11 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
         # Center line
         lines( rep(mx,2), c(sft,sft+my), col=col, lwd=2 )
         # Density curve
-        lines(x, y + sft, col=1, lwd=1.5)
+        lines(x, y + sft, col=1, lwd=1.2)
         # Bottom line
         lines(x, rep(sft,n_dens), col=1)
 
+        box(bty = "l")
     }
 
     # Add axis labels
@@ -100,3 +113,16 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
 }
 
 is_odd = function(x) ifelse(x %% 2 == 1, T, F)
+
+
+get_central_stat = function(x, center=c("mean", "median", "mode")) {
+    if (center[1] == "mode")
+        return(Mode(x))
+    return(do.call(center[1], list(x)))
+}
+
+Mode = function(x) {
+    d = density(x)
+    d$x[which.max(d$y)]
+}
+
