@@ -27,9 +27,9 @@
 #' @examples
 #' # Set up the data
 #' set.seed(100)
-#' A <- rnorm(1e6, 0, 1.5)
-#' B <- rnorm(1e6, 1, 1.5)
-#' C <- rnorm(1e6, -1, 1.2)
+#' A <- rnorm(1e6,   0, 1.5)
+#' B <- rnorm(1e6,   1, 1.5)
+#' C <- rnorm(1e6,  -1, 1.2)
 #' D <- rnorm(1e6, 1.5, 1.8)
 #'
 #' plot_forest(list(A,B,C,D), labels=LETTERS[1:4],
@@ -40,6 +40,15 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
                        center=c("mean", "median", "mode"), decreasing=FALSE,
                        vert_ref=NULL, col=2, xlim=NULL, sep_fct=.5, adj=-.00,
                        ...) {
+    # Sort distribution
+    if (!is.null(decreasing)) {
+        centers = sapply(dat, \(x) get_central_stat(x, center=center[1]))
+        idx_reorder = order(rank(centers), decreasing = decreasing)
+        dat = dat[idx_reorder]
+        labels = labels[idx_reorder]
+    }
+
+    # Compute densities
     dens = lapply(dat, \(x) density(x))
     n_distr = length(dat)
     n_distr_per_side = as.integer(n_distr / 2)
@@ -48,14 +57,6 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
         ylim = ylim + c(-1, 1)*sep_fct
     if (is.null(xlim))
         xlim = range( unlist(lapply(dens, \(x) x$x)))
-
-    # Sort distribution
-    if (!is.null(decreasing)) {
-        centers = sapply(dat, \(x) get_central_stat(x, center=center[1]))
-        idx_reorder = order(rank(centers), decreasing = decreasing)
-        dens = dens[idx_reorder]
-        labels = labels[idx_reorder]
-    }
 
     # Set up distribution positions
     y_centers = seq(from=ylim[1]+sep_fct, to=ylim[2]-sep_fct, length=n_distr)

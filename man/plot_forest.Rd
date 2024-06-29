@@ -58,9 +58,9 @@ Forest plot for multiple densities
 \examples{
 # Set up the data
 set.seed(100)
-A <- rnorm(1e6, 0, 1.5)
-B <- rnorm(1e6, 1, 1.5)
-C <- rnorm(1e6, -1, 1.2)
+A <- rnorm(1e6,   0, 1.5)
+B <- rnorm(1e6,   1, 1.5)
+C <- rnorm(1e6,  -1, 1.2)
 D <- rnorm(1e6, 1.5, 1.8)
 
 plot_forest(list(A,B,C,D), labels=LETTERS[1:4],
