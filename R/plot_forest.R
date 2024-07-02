@@ -50,7 +50,7 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
     }
 
     # Compute densities
-    dens = lapply(dat, \(x) density(x))
+    dens = lapply(dat, \(x) density(x, na.rm=T))
     n_distr = length(dat)
     n_distr_per_side = as.integer(n_distr / 2)
     ylim = 2 * sep_fct * c(-n_distr_per_side, n_distr_per_side)
@@ -61,7 +61,7 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
 
     # Set up distribution positions
     y_centers = seq(from=ylim[1]+sep_fct, to=ylim[2]-sep_fct, length=n_distr)
-    plot(1, type="n", xlim=xlim, ylim=ylim, axes=FALSE, ...)
+    plot(1, type="n", xlab="", ylab="", xlim=xlim, ylim=ylim, axes=FALSE, ...)
 
     # Vertical ref line
     if (is.numeric(vert_ref))
@@ -90,8 +90,8 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
 
         # Shade center portion
         if (is.numeric(shade_inv)[1]) {
-            qLow = quantile(dat[[i]], shade_inv[1])
-            qUp = quantile(dat[[i]], shade_inv[2])
+            qLow = quantile(dat[[i]], shade_inv[1], na.rm=T)
+            qUp = quantile(dat[[i]], shade_inv[2], na.rm=T)
             idx = which(x >= qLow & x <= qUp)
             # Shade the central region
             for ( cl in c("white", stom::col.alpha(col,.2)) )
