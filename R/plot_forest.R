@@ -61,7 +61,7 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
 
     # Set up distribution positions
     y_centers = seq(from=ylim[1]+sep_fct, to=ylim[2]-sep_fct, length=n_distr)
-    plot(1, type="n", xlab="", ylab="", xlim=xlim, ylim=ylim, axes=FALSE, ...)
+    plot(1, type="n", xlim=xlim, ylim=ylim, axes=FALSE, ...)
 
     # Vertical ref line
     if (is.numeric(vert_ref))
