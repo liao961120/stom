@@ -1,0 +1,63 @@
+import os
+from pathlib import Path
+
+# Additional setup for running with git-bash on Windows
+if os.name == 'nt':
+    from snakemake.shell import shell
+    shell.executable(r'C:\Users\rd\AppData\Local\Programs\Git\bin\bash.exe')
+    shell.prefix("""
+    # Load bash predefined functions
+    lastwd=$(pwd)
+    source ~/.bash_profile
+    cd "$lastwd"
+    export CMDSTAN=C:/Users/rd/Documents/.cmdstan/cmdstan-2.32.1
+""")
+
+
+#### Rule definition ####
+rule fit_m2:
+    """Fit hierarchical model (partial-pooling)
+    """
+    input:
+        script = "src/fit_m2.R",
+        model = "src/m2.stan",
+        sim   = "cache/sim.RDS",
+        utils = "src/utils.R",
+    output:
+        "cache/m2.RDS"
+    shell:
+        """
+        Rscript {input.script} {input.model} {input.sim} {input.utils} -o {output}
+        """
+
+
+rule fit_m1:
+    """Fit simple model (no partial-pooling)
+    """
+    input:
+        script = "src/fit_m1.R",
+        model = "src/m1.stan",
+        sim   = "cache/sim.RDS",
+        utils = "src/utils.R",
+    output:
+        "cache/m1.RDS"
+    shell:
+        """
+        Rscript {input.script} {input.model} {input.sim} {input.utils} -o {output}
+        """
+
+
+rule simulation:
+    """Simulate data to be used for model fitting
+    """
+    input: 
+        script = "src/simulation.R",
+        model = "src/sim.stan"
+    output: 
+        "cache/sim.RDS"
+    shell:
+        """
+        Rscript {input.script} {input.model} -o {output}
+        ## Check output
+        # Rscript -e 'readRDS("sim.RDS") |> str()'
+        """

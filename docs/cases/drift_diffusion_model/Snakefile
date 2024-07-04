@@ -1,0 +1,59 @@
+import os
+from pathlib import Path
+
+# Additional setup for running with git-bash on Windows
+if os.name == 'nt':
+    from snakemake.shell import shell
+    shell.executable(r'C:\Users\rd\AppData\Local\Programs\Git\bin\bash.exe')
+    shell.prefix("""
+    # Load bash predefined functions
+    lastwd=$(pwd)
+    source ~/.bash_profile
+    cd "$lastwd"
+    export CMDSTAN=C:/Users/rd/Documents/.cmdstan/cmdstan-2.32.1
+""")
+
+
+######################
+#### Scaffolding #####
+######################
+rule prior_check_multi_subj:
+    """Prior predictive checks for the hierachical model fitting to multi-subject DDM
+    """
+    input:
+        script = "src/multi_subj.prior.check.R"
+    output:
+        "docs/multi_subj.prior.check.pdf"
+    shell:
+        """
+        Rscript -e 'rmarkdown::render("{input.script}", "pdf_document", output_dir="docs")'
+        """
+
+
+rule fit_one_subj:
+    """Fit single subject model
+    """
+    input:
+        script = "src/one_subj.fit.R",
+        model = "src/one_subj.stan",
+        sim   = "data/one_subj.RDS",
+        utils = "src/utils.R",
+    output:
+        "data/one_subj.model.RDS"
+    shell:
+        """
+        Rscript {input.script} {input.model} {input.sim} {input.utils} -o {output}
+        """
+
+
+rule sim_one_subj:
+    """Simulate DDM of one subject, with all parameters fixed (no variation across trials)
+    """
+    input: 
+        script = "src/one_subj.sim.R",
+    output: 
+        "data/one_subj.RDS"
+    shell:
+        """
+        Rscript {input.script} -o {output}
+        """

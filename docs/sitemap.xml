@@ -97,6 +97,9 @@
     <loc>http://yongfu.name/stom/reference/pdf2png.html</loc>
   </url>
   <url>
+    <loc>http://yongfu.name/stom/reference/plot_forest.html</loc>
+  </url>
+  <url>
     <loc>http://yongfu.name/stom/reference/precis.html</loc>
   </url>
   <url>
@@ -121,6 +124,9 @@
     <loc>http://yongfu.name/stom/reference/simplex.html</loc>
   </url>
   <url>
+    <loc>http://yongfu.name/stom/reference/softmax.html</loc>
+  </url>
+  <url>
     <loc>http://yongfu.name/stom/reference/stan.html</loc>
   </url>
   <url>
@@ -143,6 +149,9 @@
   </url>
   <url>
     <loc>http://yongfu.name/stom/reference/xclip.html</loc>
+  </url>
+  <url>
+    <loc>http://yongfu.name/stom/reference/year.html</loc>
   </url>
   <url>
     <loc>http://yongfu.name/stom/template/after-body.html</loc>
