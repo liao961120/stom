@@ -37,9 +37,10 @@ an image.}
 Convert a PDF/SVG file to images of other formats with Inkscape.
 }
 \details{
-To use this function, \code{inkscape} has to be available from the command line.
-Alternatively, users can specify the absolute path to inkscape by the option
-\code{stom.inkscape} (e.g., \code{options(stom.inkscape = "/home/stom/bin/inkscape")}).
+To use this function, \code{inkscape} (v1.2.2) has to be available from the
+command line. Alternatively, users can specify the absolute path to inkscape
+by the option \code{stom.inkscape}
+(e.g., \code{options(stom.inkscape = "/home/stom/bin/inkscape")}).
 }
 \examples{
 \dontrun{

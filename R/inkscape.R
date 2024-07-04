@@ -2,9 +2,10 @@
 #'
 #' Convert a PDF/SVG file to images of other formats with Inkscape.
 #'
-#' To use this function, `inkscape` has to be available from the command line.
-#' Alternatively, users can specify the absolute path to inkscape by the option
-#' `stom.inkscape` (e.g., `options(stom.inkscape = "/home/stom/bin/inkscape")`).
+#' To use this function, `inkscape` (v1.2.2) has to be available from the
+#' command line. Alternatively, users can specify the absolute path to inkscape
+#' by the option `stom.inkscape`
+#' (e.g., `options(stom.inkscape = "/home/stom/bin/inkscape")`).
 #'
 #' @param infile String. Path to input PDF file.
 #' @param dpi Integer. "Dots Per Inch" for PNG outputs with `pdf2png()`.

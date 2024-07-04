@@ -21,6 +21,10 @@ Options:
     --dpi=DPI   Dots per inch for output PNGs [default: 300].
     --white     Add white background.
     --page=PAGE The pages to convert.
+
+Notes:
+    To use this function on windows, inkscape v1.2.2 has to be installed.
+    Versions above this do not work.
 " -> DOC
 if (!interactive()) {
     a = docopt::docopt(DOC, version = VERSION)
