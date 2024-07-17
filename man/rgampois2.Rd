@@ -4,14 +4,14 @@
 \alias{rgampois2}
 \title{Random Number Generator from Gamma-Poisson Distribution}
 \usage{
-rgampois2(n, mu, scale)
+rgampois2(n, mu, phi)
 }
 \arguments{
 \item{n}{Number of samples.}
 
 \item{mu}{Poisson mean (rate)}
 
-\item{scale}{Parameter determining the dispersion of the outcomes.
+\item{phi}{Parameter determining the dispersion of the outcomes.
 This parameter is equivalent to Stan's \code{neg_binomial_2(mu, phi)}'s \code{phi}.}
 }
 \description{

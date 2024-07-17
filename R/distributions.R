@@ -61,16 +61,16 @@ rordlogit = function( phi, kappa ) {
 #'
 #' @param n Number of samples.
 #' @param mu Poisson mean (rate)
-#' @param scale Parameter determining the dispersion of the outcomes.
+#' @param phi Parameter determining the dispersion of the outcomes.
 #'        This parameter is equivalent to Stan's `neg_binomial_2(mu, phi)`'s `phi`.
 #'
 #' @details
 #' See Chapter 12.1.2 of Statistical Rethinking 2th Edition, which details the
 #' Gamma-Poisson distribution for modeling over-dispersed count data.
-rgampois2 = function (n , mu , scale) {
-    # Matches stan neg_binomial_2(mu, phi=scale)
-    p_p = scale / (scale + mu)
-    p_n = scale
+#' @export
+rgampois2 = function (n , mu , phi) {
+    p_p = phi / (phi + mu)
+    p_n = phi
     rnbinom(n, size = p_n, prob = p_p)
 }
 
