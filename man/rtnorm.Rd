@@ -7,7 +7,7 @@
 rtnorm(n, m = 0, s = 1, lower = 0, upper = Inf)
 }
 \arguments{
-\item{n}{Numbers of sample.}
+\item{n}{Number of samples.}
 
 \item{m}{The mean of the untruncated normal distribution.}
 

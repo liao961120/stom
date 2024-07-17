@@ -38,6 +38,7 @@ reference:
   - rbern
   - rordlogit
   - rtnorm
+  - rgampois2
   - logit
   - softmax
   - standardize
