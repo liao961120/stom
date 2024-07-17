@@ -14,7 +14,7 @@ rbern = function(prob, n=length(prob)) rbinom( n=n, size=1, prob=prob )
 #' The parameters are set to generate numbers from a half-normal distribution
 #' by default.
 #'
-#' @param n Numbers of sample.
+#' @param n Number of samples.
 #' @param m The mean of the untruncated normal distribution.
 #' @param s The standard deviation of the untruncated normal distribution.
 #' @param lower The lower bound for truncation.
@@ -53,5 +53,24 @@ rordlogit = function( phi, kappa ) {
     P = Pc[-1] - Pc[-length(Pc)]
     sample( seq_along(P), size=1, prob=P )
   })
+}
+
+
+
+#' Random Number Generator from Gamma-Poisson Distribution
+#'
+#' @param n Number of samples.
+#' @param mu Poisson mean (rate)
+#' @param scale Parameter determining the dispersion of the outcomes.
+#'        This parameter is equivalent to Stan's `neg_binomial_2(mu, phi)`'s `phi`.
+#'
+#' @details
+#' See Chapter 12.1.2 of Statistical Rethinking 2th Edition, which details the
+#' Gamma-Poisson distribution for modeling over-dispersed count data.
+rgampois2 = function (n , mu , scale) {
+    # Matches stan neg_binomial_2(mu, phi=scale)
+    p_p = scale / (scale + mu)
+    p_n = scale
+    rnbinom(n, size = p_n, prob = p_p)
 }
 
