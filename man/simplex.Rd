@@ -2,13 +2,17 @@
 % Please edit documentation in R/transform.R
 \name{simplex}
 \alias{simplex}
+\alias{min_max}
 \title{Commonly used statistical transformation}
 \usage{
 simplex(x)
+
+min_max(x)
 }
 \description{
 Commonly used statistical transformation
 }
 \examples{
 simplex( rep(1,3) )
+min_max(-5:10)
 }
