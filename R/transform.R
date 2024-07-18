@@ -13,7 +13,7 @@ simplex = function(x) {
 #' @examples
 #' min_max(-5:10)
 min_max = function(x) {
-    m = min(x)
-    M = max(x)
+    m = min(x, na.rm = T)
+    M = max(x, na.rm = T)
     (x - m) / (M - m)
 }
