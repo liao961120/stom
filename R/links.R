@@ -14,6 +14,33 @@ inv_logit = function(x) 1 / (1 + exp(-x))  # Real -> P
 logistic = inv_logit
 
 
+
+#' Links for mapping reals to values between -1 and 1.
+#'
+#' @param x Double.
+#' @details
+#' `erf()`: <https://en.wikipedia.org/wiki/Error_function>.
+#' @export
+erf = function(x) 2 * pnorm(x * sqrt(2)) - 1
+
+
+#' @rdname erf
+#' @export
+inv_erf = function (x) qnorm((1 + x)/2)/sqrt(2)
+
+#' @rdname erf
+#' @export
+tanh = function(x) {
+    ex = exp(x)
+    enx = exp(-x)
+    (ex - enx) / (ex + enx)
+}
+
+#' @rdname erf
+#' @export
+inv_tanh = function(x) .5 * (log(1 + x) - log(1 - x))
+
+
 #' Numerically stable softmax function
 #'
 #' @param x Numeric. A vector of reals to map to probabilities.
