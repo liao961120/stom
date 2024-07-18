@@ -30,14 +30,6 @@ inv_erf = function (x) qnorm((1 + x)/2)/sqrt(2)
 
 #' @rdname erf
 #' @export
-tanh = function(x) {
-    ex = exp(x)
-    enx = exp(-x)
-    (ex - enx) / (ex + enx)
-}
-
-#' @rdname erf
-#' @export
 inv_tanh = function(x) .5 * (log(1 + x) - log(1 - x))
 
 

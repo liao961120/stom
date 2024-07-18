@@ -3,15 +3,12 @@
 \name{erf}
 \alias{erf}
 \alias{inv_erf}
-\alias{tanh}
 \alias{inv_tanh}
 \title{Links for mapping reals to values between -1 and 1.}
 \usage{
 erf(x)
 
 inv_erf(x)
-
-tanh(x)
 
 inv_tanh(x)
 }
