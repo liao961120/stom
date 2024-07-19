@@ -120,11 +120,11 @@ is_odd = function(x) ifelse(x %% 2 == 1, T, F)
 get_central_stat = function(x, center=c("mean", "median", "mode")) {
     if (center[1] == "mode")
         return(Mode(x))
-    return(do.call(center[1], list(x)))
+    return(do.call(center[1], list(x, na.rm=T)))
 }
 
 Mode = function(x) {
-    d = density(x)
+    d = density(x, na.rm = T)
     d$x[which.max(d$y)]
 }
 
