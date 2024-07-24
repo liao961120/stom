@@ -82,11 +82,17 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
         } else if (center[1] == "mode") {
             center_pos = which(y == max(y))[1]
         } else {
-            x_sq_err = (x - mean(x))^2
-            center_pos = which(x_sq_err == min(x_sq_err))[1]
+            center_pos = -1
         }
 
-        mx = x[center_pos]; my = y[center_pos]
+        if (center_pos == -1) {
+            mx = mean(dat[[i]])
+            x_err = abs(x - mx)
+            center_pos = which(x_err == min(x_err))
+            my = y[center_pos]
+        } else {
+            mx = x[center_pos]; my = y[center_pos]
+        }
 
         # Shade center portion
         if (is.numeric(shade_inv)[1]) {
@@ -113,6 +119,7 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
     axis(1)
     axis(2, at = y_centers, labels = labels, las=1)
 }
+
 
 is_odd = function(x) ifelse(x %% 2 == 1, T, F)
 
