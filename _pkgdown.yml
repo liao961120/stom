@@ -58,6 +58,7 @@ reference:
   - shade
   - curve_mvnorm
   - par2
+  - vals2cols
 - title: "Data I/O"
   desc: >
     Reading and writing data.
