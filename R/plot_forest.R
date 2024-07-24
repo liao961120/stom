@@ -86,7 +86,7 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
         }
 
         if (is.null(center_pos)) {
-            mx = mean(dat[[i]])
+            mx = mean(dat[[i]], na.rm=T)
             x_err = abs(x - mx)
             center_pos = which(x_err == min(x_err))[1]
             my = y[center_pos]
