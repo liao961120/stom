@@ -94,3 +94,29 @@ par2 = function(x, ...) {
 }
 
 
+#' Convert numerical values to divergent colors
+#'
+#' @param x Numeric.
+#' @param center Integer. Currently only `0` is valid.
+#'        If `center == 0`, `0` is used as the center and corresponds to
+#'        the central color (lightgoldenrod1).
+#'        Otherwise, `x` must have values in the range [0, 1].
+#' @return A vector of hex colors.
+#' @export
+#' @examples
+#' x = rnorm(1e3)
+#' plot(seq(x), x, col= vals2cols(x), pch=19)
+vals2cols = function(x, center=0) {
+    if (center == 0) {
+        max_scale = max(abs(x))
+        x = x / max_scale
+    }
+    p.pal = colorRamp(c("lightgoldenrod1", "orange", "orangered", "red"))
+    n.pal = colorRamp(c("lightgoldenrod1", "yellowgreen", "green", "blue"))
+    sapply(x, \(v) {
+        if (v > 0)
+            return(rgb(p.pal(v), max=255))
+        else
+            return(rgb(n.pal(-v), max=255))
+    })
+}
