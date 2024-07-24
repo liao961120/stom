@@ -111,8 +111,8 @@ vals2cols = function(x, center=0) {
         max_scale = max(abs(x))
         x = x / max_scale
     }
-    p.pal = colorRamp(c("lightgoldenrod1", "orange", "orangered", "red"))
-    n.pal = colorRamp(c("lightgoldenrod1", "yellowgreen", "green", "blue"))
+    p.pal = colorRamp(c("#865C6A", "#ED553B", "red"))
+    n.pal = colorRamp(c("#865C6A", "#20639B", "blue"))
     sapply(x, \(v) {
         if (v > 0)
             return(rgb(p.pal(v), max=255))
@@ -120,3 +120,5 @@ vals2cols = function(x, center=0) {
             return(rgb(n.pal(-v), max=255))
     })
 }
+# x = rnorm(1e3)
+# plot(seq(x), x, col= vals2cols(x), pch=19)
