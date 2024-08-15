@@ -43,6 +43,12 @@ reference:
   - erf
   - softmax
   - standardize
+  - min_max
+- title: "Evaluation"
+  desc: >
+    Utilities for evaluating models.
+  contents:
+  - prob_input
 - title: "Wrangling"
   desc: >
     Utilities for data wrangling.
