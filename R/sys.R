@@ -22,6 +22,12 @@ bin_ext = function() {
 }
 
 
+#' R equivalent of Python pathlib's `Path.stem`
+#' @param x Character. File name.
+#' @export
+fstem = function(x) xfun::sans_ext(basename(x))
+
+
 
 #' Normalize to Unix paths
 #'
