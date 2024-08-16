@@ -1,5 +1,6 @@
 url: http://yongfu.name/stom/
 template:
+  math-rendering: mathjax
   assets: inst
   bootstrap: 5
   bslib:
@@ -44,6 +45,12 @@ reference:
   - softmax
   - standardize
   - min_max
+- title: "Linguisitics"
+  desc: >
+    Utilities for linguistics.
+  contents:
+  - TTR
+  - VOCD
 - title: "Evaluation"
   desc: >
     Utilities for evaluating models.

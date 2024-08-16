@@ -1,171 +1,65 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>http://yongfu.name/stom/404.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/authors.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/index.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/array_type.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/as_c_num.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/as_posterior_array.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/as_vec.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/bin_ext.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/cmd_get_value.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/cmd_parse_args.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/col.alpha.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/curve_mvnorm.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/export_docs.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/extract2.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/get_cli_programs.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/get_param_info.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/get_pars.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/get_sim_param_info.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/get_stan_param_info.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/ignore_dollars_with_begin_equation.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/inkscape_pdf_pager.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/inkscape_run_through_pages.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/inline.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/logit.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/lst2message.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/n_samples.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/pandoc_pdf.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/par2.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/pat_depth.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/pdf2png.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/plot_forest.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/precis.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/prepare_drive_model.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/rbern.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/replace_file_ext.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/rordlogit.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/rtnorm.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/save_model.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/simplex.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/softmax.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/stan.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/stan2bin.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/standardize.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/stom-package.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/test_cmdstanr.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/to_unix_path.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/write_tcsv.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/xclip.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/reference/year.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/template/after-body.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/template/before-body-yihui.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/template/katex.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/template/math-copytex.html</loc>
-  </url>
-  <url>
-    <loc>http://yongfu.name/stom/template/mathjax.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>http://yongfu.name/stom/404.html</loc></url>
+<url><loc>http://yongfu.name/stom/authors.html</loc></url>
+<url><loc>http://yongfu.name/stom/index.html</loc></url>
+<url><loc>http://yongfu.name/stom/LICENSE-text.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/array_type.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/as_c_num.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/as_posterior_array.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/as_vec.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/bin_ext.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/cmd_get_value.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/cmd_parse_args.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/col.alpha.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/curve_mvnorm.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/erf.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/export_docs.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/extract2.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/get_cli_programs.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/get_param_info.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/get_pars.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/get_sim_param_info.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/get_stan_param_info.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/ignore_dollars_with_begin_equation.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/index.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/inkscape_pdf_pager.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/inkscape_run_through_pages.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/inline.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/logit.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/lst2message.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/n_samples.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/pandoc_pdf.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/par2.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/pat_depth.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/pdf2png.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/plot_forest.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/precis.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/prepare_drive_model.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/prob_input.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/rbern.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/replace_file_ext.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/rgampois2.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/rordlogit.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/rtnorm.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/save_model.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/simplex.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/softmax.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/stan.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/stan2bin.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/standardize.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/stom-package.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/test_cmdstanr.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/to_unix_path.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/TTR.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/vals2cols.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/VOCD.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/write_tcsv.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/xclip.html</loc></url>
+<url><loc>http://yongfu.name/stom/reference/year.html</loc></url>
+<url><loc>http://yongfu.name/stom/template/after-body.html</loc></url>
+<url><loc>http://yongfu.name/stom/template/before-body-yihui.html</loc></url>
+<url><loc>http://yongfu.name/stom/template/katex.html</loc></url>
+<url><loc>http://yongfu.name/stom/template/math-copytex.html</loc></url>
+<url><loc>http://yongfu.name/stom/template/mathjax.html</loc></url>
 </urlset>
+
