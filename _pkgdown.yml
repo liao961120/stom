@@ -62,6 +62,7 @@ reference:
   contents:
   - as_vec
   - year
+  - fstem
 - title: "Plotting"
   desc: >
     Utilities for plotting.
