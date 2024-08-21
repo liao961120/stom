@@ -19,10 +19,15 @@
 #'            Determines the color of the central tendency lines and
 #'            shaded regions.
 #' @param xlim Numeric. A vector of length 2 giving the plotted x range.
-#' @param sep_fct,adj Parameters to tweak the positions of the distributions.
+#' @param sep_fct,adj,ylim_base Parameters to tweak the positions of the
+#'        distributions.
 #'        `sep_fct` changes the distances between a pair of distributions.
+#'        `ylim_base` determines the height of the density WITHIN a
+#'         distribution.
 #'        `adj` shifts the baselines of the distributions, with positive
 #'        values shifting them upwards and negative values downwards.
+#' @param plot_center Logical. Whether to plot the central tendency line.
+#'        Defaults to TRUE.
 #' @param ... Additional arguments passed to the main `plot()` function.
 #'
 #' @examples
@@ -39,8 +44,10 @@
 #' @export
 plot_forest = function(dat, labels, shade_inv=c(.25,.75),
                        center=c("mean", "median", "mode"), decreasing=FALSE,
-                       vert_ref=NULL, col=2, xlim=NULL, sep_fct=.5, adj=-.00,
-                       ...) {
+                       vert_ref=NULL, col=2, xlim=NULL, ylim_base=0, sep_fct=.5, adj=-.00,
+                       dens_col=1, shade_pad_white=T, shade_col=col.alpha(2,.2),
+                       center_col=2, plot_center=TRUE,
+                       x_axis_at = NULL, ...) {
     # Sort distribution
     if (!is.null(decreasing)) {
         centers = sapply(dat, \(x) get_central_stat(x, center=center[1]))
@@ -61,14 +68,15 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
 
     # Set up distribution positions
     y_centers = seq(from=ylim[1]+sep_fct, to=ylim[2]-sep_fct, length=n_distr)
-    plot(1, type="n", xlab="", ylab="", xlim=xlim, ylim=ylim, axes=FALSE, ...)
+    plot(1, type="n", xlab="", ylab="", xlim=xlim,
+         ylim=ylim+c(-ylim_base,ylim_base), axes=FALSE, ...)
 
     # Vertical ref line
     if (is.numeric(vert_ref))
         segments(x0 = vert_ref, x1 = vert_ref,
                  y0 = -100,
                  y1 = y_centers[n_distr] + max(dens[[n_distr]]$y) + adj + .15,
-                 col="grey")
+                 col="darkgrey")
 
     # Plot densities
     n_dens = length(dens[[1]]$x)
@@ -100,22 +108,29 @@ plot_forest = function(dat, labels, shade_inv=c(.25,.75),
             qUp = quantile(dat[[i]], shade_inv[2], na.rm=T)
             idx = which(x >= qLow & x <= qUp)
             # Shade the central region
-            for ( cl in c("white", stom::col.alpha(col,.2)) )
+            bg = "white"
+            if (!shade_pad_white)
+                bg = col.alpha(bg, 0)
+            for ( cl in c(bg, shade_col) )
                 polygon(c(x[idx], rev(x[idx])), c(y[idx] + sft, rep(sft, length(idx))),
                         col = cl, border = NA)
         }
 
         # Center line
-        lines( rep(mx,2), c(sft,sft+my), col=col, lwd=2 )
+        if (plot_center)
+            lines( rep(mx,2), c(sft,sft+my), col=center_col, lwd=2 )
         # Density curve
-        lines(x, y + sft, col=1, lwd=1.2)
+        lines(x, y + sft, col=dens_col, lwd=1.2)
         # Bottom line
-        lines(x, rep(sft,n_dens), col=1)
+        lines(x, rep(sft,n_dens), col=dens_col)
 
         box(bty = "l")
     }
 
     # Add axis labels
+    if (!is.null(x_axis_at)) {
+        axis(1, at = x_axis_at)
+    }
     axis(1)
     axis(2, at = y_centers, labels = labels, las=1)
 }

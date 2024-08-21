@@ -13,8 +13,15 @@ plot_forest(
   vert_ref = NULL,
   col = 2,
   xlim = NULL,
+  ylim_base = 0,
   sep_fct = 0.5,
   adj = -0,
+  dens_col = 1,
+  shade_pad_white = T,
+  shade_col = col.alpha(2, 0.2),
+  center_col = 2,
+  plot_center = TRUE,
+  x_axis_at = NULL,
   ...
 )
 }
@@ -46,10 +53,16 @@ shaded regions.}
 
 \item{xlim}{Numeric. A vector of length 2 giving the plotted x range.}
 
-\item{sep_fct, adj}{Parameters to tweak the positions of the distributions.
+\item{sep_fct, adj, ylim_base}{Parameters to tweak the positions of the
+distributions.
 \code{sep_fct} changes the distances between a pair of distributions.
+\code{ylim_base} determines the height of the density WITHIN a
+distribution.
 \code{adj} shifts the baselines of the distributions, with positive
 values shifting them upwards and negative values downwards.}
+
+\item{plot_center}{Logical. Whether to plot the central tendency line.
+Defaults to TRUE.}
 
 \item{...}{Additional arguments passed to the main \code{plot()} function.}
 }
