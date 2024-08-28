@@ -40,6 +40,7 @@ reference:
   - rordlogit
   - rtnorm
   - rgampois2
+  - rlkjcorr
   - logit
   - erf
   - softmax

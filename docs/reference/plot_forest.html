@@ -47,8 +47,15 @@
 <span>  vert_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  col <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  xlim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ylim_base <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  sep_fct <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  adj <span class="op">=</span> <span class="op">-</span><span class="fl">0</span>,</span>
+<span>  dens_col <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  shade_pad_white <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  shade_col <span class="op">=</span> <span class="fu"><a href="col.alpha.html">col.alpha</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.2</span><span class="op">)</span>,</span>
+<span>  center_col <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  plot_center <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  x_axis_at <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -100,11 +107,19 @@ shaded regions.</p></dd>
 <dd><p>Numeric. A vector of length 2 giving the plotted x range.</p></dd>
 
 
-<dt id="arg-sep-fct-adj">sep_fct, adj<a class="anchor" aria-label="anchor" href="#arg-sep-fct-adj"></a></dt>
-<dd><p>Parameters to tweak the positions of the distributions.
+<dt id="arg-sep-fct-adj-ylim-base">sep_fct, adj, ylim_base<a class="anchor" aria-label="anchor" href="#arg-sep-fct-adj-ylim-base"></a></dt>
+<dd><p>Parameters to tweak the positions of the
+distributions.
 <code>sep_fct</code> changes the distances between a pair of distributions.
+<code>ylim_base</code> determines the height of the density WITHIN a
+distribution.
 <code>adj</code> shifts the baselines of the distributions, with positive
 values shifting them upwards and negative values downwards.</p></dd>
+
+
+<dt id="arg-plot-center">plot_center<a class="anchor" aria-label="anchor" href="#arg-plot-center"></a></dt>
+<dd><p>Logical. Whether to plot the central tendency line.
+Defaults to TRUE.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
