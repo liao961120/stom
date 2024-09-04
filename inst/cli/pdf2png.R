@@ -7,11 +7,8 @@ Example:
 
 Usage:
     pdf2png INPUT
-    pdf2png INPUT [--dpi=DPI]
-    pdf2png INPUT [--white]
-    pdf2png INPUT [--page=PAGE]
-    pdf2png INPUT [-o OUTFILE]
-    pdf2png INPUT [--output=OUTFILE]
+    pdf2png INPUT [--dpi=DPI] [--white] [--page=PAGE] [-o OUTFILE]
+    pdf2png INPUT [--dpi=DPI] [--white] [--page=PAGE] [--output=OUTFILE]
 
 Options:
     -h --help   Show this screen.

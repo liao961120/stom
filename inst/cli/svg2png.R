@@ -7,9 +7,8 @@ Example:
 
 Usage:
     svg2png INPUT
-    svg2png INPUT [-o OUTFILE]
-    svg2png INPUT [--dpi=DPI]
-    svg2png INPUT [--output=OUTFILE]
+    svg2png INPUT [--dpi=DPI] [-o OUTFILE]
+    svg2png INPUT [--dpi=DPI] [--output=OUTFILE]
 
 Options:
     -h --help   Show this screen.

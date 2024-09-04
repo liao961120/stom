@@ -7,10 +7,8 @@ Example:
 
 Usage:
     pdf2svg INPUT
-    pdf2svg INPUT [-o OUTFILE]
-    pdf2svg INPUT [--output=OUTFILE]
-    pdf2svg INPUT [--white]
-    pdf2svg INPUT [--page=PAGE]
+    pdf2svg INPUT [--white] [--page=PAGE] [-o OUTFILE]
+    pdf2svg INPUT [--white] [--page=PAGE] [--output=OUTFILE]
 
 Options:
     -h --help   Show this screen.
