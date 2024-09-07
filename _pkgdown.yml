@@ -46,6 +46,7 @@ reference:
   - softmax
   - standardize
   - min_max
+  - log_mix
 - title: "Linguisitics"
   desc: >
     Utilities for linguistics.
