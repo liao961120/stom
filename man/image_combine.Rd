@@ -2,7 +2,7 @@
 % Please edit documentation in R/magick.R
 \name{image_combine}
 \alias{image_combine}
-\title{Joining multiple SVG/PNG images into a single one}
+\title{Joining multiple images into a single one}
 \usage{
 image_combine(
   fps,
@@ -36,5 +36,5 @@ images. The space between the joined images is determined by:
 \item{background}{Character. The color to add to background. By default, "transparent".}
 }
 \description{
-Joining multiple SVG/PNG images into a single one
+Joining multiple images into a single one
 }

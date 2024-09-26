@@ -1,4 +1,4 @@
-#' Joining multiple SVG/PNG images into a single one
+#' Joining multiple images into a single one
 #'
 #' @param fps A character vector of paths to the images to be combined.
 #' @param output The output file path. If `NULL`, the image is printed.
@@ -43,9 +43,7 @@ image_combine = function(fps, output = NULL, stack = FALSE, height = NULL,
 read_image = function(fp, ...) {
     if (endsWith(fp, ".svg") || endsWith(fp, ".SVG"))
         return(magick::image_read_svg(fp, ...))
-    if (endsWith(fp, ".png") || endsWith(fp, ".PNG"))
-        return(magick::image_read(fp))
-    stop("Only .svg and .png images are supported.")
+    return(magick::image_read(fp))
 }
 
 get_max_dim = function(img) {
