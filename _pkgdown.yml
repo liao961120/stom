@@ -83,6 +83,7 @@ reference:
   desc: >
     Helpers for documenting scripts in Markdown.
   contents:
+  - image_combine
   - as_vec
   - inline
   - as_c_num
