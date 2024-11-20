@@ -1,0 +1,92 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      // Typst tasks
+      {
+        "label": "Export as PNG (typst)",
+        "type": "shell",
+        "command": "typst compile --format=png --ppi=300 --root=${fileDirname} '${file}' '${fileDirname}${pathSeparator}${fileBasenameNoExtension}_{n}.png'",
+        "problemMatcher": []
+      },
+      {
+        "label": "Export as SVG (typst)",
+        "type": "shell",
+        "command": "typst compile --format=svg --root=${fileDirname} '${file}' '${fileDirname}${pathSeparator}${fileBasenameNoExtension}_{n}.svg'",
+        "problemMatcher": []
+      },
+      {
+        "label": "Export as LaTeX (typst)",
+        "type": "shell",
+        "command": "pandoc ${file} --to latex -o ${fileDirname}${pathSeparator}${fileBasenameNoExtension}.tex"
+      },
+      {
+        "label": "Export as LaTeX standalone (typst)",
+        "type": "shell",
+        "command": "pandoc ${file} --to latex -o ${fileDirname}${pathSeparator}${fileBasenameNoExtension}.tex -s",
+        "problemMatcher": []
+      },
+      {
+        "label": "Export as LaTeX (clipboard)",
+        "type": "shell",
+        "command": "pandoc '${file}' --to latex -o '${fileDirname}${pathSeparator}${fileBasenameNoExtension}.tex'",
+        "windows": {
+            "command": "pandoc '${file}' --to markdown | clip.exe",
+        },
+        "osx": {
+            "command": "pandoc '${file}' --to markdown | pbcopy",
+        },
+        "linux": {
+            "command": "pandoc '${file}' --to markdown | xclip"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Export as PNG (clipboard)",
+        "type": "shell",
+        "command": "typst compile --format=png --ppi=300 --root='${fileDirname}' '${file}' -",
+        "windows": {
+            "command": "typst compile --format=png --ppi=300 --root='${fileDirname}' '${file}' this_is_tempfile.png; nircmd.exe clipboard copyimage this_is_tempfile.png; rm this_is_tempfile.png",
+        },
+        "osx": {
+            "command": "typst compile --format=png --ppi=300 --root='${fileDirname}' '${file}' - | impbcopy -",
+        },
+        "linux": {
+            "command": "typst compile --format=png --ppi=300 --root='${fileDirname}' '${file}' - | xclip -selection clipboard -target image/png -i"
+        },
+        "problemMatcher": []
+      },
+      // LaTeX tasks
+      {
+        "label": "Compile a TeX document to PDF (tectonic)",
+        "type": "shell",
+        "command": "tectonic -X compile ${file}",
+        "problemMatcher": []
+      },
+      {
+        "label": "Compile a TeX document to SVG (tectonic)",
+        "type": "shell",
+        "command": "tectonic -X compile ${file}; pdf2svg '${fileDirname}${pathSeparator}${fileBasenameNoExtension}.pdf' --page=1",
+        "problemMatcher": []
+      },
+      {
+        "label": "Compile a TeX document to PNG (tectonic)",
+        "type": "shell",
+        "command": "tectonic -X compile ${file}; pdf2png --dpi=350 '${fileDirname}${pathSeparator}${fileBasenameNoExtension}.pdf'",
+        "problemMatcher": []
+      },
+      {
+        "label": "Export a TeX document to clipboard (PNG)",
+        "type": "shell",
+        "windows": {
+            "command": "tectonic -X compile ${file}; pdf2png '${fileDirname}${pathSeparator}${fileBasenameNoExtension}.pdf' --page=1 --dpi=350 --white -o this_is_tempfile.png; nircmd.exe clipboard copyimage this_is_tempfile.png; rm this_is_tempfile*",
+        },
+        "osx": {
+            "command": "tectonic -X compile ${file}; pdf2png '${fileDirname}${pathSeparator}${fileBasenameNoExtension}.pdf' --page=1 --dpi=350 -o this_is_tempfile.png; cat this_is_tempfile.png | impbcopy -",
+        },
+        "linux": {
+            "command": "tectonic -X compile ${file}; pdf2png '${fileDirname}${pathSeparator}${fileBasenameNoExtension}.pdf' --page=1 --dpi=350 -o this_is_tempfile.png; cat this_is_tempfile.png | xclip -selection clipboard -target image/png -i"
+        },
+        "problemMatcher": []
+      },
+    ]
+}
