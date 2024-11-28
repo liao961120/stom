@@ -75,6 +75,12 @@ reference:
   - curve_mvnorm
   - par2
   - vals2cols
+- title: "Image conversion"
+  desc: >
+    Conversion between various image formats
+  contents:
+  - pdf2png
+  - mutool_convert
 - title: "Data I/O"
   desc: >
     Reading and writing data.
