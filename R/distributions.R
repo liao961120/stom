@@ -8,7 +8,6 @@
 rbern = function(prob, n=length(prob)) rbinom( n=n, size=1, prob=prob )
 
 
-
 #' Random Number Generator for Truncated Normal Distribution
 #'
 #' The parameters are set to generate numbers from a half-normal distribution
@@ -17,8 +16,8 @@ rbern = function(prob, n=length(prob)) rbinom( n=n, size=1, prob=prob )
 #' @param n Number of samples.
 #' @param m The mean of the untruncated normal distribution.
 #' @param s The standard deviation of the untruncated normal distribution.
-#' @param lower The lower bound for truncation.
-#' @param upper The upper bound for truncation.
+#' @param lower The lower bound for the truncation.
+#' @param upper The upper bound for the truncation.
 #' @export
 rtnorm = function(n, m=0, s=1, lower=0, upper=Inf) {
   n_sampled = 0
@@ -28,6 +27,27 @@ rtnorm = function(n, m=0, s=1, lower=0, upper=Inf) {
     sampled = c( sampled, x[x > lower & x < upper] )
   }
   sampled[seq(n)]
+}
+
+
+#' Random Number Generator for Truncated Cauchy Distribution
+#'
+#' The parameters are set to generate numbers from a half-normal distribution
+#' by default.
+#'
+#' @param n Number of samples.
+#' @param location,scale Parameters of the Cauchy distribution, see `stats::rcauchy`.
+#' @param lower The lower bound for the truncation.
+#' @param upper The upper bound for the truncation.
+#' @export
+rtcauchy = function(n, location=0, scale=1, lower=0, upper=Inf) {
+    n_sampled = 0
+    sampled = c()
+    while (length(sampled) < n) {
+        x = rcauchy( n, location, scale )
+        sampled = c( sampled, x[x > lower & x < upper] )
+    }
+    sampled[seq(n)]
 }
 
 
